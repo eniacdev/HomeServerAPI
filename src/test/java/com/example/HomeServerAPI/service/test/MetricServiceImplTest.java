@@ -38,8 +38,6 @@ public class MetricServiceImplTest {
 	
 	@BeforeEach
 	public void setUp(){
-
-		//test amaçlı metrikler hazırlanır.
 		
 		// given
 		createdMetrics.setLogId(1L);
@@ -67,19 +65,14 @@ public class MetricServiceImplTest {
 		
 		//when
 		
-		//eğer createdMetrics nesnesi repository'e kaydedilebiliyorsa.
 		when(metricRepository.save(any(SystemLog.class))).thenReturn(createdMetrics);
-		//eğer metric nesnesi prepareSytemMetircs'e gönderilip metirkler hazırlanıyorsa.
 		when(prepareSystemMetrics.preapreSystemMetrics()).thenReturn(metric);
 		
 		metricService.prepareAndCreateMetrics();
 		
 		//then
 		
-		//createdMetrics nesnesi null olamaz
 		assertNotNull(createdMetrics);
-		
-		//onayla
 		verify(metricRepository).save(any(SystemLog.class));
 		
 	}

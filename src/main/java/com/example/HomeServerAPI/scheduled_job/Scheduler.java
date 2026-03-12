@@ -20,9 +20,10 @@ public class Scheduler {
 	@Scheduled(cron = "0 * * * * *")
 	public void doSchedulerJob() {
 		try {
-			//logları okumak ve schedule tetiklendiğinden emin olmak için.
+			
 		System.out.println("schedule çalıştı");
 		metricsService.prepareAndCreateMetrics();
+		
 		}catch (Exception e) {
 			e.getMessage();
 		}
