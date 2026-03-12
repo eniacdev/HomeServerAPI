@@ -14,4 +14,4 @@ Bu proje, backend'in temellerini öğrenmek/kavramak için geliştirilmiştir. E
 - 
 
 #Lisans
-- 
+Apache License 2.0 
