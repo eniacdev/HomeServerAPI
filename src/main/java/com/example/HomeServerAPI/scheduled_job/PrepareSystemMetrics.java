@@ -42,7 +42,6 @@ public class PrepareSystemMetrics {
 		metric.setDisk(collectDiskMetrics());
 		metric.setTimeStamp(LocalDateTime.now());
 		metric.setHostName(getHostname());
-		
 		return metric;
 	}
 	
@@ -85,5 +84,4 @@ public class PrepareSystemMetrics {
 		}
 		return null;
 	}
-
 }

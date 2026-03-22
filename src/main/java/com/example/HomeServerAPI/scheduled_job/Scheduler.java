@@ -31,11 +31,8 @@ public class Scheduler {
 	@Scheduled(cron = "0 8 12 * * *", zone = "Europe/Istanbul")
 	public void doSchedulerJob() {
 		try {
-
 		log.warn("Schedule started.");
-			
 		metricsService.prepareAndCreateMetrics();
-		
 		}catch (Exception e) {
 			e.getMessage();
 		}
