@@ -4,18 +4,26 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
+import com.example.HomeServerAPI.log.APILog;
 import com.example.HomeServerAPI.model.SystemLogDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class PrepareJsonFile {
 	
+	private static final Logger log = LoggerFactory.getLogger(PrepareJsonFile.class);
+	
 	public boolean writeJsonFile(SystemLogDto metric) {
 		
 		try {
 		
-		System.out.println("dosya yazılmaya başlandı");
+		log.warn("The json file is being preparing.");
 			
 		ObjectMapper mapper = new ObjectMapper();
 		
@@ -31,12 +39,12 @@ public class PrepareJsonFile {
 		
 		mapper.writerWithDefaultPrettyPrinter().writeValue(filePath.toFile(), metric);	
 		
-		System.out.println("dosya yazma bitti");
+		log.info("file is ready.");
 		
 		return true;
 		
 		}catch (Exception e) {
-			System.out.println("dosya yazılırken bir hata oluştu: " + e);
+			e.getMessage();
 			return false;
 		}
 		

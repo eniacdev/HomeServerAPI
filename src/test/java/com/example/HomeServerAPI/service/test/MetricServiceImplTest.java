@@ -14,7 +14,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.example.HomeServerAPI.model.SystemLog;
 import com.example.HomeServerAPI.model.SystemLogDto;
 import com.example.HomeServerAPI.repository.IMetricRepository;
-import com.example.HomeServerAPI.scheduled_job.PreapreSystemMetrics;
+import com.example.HomeServerAPI.scheduled_job.PrepareSystemMetrics;
 import com.example.HomeServerAPI.scheduled_job.PrepareJsonFile;
 import com.example.HomeServerAPI.service.MetricServiceImpl;
 
@@ -28,7 +28,7 @@ public class MetricServiceImplTest {
 	private PrepareJsonFile prepareJsonFile;
 	
 	@Mock
-	private PreapreSystemMetrics prepareSystemMetrics;
+	private PrepareSystemMetrics prepareSystemMetrics;
 	
 	@Mock
 	private IMetricRepository metricRepository;
@@ -39,7 +39,6 @@ public class MetricServiceImplTest {
 	@BeforeEach
 	public void setUp(){
 		
-		// given
 		createdMetrics.setLogId(1L);
 		createdMetrics.setTimeStamp(LocalDateTime.now());
 		
@@ -63,14 +62,10 @@ public class MetricServiceImplTest {
 	@Test
 	public void prepareAndCreateMetricsTest() throws Exception{
 		
-		//when
-		
 		when(metricRepository.save(any(SystemLog.class))).thenReturn(createdMetrics);
-		when(prepareSystemMetrics.preapreSystemMetrics()).thenReturn(metric);
+		when(prepareSystemMetrics.prepareSystemMetrics()).thenReturn(metric);
 		
 		metricService.prepareAndCreateMetrics();
-		
-		//then
 		
 		assertNotNull(createdMetrics);
 		verify(metricRepository).save(any(SystemLog.class));

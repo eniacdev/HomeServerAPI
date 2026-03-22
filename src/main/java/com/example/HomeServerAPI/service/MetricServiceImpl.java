@@ -5,8 +5,9 @@ import org.springframework.stereotype.Service;
 import com.example.HomeServerAPI.model.SystemLog;
 import com.example.HomeServerAPI.model.SystemLogDto;
 import com.example.HomeServerAPI.repository.IMetricRepository;
-import com.example.HomeServerAPI.scheduled_job.PreapreSystemMetrics;
 import com.example.HomeServerAPI.scheduled_job.PrepareJsonFile;
+import com.example.HomeServerAPI.scheduled_job.PrepareSystemMetrics;
+
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -14,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 public class MetricServiceImpl implements IMetricsService{
 	
 	private final IMetricRepository metricRepository;
-	private final PreapreSystemMetrics systemMetrics;
+	private final PrepareSystemMetrics systemMetrics;
 	private final PrepareJsonFile prepareJsonFile;
 	
 
@@ -25,7 +26,7 @@ public class MetricServiceImpl implements IMetricsService{
 		// schedule tetiklendiğinde servise (buraya) yönlendirir.
 		//ayrıca client'ta manuel tetikleme yapabilir.
 			 
-		SystemLogDto createdMetrics = systemMetrics.preapreSystemMetrics();
+		SystemLogDto createdMetrics = systemMetrics.prepareSystemMetrics();
 	    SystemLog metrics = new SystemLog();
 	    
 	    BeanUtils.copyProperties(createdMetrics, metrics);
