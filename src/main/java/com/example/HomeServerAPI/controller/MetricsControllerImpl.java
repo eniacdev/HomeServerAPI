@@ -7,7 +7,7 @@ import com.example.HomeServerAPI.model.SystemLogDto;
 import com.example.HomeServerAPI.service.IMetricsService;
 
 @RestController
-@RequestMapping(path = "/homeserver/api")
+@RequestMapping(path = "/homeserver")
 public class MetricsControllerImpl implements IMetricsController{
 	
 	private final IMetricsService metricsService;
@@ -19,7 +19,7 @@ public class MetricsControllerImpl implements IMetricsController{
 
 	//client schedule tetiklenmesini beklemek yerine kendi manuel olarak tetikleyebilir.
 	@Override
-	@GetMapping(path = "/prepare/create/metrics")
+	@GetMapping(path = "/get/metrics")
 	public SystemLogDto prepareAndCreateMetrics() {
 		return metricsService.prepareAndCreateMetrics();
 	}

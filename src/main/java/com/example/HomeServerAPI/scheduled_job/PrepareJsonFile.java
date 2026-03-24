@@ -4,13 +4,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-
-import com.example.HomeServerAPI.log.APILog;
 import com.example.HomeServerAPI.model.SystemLogDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
