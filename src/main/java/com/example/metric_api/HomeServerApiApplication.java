@@ -8,9 +8,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Component;
-@EntityScan(basePackages = {"com.example.HomeServerAPI.model"})
-@ComponentScan(basePackages = {"com.example.HomeServerAPI"})
-@EnableJpaRepositories(basePackages = {"com.example.HomeServerAPI.repository"})
+@EntityScan(basePackages = {"com.example.metric_api.model"})
+@ComponentScan(basePackages = {"com.example.metric_api"})
+@EnableJpaRepositories(basePackages = {"com.example.metric_api.repository"})
 @EnableScheduling
 @SpringBootApplication
 public class HomeServerApiApplication {

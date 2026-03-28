@@ -30,8 +30,8 @@ public class MetricServiceImpl implements IMetricsService{
 		
 		try {
 		// schedule tetiklendiğinde servise (buraya) yönlendirir.
-		//ayrıca client'ta manuel tetikleme yapabilir.
-			 
+		//ayrıca client'ta manuel tetikleme yapabilir.	
+			
 		SystemLogDto createdMetrics = systemMetrics.prepareSystemMetrics();
 	    SystemLog metrics = new SystemLog();
 	    

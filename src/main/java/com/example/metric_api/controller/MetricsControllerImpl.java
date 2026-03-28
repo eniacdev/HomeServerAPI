@@ -1,10 +1,13 @@
 package com.example.metric_api.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.metric_api.model.SystemLogDto;
+import com.example.metric_api.response.ApiResponse;
+import com.example.metric_api.response.ResponseType;
 import com.example.metric_api.service.IMetricsService;
 
 @RestController
@@ -21,8 +24,8 @@ public class MetricsControllerImpl implements IMetricsController{
 	//client schedule tetiklenmesini beklemek yerine kendi manuel olarak tetikleyebilir.
 	@Override
 	@GetMapping(path = "/get/metrics")
-	public SystemLogDto prepareAndCreateMetrics() {
-		return metricsService.prepareAndCreateMetrics();
+	public ResponseEntity<ApiResponse<SystemLogDto>> prepareAndCreateMetrics() {
+		return ApiResponse.ok(ResponseType.METRICS_COLLECTED, metricsService.prepareAndCreateMetrics());
 	}
 
 }
