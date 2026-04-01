@@ -1,4 +1,4 @@
-package com.example.metric_api.scheduled_job;
+package com.example.metric_api.scheduled_job.schedule;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

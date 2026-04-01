@@ -10,8 +10,8 @@ import com.example.metric_api.model.SystemLog;
 import com.example.metric_api.model.SystemLogDto;
 import com.example.metric_api.repository.IMetricRepository;
 import com.example.metric_api.response.ResponseType;
-import com.example.metric_api.scheduled_job.PrepareJsonFile;
-import com.example.metric_api.scheduled_job.PrepareSystemMetrics;
+import com.example.metric_api.scheduled_job.export.PrepareJsonFile;
+import com.example.metric_api.scheduled_job.prepare.PrepareSystemMetrics;
 
 import lombok.RequiredArgsConstructor;
 
