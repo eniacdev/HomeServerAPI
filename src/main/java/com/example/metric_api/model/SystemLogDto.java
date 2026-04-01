@@ -13,8 +13,10 @@ public class SystemLogDto {
 
 	private LocalDateTime timeStamp;
 	private String hostName;
+	private UpTimeMetricDto upTime;
 	private OsDto os;
 	private CpuDto cpu;
 	private MemoryDto memory;
 	private DiskDto disk;
+	
 }

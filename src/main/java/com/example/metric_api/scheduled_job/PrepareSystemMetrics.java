@@ -2,7 +2,10 @@ package com.example.metric_api.scheduled_job;
 
 import java.io.File;
 import java.lang.management.ManagementFactory;
+import java.lang.management.RuntimeMXBean;
 import java.net.InetAddress;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +17,7 @@ import com.example.metric_api.model.DiskDto;
 import com.example.metric_api.model.MemoryDto;
 import com.example.metric_api.model.OsDto;
 import com.example.metric_api.model.SystemLogDto;
+import com.example.metric_api.model.UpTimeMetricDto;
 import com.example.metric_api.response.ResponseType;
 import com.sun.management.OperatingSystemMXBean;
 
@@ -38,8 +42,37 @@ public class PrepareSystemMetrics {
 		metric.setDisk(collectDiskMetrics());
 		metric.setTimeStamp(LocalDateTime.now());
 		metric.setHostName(getHostname());
+		metric.setUpTime(collectUpTimeMetric());
 		
 		return metric;
+	}
+	
+	public UpTimeMetricDto collectUpTimeMetric() throws Exception{
+		
+		RuntimeMXBean rb = ManagementFactory.getRuntimeMXBean();
+		long uptime = rb.getUptime();
+		
+		UpTimeMetricDto upTimeMetricDto = new UpTimeMetricDto();
+		upTimeMetricDto.setOsUpTime(osUptime());
+		upTimeMetricDto.setServiceUpTime(uptime);
+		
+		return upTimeMetricDto;
+	}
+	
+	public Long osUptime() throws Exception{
+		
+		String content = Files.readString(Path.of("/proc/uptime"));
+	    return (long) Double.parseDouble(content.split(" ")[0]);
+		
+	}
+	
+	public Long serviceUpTime() {
+
+		RuntimeMXBean rb = ManagementFactory.getRuntimeMXBean();
+		Long serviceUpTime = rb.getUptime();
+		
+		return serviceUpTime;
+
 	}
 	
 	public OsDto collectOsMetrics() {
