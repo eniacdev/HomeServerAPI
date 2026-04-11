@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SystemLogDto {
 
-	private LocalDateTime timeStamp;
 	private String hostName;
 	private UptimeMetricDto upTime;
 	private OsDto os;

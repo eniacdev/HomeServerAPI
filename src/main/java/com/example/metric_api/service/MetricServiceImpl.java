@@ -58,12 +58,6 @@ public class MetricServiceImpl implements IMetricsService{
 		return cpuDto;
 	}
 
-	@Override
-	public UptimeMetricDto getUptimeMetric() throws Exception{
-		PrepareUptimeMetric uptimeMetric = new PrepareUptimeMetric();
-		UptimeMetricDto uptimeDto = uptimeMetric.collectUptimeMetric();
-		return uptimeDto;
-	}
 
 	@Override
 	public OsDto getOsMetric() {

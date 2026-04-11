@@ -20,7 +20,7 @@ public class ApiResponse <T>{
 	private T data;
 	
 	public static <T> ResponseEntity<ApiResponse<T>> ok(ResponseType responseType, T data){
-		ApiResponse<T> response = new ApiResponse<T>(LocalDateTime.now(), responseType.getStatus(), data);
+		ApiResponse<T> response = new ApiResponse<T>(LocalDateTime.now(),responseType.getStatus(), data);
 		
 		return ResponseEntity.status(responseType.getStatus()).body(response);
 	}

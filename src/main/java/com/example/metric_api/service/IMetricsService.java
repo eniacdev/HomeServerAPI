@@ -10,7 +10,6 @@ import com.example.metric_api.scheduled_job.prepare.PrepareCpuMetric;
 public interface IMetricsService {
 
 	public SystemLogDto prepareAndCreateMetrics();
-	public UptimeMetricDto getUptimeMetric() throws Exception;
 	public OsDto getOsMetric();
 	public CpuDto getCpuMetric(); 
 	public MemoryDto getMemoryMetric();

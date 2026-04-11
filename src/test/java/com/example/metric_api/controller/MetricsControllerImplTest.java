@@ -112,7 +112,18 @@ public class MetricsControllerImplTest {
 		verify(metricsService).getMemoryMetric();
 	}
 	
-	
+	@Test
+	public void getOsMetricTest() throws Exception{
+		when(metricsService.getOsMetric()).thenReturn(os);
+		
+		mockMvc.perform(get("/homeserver/get/os"))
+		.andExpect(status().isOk())
+		.andExpect(jsonPath("$.data.osName").value("Linux"))
+		.andExpect(jsonPath("$.data.osVersion").value("Linux-version"))
+		.andDo(print());
+		
+		verify(metricsService).getOsMetric();
+	}
 	
 	
 	

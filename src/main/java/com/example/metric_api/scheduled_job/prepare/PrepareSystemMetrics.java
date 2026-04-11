@@ -35,7 +35,6 @@ public class PrepareSystemMetrics {
 		metric.setCpu(cpuMetric.collectCpuMetrics());
 		metric.setMemory(memoryMetric.collectMemoryMetrics());
 		metric.setDisk(diskMetric.collectDiskMetrics());
-		metric.setTimeStamp(LocalDateTime.now());
 		metric.setHostName(hostnameMetric.getHostname());
 		metric.setUpTime(uptimeMetric.collectUptimeMetric());
 		

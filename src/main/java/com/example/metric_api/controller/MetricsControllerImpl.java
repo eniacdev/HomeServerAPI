@@ -42,11 +42,7 @@ public class MetricsControllerImpl implements IMetricsController{
 		return ApiResponse.ok(ResponseType.METRICS_COLLECTED, metricsService.getCpuMetric());
 	}
 
-	@Override
-	@GetMapping(path = "/get/uptime")
-	public ResponseEntity<ApiResponse<UptimeMetricDto>> getUptimeMetric() throws Exception{
-		return ApiResponse.ok(ResponseType.METRICS_COLLECTED, metricsService.getUptimeMetric());
-	}
+	
 
 	@Override
 	@GetMapping(path = "/get/os")

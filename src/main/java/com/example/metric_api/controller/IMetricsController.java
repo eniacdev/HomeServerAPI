@@ -15,7 +15,6 @@ import com.example.metric_api.response.ApiResponse;
 public interface IMetricsController {
 
 	public ResponseEntity<ApiResponse<SystemLogDto>> prepareAndCreateMetrics();
-	public ResponseEntity<ApiResponse<UptimeMetricDto>> getUptimeMetric() throws Exception;
 	public ResponseEntity<ApiResponse<OsDto>> getOsMetric();
 	public ResponseEntity<ApiResponse<CpuDto>> getCpuMetric();
 	public ResponseEntity<ApiResponse<MemoryDto>> getMemoryMetric();
