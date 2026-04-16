@@ -18,9 +18,9 @@ public class Scheduler {
 	@Autowired
 	private IMetricsService metricsService;
 	
-	/* her bir dakikada schedule tetiklenir.
+	/* istenilen zamanda tetiklenir
 	 * tetiklendiğinde servisi çağırarak metrikler toplanmaya ve hazırlanmaya başlar.
-	 * en sonunda metrikler hazır olduğunda veritabanına kaydeder ve ek olarak json dosyası oluşturur.
+	 * en sonunda metrikler hazır olduğunda veritabanına (veritabanı kaldırıldı ancak ileride gerekebilir) kaydeder ve ek olarak json dosyası oluşturur.
 	 * json dosyanın güncel tarihin ismiyle metrikler kaydedilir.
 	 */
 	@Scheduled(cron = "0 8 12 * * *", zone = "Europe/Istanbul")

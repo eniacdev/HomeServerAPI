@@ -72,7 +72,7 @@ public class MetricsControllerImplTest {
 	public void prepareAndCreateMetricsTest() throws Exception{
 		
 		//when
-		when(metricsService.prepareAndGetMetrics()).thenReturn(metric);
+		when(metricsService.prepareAndSaveMetrics()).thenReturn(metric);
 		
 		mockMvc.perform(get("/homeserver/get/metrics"))
         .andExpect(status().isOk())
@@ -80,7 +80,7 @@ public class MetricsControllerImplTest {
         .andDo(print());
 		
 		//then
-		verify(metricsService).prepareAndGetMetrics();
+		verify(metricsService).prepareAndSaveMetrics();
 		
 	}
 	

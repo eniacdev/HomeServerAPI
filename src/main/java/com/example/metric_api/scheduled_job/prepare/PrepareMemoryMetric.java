@@ -6,7 +6,9 @@ import com.example.metric_api.exception_handler.BaseException;
 import com.example.metric_api.model.MemoryDto;
 import com.example.metric_api.response.ResponseType;
 import com.sun.management.OperatingSystemMXBean;
+import org.springframework.stereotype.Component;
 
+@Component
 public class PrepareMemoryMetric {
 	
 	public MemoryDto collectMemoryMetrics() {

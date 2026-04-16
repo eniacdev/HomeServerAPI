@@ -5,7 +5,9 @@ import java.io.File;
 import com.example.metric_api.exception_handler.BaseException;
 import com.example.metric_api.model.DiskDto;
 import com.example.metric_api.response.ResponseType;
+import org.springframework.stereotype.Component;
 
+@Component
 public class PrepareDiskMetric {
 	
 	public DiskDto collectDiskMetrics() {

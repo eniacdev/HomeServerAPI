@@ -1,24 +1,24 @@
 package com.example.metric_api.scheduled_job.prepare;
 
-import com.example.metric_api.model.OsDto;
-import com.example.metric_api.model.SystemInfo;
-import com.example.metric_api.model.UptimeMetricDto;
+import com.example.metric_api.model.SystemInfoDto;
+import org.springframework.stereotype.Component;
 
+@Component
 public class PrepareSystemInfo {
 
 	
-	public SystemInfo collectSystemInfo() throws Exception{
+	public SystemInfoDto collectSystemInfo() throws Exception{
 		
-		SystemInfo systemInfo = new SystemInfo();
+		SystemInfoDto systemInfoDto = new SystemInfoDto();
 		
 		PrepareOsMetric osMetric = new PrepareOsMetric();
 		PrepareUptimeMetric uptimeMetric = new PrepareUptimeMetric();
 		PrepareHostnameMetric hostnameMetric = new PrepareHostnameMetric();
 		
-		systemInfo.setUptime(uptimeMetric.collectUptimeMetric());
-		systemInfo.setHostname(hostnameMetric.getHostname());
-		systemInfo.setOs(osMetric.collectOsMetrics());
+		systemInfoDto.setUptime(uptimeMetric.collectUptimeMetric());
+		systemInfoDto.setHostname(hostnameMetric.getHostname());
+		systemInfoDto.setOs(osMetric.collectOsMetrics());
 		
-		return systemInfo;
+		return systemInfoDto;
 	}
 }

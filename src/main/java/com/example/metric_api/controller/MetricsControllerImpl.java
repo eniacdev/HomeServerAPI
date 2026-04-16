@@ -8,14 +8,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.metric_api.model.CpuDto;
 import com.example.metric_api.model.DiskDto;
 import com.example.metric_api.model.MemoryDto;
-import com.example.metric_api.model.OsDto;
-import com.example.metric_api.model.SystemInfo;
+import com.example.metric_api.model.SystemInfoDto;
 import com.example.metric_api.model.SystemMetricsDto;
-import com.example.metric_api.model.UptimeMetricDto;
 import com.example.metric_api.response.ApiResponse;
 import com.example.metric_api.response.ResponseType;
-import com.example.metric_api.scheduled_job.export.PrepareJsonFile;
-import com.example.metric_api.scheduled_job.prepare.PrepareCpuMetric;
 import com.example.metric_api.service.IMetricsService;
 
 @RestController
@@ -64,7 +60,7 @@ public class MetricsControllerImpl implements IMetricsController{
 
 	@Override
 	@GetMapping(path = "/get/system-info")
-	public ResponseEntity<ApiResponse<SystemInfo>> prepareAndGetSystemInfo() throws Exception{
+	public ResponseEntity<ApiResponse<SystemInfoDto>> prepareAndGetSystemInfo() throws Exception{
 		return ApiResponse.ok(ResponseType.SYSTEM_INFO_COLLECTED, metricsService.prepareAndGetSystemInfo());
 	}
 
