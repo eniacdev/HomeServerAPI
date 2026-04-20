@@ -6,6 +6,7 @@ target/
 
 ## LOG ##
 *.log
+MetricsLog/
 
 ## PROPERTİES ##
 application.properties
