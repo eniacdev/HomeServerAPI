@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UptimeMetricDto {
 
-	private Long serviceUpTime;
-	private Long OsUpTime;
+	private Long serviceUptime;
+	private Long osUptime;
 	
 }

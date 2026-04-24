@@ -1,5 +1,8 @@
 package com.example.metric_api.service;
 
+import com.example.metric_api.MetricsMapper;
+import com.example.metric_api.entitiy.Metrics;
+import com.example.metric_api.repository.IMetricsRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -20,6 +23,9 @@ import com.example.metric_api.scheduled_job.prepare.PrepareSystemMetrics;
 
 import lombok.RequiredArgsConstructor;
 
+import java.net.InetAddress;
+import java.time.LocalDateTime;
+
 @Service
 @RequiredArgsConstructor
 public class MetricServiceImpl implements IMetricsService{
@@ -32,6 +38,8 @@ public class MetricServiceImpl implements IMetricsService{
 	private final PrepareMemoryMetric memoryMetric;
 	private final PrepareDiskMetric diskMetric;
 	private final PrepareSystemInfo systemInfo;
+	private final IMetricsRepository metricsRepository;
+	//private final MetricsMapper metricsMapper;
 	private static final Logger log = LoggerFactory.getLogger(PrepareSystemMetrics.class);
 
 	
@@ -46,6 +54,13 @@ public class MetricServiceImpl implements IMetricsService{
 		SystemMetricsDto createdMetrics = systemMetrics.prepareSystemMetrics();
 	    
 	    prepareJsonFile.writeJsonFile(createdMetrics);
+		Metrics DBmetrics = MetricsMapper.toEntity(createdMetrics);
+
+		//system
+		DBmetrics.setCreatedAt(LocalDateTime.now());
+		DBmetrics.setHostname(InetAddress.getLocalHost().getHostName());
+
+		metricsRepository.save(DBmetrics);
 	    
 	    return createdMetrics;
 	    

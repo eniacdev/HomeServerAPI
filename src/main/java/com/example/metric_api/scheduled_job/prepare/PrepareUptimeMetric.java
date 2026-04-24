@@ -15,8 +15,8 @@ public class PrepareUptimeMetric {
 		long uptime = rb.getUptime();
 		
 		UptimeMetricDto upTimeMetricDto = new UptimeMetricDto();
-		upTimeMetricDto.setOsUpTime(osUptime());
-		upTimeMetricDto.setServiceUpTime(uptime);
+		upTimeMetricDto.setOsUptime(osUptime());
+		upTimeMetricDto.setServiceUptime(uptime);
 		
 		return upTimeMetricDto;
 	}
