@@ -6,7 +6,7 @@ This project was developed to learn/understand the fundamentals of backend devel
 
 Base path: '/homeserver/metrics'
 
-- `POST /collect`     → collects metrics and saves them as JSON  
+- `POST /collect`     → collects metrics and saves DB and JSOn file.
 - `GET /`             → returns all metrics  
 - `GET /system`       → returns system info (hostname, OS, uptime)  
 - `GET /cpu`          → returns only CPU metrics  
