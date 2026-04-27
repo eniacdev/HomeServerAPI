@@ -1,6 +1,6 @@
 package com.example.metric_api.service;
 
-import com.example.metric_api.MetricsMapper;
+import com.example.metric_api.mapper.MetricsMapper;
 import com.example.metric_api.entitiy.Metrics;
 import com.example.metric_api.repository.IMetricsRepository;
 import org.slf4j.Logger;

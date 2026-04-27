@@ -7,9 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DiskDto {
-	
-	private Long diskUsage;
-	private Long freeDisk;
-	//private Long totalDisk;
+public class DiskInfoDto {
+
+    private Long totalDisk;
+
 }

@@ -16,7 +16,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class PrepareJsonFile {
-	
+
+	//kodları kim okuyorsa allah yardımcısı olsun.
+
 	private static final Logger log = LoggerFactory.getLogger(PrepareJsonFile.class);
 	private final ObjectMapper objectMapper;
 
@@ -29,7 +31,6 @@ public class PrepareJsonFile {
 		try {
 		
 		log.warn("The json file is being preparing.");
-			
 
 		JsonFile jsonFile = new JsonFile();
 		
@@ -42,10 +43,11 @@ public class PrepareJsonFile {
 		Path directoryPath = Paths.get("MetricsLog", year, month);
 		Path filePath = directoryPath.resolve(fileName);
 
-		/*jsonFile.setFile(filePath.toString());
+		//hem client için hemde kaydedilecek JSON dosyası için dosyanın ismi ve oluşturulduğu tarihi ekler.
+		//client için faydalı olabilir.
+		jsonFile.setFile(filePath.toString());
 		jsonFile.setCreatedAt(date);
-
-		metric.setJsonFile(jsonFile);*/
+		metric.setJsonFile(jsonFile);
 
 		Files.createDirectories(directoryPath);
 		
@@ -59,6 +61,5 @@ public class PrepareJsonFile {
 			log.error("Json dosyası yazılamadı: {}", e.getMessage());
 		    return false;
 		}
-		
 	}
 }

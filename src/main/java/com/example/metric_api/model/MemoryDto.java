@@ -11,5 +11,5 @@ public class MemoryDto {
 	
 	private Long memoryUsage;
 	private Long freeMemory;
-	private Long totalMemory;
+	//private Long totalMemory;
 }

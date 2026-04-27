@@ -16,10 +16,13 @@ public class PrepareDiskMetric {
 		File root = new File("/");
 		
 		diskDto.setFreeDisk(root.getFreeSpace());
-		diskDto.setTotalDisk(root.getTotalSpace());
-		diskDto.setDiskUsage(diskDto.getTotalDisk() - diskDto.getFreeDisk());
+		/*diskDto.setTotalDisk(root.getTotalSpace());
+		diskDto.setDiskUsage(diskDto.getTotalDisk() - diskDto.getFreeDisk());*/
+
+		Long totalDisk = root.getTotalSpace();
+		diskDto.setDiskUsage(totalDisk - diskDto.getFreeDisk());
 		
-		if(diskDto.getFreeDisk() == null && diskDto.getTotalDisk() == null &&
+		if(diskDto.getFreeDisk() == null && /*diskDto.getTotalDisk() == null &&*/
 		   diskDto.getDiskUsage() == null) {
 			throw new BaseException(ResponseType.DISK_METRICS_NOT_COLLECTED);
 		}

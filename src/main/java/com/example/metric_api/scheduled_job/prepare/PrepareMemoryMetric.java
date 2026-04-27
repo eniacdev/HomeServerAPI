@@ -16,11 +16,14 @@ public class PrepareMemoryMetric {
 		MemoryDto memoryDto = new MemoryDto();
 		
 		memoryDto.setFreeMemory(osBean.getFreeMemorySize());
-		memoryDto.setTotalMemory(osBean.getTotalMemorySize());
-		memoryDto.setMemoryUsage(memoryDto.getTotalMemory() - memoryDto.getFreeMemory());
+		/*memoryDto.setTotalMemory(osBean.getTotalMemorySize());
+		memoryDto.setMemoryUsage(memoryDto.getTotalMemory() - memoryDto.getFreeMemory());*/
+
+		Long totalMemory = osBean.getTotalMemorySize();
+		memoryDto.setMemoryUsage(totalMemory - memoryDto.getFreeMemory());
 		
-		if(memoryDto.getFreeMemory() == null && memoryDto.getMemoryUsage() == null &&
-		   memoryDto.getTotalMemory() == null) {
+		if(memoryDto.getFreeMemory() == null && memoryDto.getMemoryUsage() == null /*&&
+		   memoryDto.getTotalMemory() == null*/) {
 			throw new BaseException(ResponseType.MEMORY_METRICS_NOT_COLLECTED);
 		}
 		
