@@ -1,11 +1,11 @@
-package com.example.metric_api.scheduled_job.prepare;
+package com.example.metric_api.scheduled_job.prepare.info;
 
 import java.net.InetAddress;
 
 import com.example.metric_api.exception_handler.BaseException;
 import com.example.metric_api.response.ResponseType;
 
-public class PrepareHostnameMetric {
+public class CollectHostnameInfo {
 	
 	public String getHostname() throws Exception{
 		String hostName = InetAddress.getLocalHost().getHostName();

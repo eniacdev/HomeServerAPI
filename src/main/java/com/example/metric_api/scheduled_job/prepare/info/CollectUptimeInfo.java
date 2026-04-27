@@ -1,4 +1,4 @@
-package com.example.metric_api.scheduled_job.prepare;
+package com.example.metric_api.scheduled_job.prepare.info;
 
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
@@ -7,7 +7,7 @@ import java.nio.file.Path;
 
 import com.example.metric_api.model.UptimeMetricDto;
 
-public class PrepareUptimeMetric {
+public class CollectUptimeInfo {
 	
 	public UptimeMetricDto collectUptimeMetric() throws Exception{
 		

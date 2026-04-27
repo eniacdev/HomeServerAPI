@@ -15,11 +15,11 @@ import com.example.metric_api.model.SystemInfoDto;
 import com.example.metric_api.model.SystemMetricsDto;
 import com.example.metric_api.response.ResponseType;
 import com.example.metric_api.scheduled_job.export.PrepareJsonFile;
-import com.example.metric_api.scheduled_job.prepare.PrepareCpuMetric;
-import com.example.metric_api.scheduled_job.prepare.PrepareDiskMetric;
-import com.example.metric_api.scheduled_job.prepare.PrepareMemoryMetric;
-import com.example.metric_api.scheduled_job.prepare.PrepareSystemInfo;
-import com.example.metric_api.scheduled_job.prepare.PrepareSystemMetrics;
+import com.example.metric_api.scheduled_job.prepare.metrics.CollectCpuMetric;
+import com.example.metric_api.scheduled_job.prepare.metrics.CollectDiskMetric;
+import com.example.metric_api.scheduled_job.prepare.metrics.CollectMemoryMetric;
+import com.example.metric_api.scheduled_job.prepare.info.CollectSystemInfo;
+import com.example.metric_api.scheduled_job.prepare.metrics.CollectSystemMetrics;
 
 import lombok.RequiredArgsConstructor;
 
@@ -32,15 +32,15 @@ public class MetricServiceImpl implements IMetricsService{
 
 	//kod bu şekilde refactor edildi. test yazmak için uygun ve daha az karmaşa (tam olarak değil).
 	//genel olarak component anatasyonu önemli (sanırsam test yazmak için).
-	private final PrepareSystemMetrics systemMetrics;
+	private final CollectSystemMetrics systemMetrics;
 	private final PrepareJsonFile prepareJsonFile;
-	private final PrepareCpuMetric cpuMetric;
-	private final PrepareMemoryMetric memoryMetric;
-	private final PrepareDiskMetric diskMetric;
-	private final PrepareSystemInfo systemInfo;
+	private final CollectCpuMetric cpuMetric;
+	private final CollectMemoryMetric memoryMetric;
+	private final CollectDiskMetric diskMetric;
+	private final CollectSystemInfo systemInfo;
 	private final IMetricsRepository metricsRepository;
 	//private final MetricsMapper metricsMapper;
-	private static final Logger log = LoggerFactory.getLogger(PrepareSystemMetrics.class);
+	private static final Logger log = LoggerFactory.getLogger(CollectSystemMetrics.class);
 
 	
 	@Override

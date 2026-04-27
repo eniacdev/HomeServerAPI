@@ -1,4 +1,4 @@
-package com.example.metric_api.scheduled_job.prepare;
+package com.example.metric_api.scheduled_job.prepare.metrics;
 
 import java.lang.management.ManagementFactory;
 
@@ -9,7 +9,7 @@ import com.sun.management.OperatingSystemMXBean;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PrepareMemoryMetric {
+public class CollectMemoryMetric {
 	
 	public MemoryDto collectMemoryMetrics() {
 		OperatingSystemMXBean osBean = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();

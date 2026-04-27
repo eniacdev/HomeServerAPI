@@ -7,10 +7,12 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BiosDto {
+public class MotherBoardInfoDto {
 
-    private String biosName;
-    private String version;
     private String manufacturer;
+    private String model;
+    private String motherboard;
+    private String vendor;
+    private String serial;
 
 }

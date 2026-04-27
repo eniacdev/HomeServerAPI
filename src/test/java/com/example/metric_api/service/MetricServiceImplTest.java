@@ -1,17 +1,19 @@
 package com.example.metric_api.service;
 
-import com.example.metric_api.controller.MetricsControllerImpl;
 import com.example.metric_api.exception_handler.BaseException;
 import com.example.metric_api.model.*;
 import com.example.metric_api.scheduled_job.export.PrepareJsonFile;
-import com.example.metric_api.scheduled_job.prepare.*;
+import com.example.metric_api.scheduled_job.prepare.info.CollectSystemInfo;
+import com.example.metric_api.scheduled_job.prepare.metrics.CollectCpuMetric;
+import com.example.metric_api.scheduled_job.prepare.metrics.CollectDiskMetric;
+import com.example.metric_api.scheduled_job.prepare.metrics.CollectMemoryMetric;
+import com.example.metric_api.scheduled_job.prepare.metrics.CollectSystemMetrics;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
@@ -28,19 +30,19 @@ public class MetricServiceImplTest {
     private PrepareJsonFile prepareJsonFile;
 
     @Mock
-    private PrepareSystemMetrics prepareSystemMetrics;
+    private CollectSystemMetrics collectSystemMetrics;
 
     @Mock
-    private PrepareCpuMetric prepareCpuMetric;
+    private CollectCpuMetric collectCpuMetric;
 
     @Mock
-    private PrepareMemoryMetric prepareMemoryMetric;
+    private CollectMemoryMetric collectMemoryMetric;
 
     @Mock
-    private PrepareDiskMetric prepareDiskMetric;
+    private CollectDiskMetric collectDiskMetric;
 
     @Mock
-    private PrepareSystemInfo prepareSystemInfo;
+    private CollectSystemInfo collectSystemInfo;
 
     SystemMetricsDto metrics = new SystemMetricsDto();
     CpuDto cpu = new CpuDto();
@@ -84,7 +86,7 @@ public class MetricServiceImplTest {
 
     @Test
     public void prepareAndSaveMetrics() throws  Exception{
-        when(prepareSystemMetrics.prepareSystemMetrics()).thenReturn(metrics);
+        when(collectSystemMetrics.prepareSystemMetrics()).thenReturn(metrics);
         when(prepareJsonFile.writeJsonFile(metrics)).thenReturn(true);
 
         SystemMetricsDto result = metricsService.prepareAndSaveMetrics();
@@ -94,7 +96,7 @@ public class MetricServiceImplTest {
         assertEquals(metrics.getMemory(), result.getMemory());
         assertEquals(metrics.getDisk(), result.getDisk());
 
-        verify(prepareSystemMetrics).prepareSystemMetrics();
+        verify(collectSystemMetrics).prepareSystemMetrics();
         verify(prepareJsonFile).writeJsonFile(metrics);
 
     }
@@ -102,7 +104,7 @@ public class MetricServiceImplTest {
     @Test
     public void getSystemInfoTest() throws Exception{
 
-        when(prepareSystemInfo.collectSystemInfo()).thenReturn(systemInfo);
+        when(collectSystemInfo.collectSystemInfo()).thenReturn(systemInfo);
 
         SystemInfoDto result = metricsService.prepareAndGetSystemInfo();
 
@@ -111,13 +113,13 @@ public class MetricServiceImplTest {
         assertEquals(systemInfo.getUptime(), result.getUptime());
         assertEquals(systemInfo.getHostname(), result.getHostname());
 
-        verify(prepareSystemInfo).collectSystemInfo();
+        verify(collectSystemInfo).collectSystemInfo();
     }
 
     @Test
     public void getCpuMetricTest(){
 
-        when(prepareCpuMetric.collectCpuMetrics()).thenReturn(cpu);
+        when(collectCpuMetric.collectCpuMetrics()).thenReturn(cpu);
 
         CpuDto result = metricsService.getCpuMetric();
 
@@ -127,14 +129,14 @@ public class MetricServiceImplTest {
         assertEquals(cpu.getProcessCpuLoad(), result.getProcessCpuLoad());
         assertEquals(cpu.getSystemAverageLoad(), result.getSystemAverageLoad());
 
-        verify(prepareCpuMetric).collectCpuMetrics();
+        verify(collectCpuMetric).collectCpuMetrics();
 
     }
 
     @Test
     public void getMemoryMetricTest() {
 
-        when(prepareMemoryMetric.collectMemoryMetrics()).thenReturn(memory);
+        when(collectMemoryMetric.collectMemoryMetrics()).thenReturn(memory);
 
         MemoryDto result = metricsService.getMemoryMetric();
 
@@ -143,13 +145,13 @@ public class MetricServiceImplTest {
         assertEquals(memory.getTotalMemory(), result.getTotalMemory());
         assertEquals(memory.getMemoryUsage(), result.getMemoryUsage());
 
-        verify(prepareMemoryMetric).collectMemoryMetrics();
+        verify(collectMemoryMetric).collectMemoryMetrics();
     }
 
     @Test
     public void getDiskMetricTest(){
 
-        when(prepareDiskMetric.collectDiskMetrics()).thenReturn(disk);
+        when(collectDiskMetric.collectDiskMetrics()).thenReturn(disk);
 
         DiskDto result = metricsService.getDiskMetric();
 
@@ -158,13 +160,13 @@ public class MetricServiceImplTest {
         assertEquals(disk.getDiskUsage(), result.getDiskUsage());
         assertEquals(disk.getTotalDisk(), result.getTotalDisk());
 
-        verify(prepareDiskMetric).collectDiskMetrics();
+        verify(collectDiskMetric).collectDiskMetrics();
     }
 
     //exception test
     @Test
     public void throwMetricNotCollectedExceptionTest() throws Exception{
-        when(prepareSystemMetrics.prepareSystemMetrics()).thenThrow(new RuntimeException());
+        when(collectSystemMetrics.prepareSystemMetrics()).thenThrow(new RuntimeException());
 
         BaseException ex = assertThrows(BaseException.class, () ->{
            metricsService.prepareAndSaveMetrics();
@@ -172,6 +174,6 @@ public class MetricServiceImplTest {
 
         assertEquals("Something went wrong, metrics not collected.", ex.getMessage());
 
-        verify(prepareSystemMetrics).prepareSystemMetrics();
+        verify(collectSystemMetrics).prepareSystemMetrics();
     }
 }

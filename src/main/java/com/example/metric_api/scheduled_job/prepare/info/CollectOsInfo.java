@@ -1,16 +1,13 @@
-package com.example.metric_api.scheduled_job.prepare;
+package com.example.metric_api.scheduled_job.prepare.info;
 
 import java.lang.management.ManagementFactory;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.example.metric_api.exception_handler.BaseException;
 import com.example.metric_api.model.OsDto;
 import com.example.metric_api.response.ResponseType;
 import com.sun.management.OperatingSystemMXBean;
 
-public class PrepareOsMetric {
+public class CollectOsInfo {
 	
 	public OsDto collectOsMetrics() {
 		OperatingSystemMXBean osBean = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();

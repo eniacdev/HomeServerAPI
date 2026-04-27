@@ -1,4 +1,4 @@
-package com.example.metric_api.scheduled_job.prepare;
+package com.example.metric_api.scheduled_job.prepare.metrics;
 
 import java.io.File;
 
@@ -8,7 +8,7 @@ import com.example.metric_api.response.ResponseType;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PrepareDiskMetric {
+public class CollectDiskMetric {
 	
 	public DiskDto collectDiskMetrics() {
 		

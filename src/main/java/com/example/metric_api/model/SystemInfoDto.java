@@ -11,6 +11,6 @@ public class SystemInfoDto {
 	private CpuInfoDto cpuInfo;
 	private DiskInfoDto diskInfo;
 	private MemoryInfoDto memoryInfo;
-	private MotherBoardDto motherBoard;
-	private BiosDto bios;
+	private MotherBoardInfoDto motherBoard;
+	private BiosInfoDto bios;
 }

@@ -1,4 +1,4 @@
-package com.example.metric_api.scheduled_job.prepare;
+package com.example.metric_api.scheduled_job.prepare.metrics;
 
 import java.lang.management.ManagementFactory;
 
@@ -7,10 +7,7 @@ import com.example.metric_api.model.CpuDto;
 import com.example.metric_api.response.ResponseType;
 import com.sun.management.OperatingSystemMXBean;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 import oshi.SystemInfo;
 import oshi.hardware.HardwareAbstractionLayer;
@@ -18,7 +15,7 @@ import oshi.hardware.Sensors;
 
 @Getter
 @Component
-public class PrepareCpuMetric {
+public class CollectCpuMetric {
 	public CpuDto collectCpuMetrics() {
 		OperatingSystemMXBean osBean = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
 		CpuDto cpuDto = new CpuDto();
