@@ -8,9 +8,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.example.metric_api.exception_handler.BaseException;
-import com.example.metric_api.model.CpuDto;
-import com.example.metric_api.model.DiskDto;
-import com.example.metric_api.model.MemoryDto;
+import com.example.metric_api.model.CpuMetricDto;
+import com.example.metric_api.model.DiskMetricDto;
+import com.example.metric_api.model.MemoryMetricDto;
 import com.example.metric_api.model.SystemInfoDto;
 import com.example.metric_api.model.SystemMetricsDto;
 import com.example.metric_api.response.ResponseType;
@@ -58,7 +58,7 @@ public class MetricServiceImpl implements IMetricsService{
 
 		//system
 		DBmetrics.setCreatedAt(LocalDateTime.now());
-		DBmetrics.setHostname(InetAddress.getLocalHost().getHostName());
+		//DBmetrics.setHostname(InetAddress.getLocalHost().getHostName());
 
 		metricsRepository.save(DBmetrics);
 	    
@@ -70,11 +70,6 @@ public class MetricServiceImpl implements IMetricsService{
 		}
 	}
 
-	@Override
-	public SystemInfoDto prepareAndGetSystemInfo() throws Exception{
-		return systemInfo.collectSystemInfo();
-	}
-
 	//bu method metrikleri json dosyası olarak kaydetmeden sadece metrikleri alınmasını sağlar. - veriler kaydedilmez -
 	@Override
 	public SystemMetricsDto getAllMetrics() throws Exception{
@@ -82,17 +77,22 @@ public class MetricServiceImpl implements IMetricsService{
 	}
 
 	@Override
-	public CpuDto getCpuMetric() {
+	public CpuMetricDto getCpuMetric() {
 		return cpuMetric.collectCpuMetrics();
 	}
 
 	@Override
-	public MemoryDto getMemoryMetric() {
+	public MemoryMetricDto getMemoryMetric() {
 		return memoryMetric.collectMemoryMetrics();
 	}
 	
 	@Override
-	public DiskDto getDiskMetric() {
+	public DiskMetricDto getDiskMetric() {
 		return diskMetric.collectDiskMetrics();
+	}
+
+	@Override
+	public SystemInfoDto prepareAndGetSystemInfo() throws Exception{
+		return systemInfo.collectSystemInfo();
 	}
 }

@@ -1,10 +1,16 @@
 package com.example.metric_api.scheduled_job.prepare.info;
 
+import org.springframework.stereotype.Component;
+
+import com.example.metric_api.exception_handler.BaseException;
 import com.example.metric_api.model.MotherBoardInfoDto;
+import com.example.metric_api.response.ResponseType;
+
 import oshi.SystemInfo;
 import oshi.hardware.Baseboard;
 import oshi.hardware.ComputerSystem;
 
+@Component
 public class CollectMotherBoardInfo {
 
     public MotherBoardInfoDto collectMotherBoardInfo(){
@@ -13,16 +19,23 @@ public class CollectMotherBoardInfo {
         MotherBoardInfoDto motherBoard = new MotherBoardInfoDto();
 
         ComputerSystem cs = si.getHardware().getComputerSystem();
-        motherBoard.setManufacturer(cs.getManufacturer());
-        motherBoard.setModel(cs.getModel());
 
         Baseboard baseboard = cs.getBaseboard();
-        motherBoard.setMotherboard(baseboard.getModel());
-        motherBoard.setMotherboard(baseboard.getManufacturer());
+        motherBoard.setModel(baseboard.getModel());
+        motherBoard.setManufacturer(baseboard.getManufacturer());
         motherBoard.setSerial(baseboard.getSerialNumber());
 
-        //kontrol blokları çok uzar mı? ...
+        checkInfo(motherBoard); // kontroll
 
-        return motherBoard; //şimdilik bu şekilde, method hazır değil.
+        return motherBoard;
+    }
+
+    private void checkInfo(MotherBoardInfoDto motherBoard){
+
+        if(motherBoard.getManufacturer() == null &&
+          motherBoard.getModel() == null &&
+          motherBoard.getSerial() == null){
+            throw new BaseException(ResponseType.SYSTEM_INFO_NOT_COLLECTED);
+        }
     }
 }

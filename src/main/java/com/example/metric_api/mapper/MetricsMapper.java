@@ -22,6 +22,9 @@ public class MetricsMapper {
             metrics.setProcessCpuLoad(dto.getCpu().getProcessCpuLoad());
             metrics.setSystemCpuLoad(dto.getCpu().getSystemCpuLoad());
             metrics.setSystemAverageLoad(dto.getCpu().getSystemAverageLoad());
+            metrics.setCpuTemp(dto.getCpu().getCpuTemp());
+            metrics.setCpuVolt(dto.getCpu().getCpuVolt());
+            metrics.setFanSpeeds(dto.getCpu().getFanSpeeds());
         }
 
         //MEMORY
@@ -37,9 +40,7 @@ public class MetricsMapper {
             metrics.setFreeDisk(dto.getDisk().getFreeDisk());
             //metrics.setTotalDisk(dto.getDisk().getTotalDisk());
         }
-
-        //OS
-        //if()
+        
 
         return metrics;
     }

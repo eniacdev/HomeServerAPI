@@ -1,8 +1,6 @@
 package com.example.metric_api.response;
 
 import org.springframework.http.HttpStatus;
-import com.sun.net.httpserver.Authenticator.Success;
-import com.sun.net.httpserver.HttpsConfigurator;
 import lombok.Getter;
 
 @Getter
@@ -14,6 +12,9 @@ public enum ResponseType {
 	
 	SYSTEM_INFO_COLLECTED("SYSTEM_INFO_COLLECTED","System info succesfuly collected.", HttpStatus.OK),
 	SYSTEM_INFO_NOT_COLLECTED("SYSTEM_INFO_COLLECTED","Something went wrong, system info not collected.", HttpStatus.NOT_FOUND),
+
+	CPU_INFO_NOT_COLLECTED("CPU_INFO_NOT_COLLECTED", "Something went wrong, CPU info not collected.", HttpStatus.NOT_FOUND),
+	DISK_INFO_NOT_COLLECTED("DISK_INFO_NOT_COLLECTED", "Something went wrong, disk info not collected.", HttpStatus.NOT_FOUND),
 	
 	OS_METRICS_NOT_COLLECTED("OS_METRICS_NOT_FOUND","Os metrics is not collected.", HttpStatus.NOT_FOUND),
 	CPU_METRICS_NOT_COLLECTED("CPU_METRICS_NOT_FOUND","Cpu metrics is not collected.", HttpStatus.NOT_FOUND),

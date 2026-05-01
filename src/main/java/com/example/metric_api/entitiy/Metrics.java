@@ -1,6 +1,6 @@
 package com.example.metric_api.entitiy;
 
-import com.example.metric_api.model.OsDto;
+import com.example.metric_api.model.OsInfoDto;
 import com.example.metric_api.model.SystemMetricsDto;
 import com.example.metric_api.model.UptimeMetricDto;
 import jakarta.persistence.*;
@@ -25,14 +25,16 @@ public class Metrics {
     private LocalDateTime createdAt;
 
     //CPU
-    private Integer cpuCores;
     private Double processCpuLoad;
-    private Double systemCpuLoad;
-    private Double systemAverageLoad;
+	private Double systemCpuLoad;
+	private Double systemAverageLoad;
+	private Double cpuTemp;
+	private Double cpuVolt;
+	private int[] fanSpeeds;
 
     //RAM
     private Long memoryUsage;
-    private  Long freeMemory;
+    private Long freeMemory;
     private Long totalMemory;
 
     //Disk
@@ -40,12 +42,7 @@ public class Metrics {
     private Long freeDisk;
     private Long totalDisk;
 
-    //System and OS
-    private String osName;
-    private String osVersion;
-
-    private String hostname;
-
+    //uptime
     private Long serviceUptime;
     private Long osUptime;
 

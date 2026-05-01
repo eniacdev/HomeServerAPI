@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MemoryDto {
+public class MemoryMetricDto {
 	
 	private Long memoryUsage;
 	private Long freeMemory;
-	//private Long totalMemory;
+	private Long totalMemory;
 }

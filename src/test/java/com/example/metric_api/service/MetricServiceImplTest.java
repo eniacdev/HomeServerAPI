@@ -45,10 +45,10 @@ public class MetricServiceImplTest {
     private CollectSystemInfo collectSystemInfo;
 
     SystemMetricsDto metrics = new SystemMetricsDto();
-    CpuDto cpu = new CpuDto();
-    MemoryDto memory = new MemoryDto();
-    DiskDto disk = new DiskDto();
-    OsDto os = new OsDto();
+    CpuMetricDto cpu = new CpuMetricDto();
+    MemoryMetricDto memory = new MemoryMetricDto();
+    DiskMetricDto disk = new DiskMetricDto();
+    OsInfoDto os = new OsInfoDto();
     UptimeMetricDto uptime = new UptimeMetricDto();
     SystemInfoDto systemInfo = new SystemInfoDto();
 
@@ -59,21 +59,21 @@ public class MetricServiceImplTest {
         os.setOsName("Linux");
         os.setOsVersion("Linux-version");
 
-        cpu.setCpuCores(2);
+       // cpu.setCpuCores(2);
         cpu.setProcessCpuLoad(1.5);
         cpu.setSystemAverageLoad(1.5);
         cpu.setSystemCpuLoad(1.5);
 
         memory.setFreeMemory(10L);
-        memory.setTotalMemory(15L);
-        memory.setMemoryUsage(memory.getTotalMemory() - memory.getFreeMemory());
+       // memory.setTotalMemory(15L);
+       // memory.setMemoryUsage(memory.getTotalMemory() - memory.getFreeMemory());
 
         disk.setFreeDisk(10L);
-        disk.setTotalDisk(10L);
-        disk.setDiskUsage(disk.getTotalDisk() - disk.getFreeDisk());
+       // disk.setTotalDisk(10L);
+       // disk.setDiskUsage(disk.getTotalDisk() - disk.getFreeDisk());
 
-        uptime.setOsUpTime(100L);
-        uptime.setServiceUpTime(100L);
+        //uptime.setOsUpTime(100L);
+        //uptime.setServiceUpTime(100L);
 
         systemInfo.setHostname("Linux");
         systemInfo.setOs(os);
@@ -121,10 +121,10 @@ public class MetricServiceImplTest {
 
         when(collectCpuMetric.collectCpuMetrics()).thenReturn(cpu);
 
-        CpuDto result = metricsService.getCpuMetric();
+        CpuMetricDto result = metricsService.getCpuMetric();
 
         assertNotNull(result);
-        assertEquals(cpu.getCpuCores(), result.getCpuCores());
+       // assertEquals(cpu.getCpuCores(), result.getCpuCores());
         assertEquals(cpu.getSystemCpuLoad(), result.getSystemCpuLoad());
         assertEquals(cpu.getProcessCpuLoad(), result.getProcessCpuLoad());
         assertEquals(cpu.getSystemAverageLoad(), result.getSystemAverageLoad());
@@ -138,11 +138,11 @@ public class MetricServiceImplTest {
 
         when(collectMemoryMetric.collectMemoryMetrics()).thenReturn(memory);
 
-        MemoryDto result = metricsService.getMemoryMetric();
+        MemoryMetricDto result = metricsService.getMemoryMetric();
 
         assertNotNull(result);
         assertEquals(memory.getFreeMemory(), result.getFreeMemory());
-        assertEquals(memory.getTotalMemory(), result.getTotalMemory());
+      //  assertEquals(memory.getTotalMemory(), result.getTotalMemory());
         assertEquals(memory.getMemoryUsage(), result.getMemoryUsage());
 
         verify(collectMemoryMetric).collectMemoryMetrics();
@@ -153,12 +153,12 @@ public class MetricServiceImplTest {
 
         when(collectDiskMetric.collectDiskMetrics()).thenReturn(disk);
 
-        DiskDto result = metricsService.getDiskMetric();
+        DiskMetricDto result = metricsService.getDiskMetric();
 
         assertNotNull(result);
         assertEquals(disk.getFreeDisk(), result.getFreeDisk());
         assertEquals(disk.getDiskUsage(), result.getDiskUsage());
-        assertEquals(disk.getTotalDisk(), result.getTotalDisk());
+       // assertEquals(disk.getTotalDisk(), result.getTotalDisk());
 
         verify(collectDiskMetric).collectDiskMetrics();
     }

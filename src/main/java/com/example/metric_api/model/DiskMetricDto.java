@@ -7,8 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class OsDto {
-
-	private String osName;
-	private String osVersion;
+public class DiskMetricDto {
+	
+	private Long diskUsage;
+	private Long freeDisk;
+	private Long totalDisk;
 }

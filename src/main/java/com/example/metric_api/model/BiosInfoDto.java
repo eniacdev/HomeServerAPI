@@ -9,8 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class BiosInfoDto {
 
+    private String manufacturer;
     private String biosName;
     private String version;
-    private String manufacturer;
+    private String releaseDate;
+
 
 }

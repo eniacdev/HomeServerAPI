@@ -3,7 +3,7 @@ package com.example.metric_api.scheduled_job.prepare.metrics;
 import java.lang.management.ManagementFactory;
 
 import com.example.metric_api.exception_handler.BaseException;
-import com.example.metric_api.model.CpuDto;
+import com.example.metric_api.model.CpuMetricDto;
 import com.example.metric_api.response.ResponseType;
 import com.sun.management.OperatingSystemMXBean;
 
@@ -16,25 +16,24 @@ import oshi.hardware.Sensors;
 @Getter
 @Component
 public class CollectCpuMetric {
-	public CpuDto collectCpuMetrics() {
+	public CpuMetricDto collectCpuMetrics() {
 		OperatingSystemMXBean osBean = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
-		CpuDto cpuDto = new CpuDto();
+		CpuMetricDto cpuDto = new CpuMetricDto();
 
 		//işlemcinin diğer değerlerini almak için (cpuTemp, fan ve voltage).
 		SystemInfo si = new SystemInfo();
 		HardwareAbstractionLayer hal = si.getHardware();
 		Sensors sensors = hal.getSensors();
 		
-		//cpuDto.setCpuCores(osBean.getAvailableProcessors());
 		cpuDto.setProcessCpuLoad(osBean.getProcessCpuLoad() * 100);
 		cpuDto.setSystemCpuLoad(osBean.getSystemCpuLoad() * 100);
 		cpuDto.setSystemAverageLoad(osBean.getSystemLoadAverage());
 
 		cpuDto.setCpuTemp(sensors.getCpuTemperature()); // Celsius
 		cpuDto.setFanSpeeds(sensors.getFanSpeeds());  // RPM
-		cpuDto.setCpuVolt(sensors.getCpuVoltage());
+		cpuDto.setCpuVolt(sensors.getCpuVoltage()); // Voltage
 		
-		if(/*cpuDto.getCpuCores() == null &&*/ cpuDto.getProcessCpuLoad() == null &&
+		if(cpuDto.getProcessCpuLoad() == null &&
 		   cpuDto.getSystemAverageLoad() == null && cpuDto.getSystemCpuLoad() == null) {
 			throw new BaseException(ResponseType.CPU_METRICS_NOT_COLLECTED);
 		}

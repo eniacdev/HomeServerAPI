@@ -11,8 +11,6 @@ public class MotherBoardInfoDto {
 
     private String manufacturer;
     private String model;
-    private String motherboard;
-    private String vendor;
     private String serial;
 
 }

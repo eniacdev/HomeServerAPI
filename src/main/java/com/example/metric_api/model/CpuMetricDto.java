@@ -7,9 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CpuDto {
+public class CpuMetricDto {
 	
-	//private Integer cpuCores;
 	private Double processCpuLoad;
 	private Double systemCpuLoad;
 	private Double systemAverageLoad;

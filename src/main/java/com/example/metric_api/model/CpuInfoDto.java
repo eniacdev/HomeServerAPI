@@ -10,10 +10,9 @@ import lombok.NoArgsConstructor;
 public class CpuInfoDto {
 
     private String cpuName;
-    private String vendor;
-    private String family;
-    private String model;
-    private String stepping;
-    private String cpuId;
+    private Integer physicalCore;
+    private Integer logicalCore;
+    //private Long maxFreqMHz;
+    private Boolean is64Bit;
 
 }

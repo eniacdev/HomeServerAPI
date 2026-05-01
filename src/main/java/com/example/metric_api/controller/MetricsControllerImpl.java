@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.metric_api.model.CpuDto;
-import com.example.metric_api.model.DiskDto;
-import com.example.metric_api.model.MemoryDto;
+import com.example.metric_api.model.CpuMetricDto;
+import com.example.metric_api.model.DiskMetricDto;
+import com.example.metric_api.model.MemoryMetricDto;
 import com.example.metric_api.model.SystemInfoDto;
 import com.example.metric_api.model.SystemMetricsDto;
 import com.example.metric_api.response.ApiResponse;
@@ -42,20 +42,20 @@ public class MetricsControllerImpl implements IMetricsController{
 
 	@Override
 	@GetMapping(path = "/cpu")
-	public ResponseEntity<ApiResponse<CpuDto>> getCpuMetric() {
+	public ResponseEntity<ApiResponse<CpuMetricDto>> getCpuMetric() {
 		return ApiResponse.ok(ResponseType.METRICS_COLLECTED, metricsService.getCpuMetric());
 	}
 
 
 	@Override
 	@GetMapping(path = "/memory")
-	public ResponseEntity<ApiResponse<MemoryDto>> getMemoryMetric() {
+	public ResponseEntity<ApiResponse<MemoryMetricDto>> getMemoryMetric() {
 		return ApiResponse.ok(ResponseType.METRICS_COLLECTED, metricsService.getMemoryMetric());
 	}
 
 	@Override
 	@GetMapping(path = "/disk")
-	public ResponseEntity<ApiResponse<DiskDto>> getDiskMetric() {
+	public ResponseEntity<ApiResponse<DiskMetricDto>> getDiskMetric() {
 		return ApiResponse.ok(ResponseType.METRICS_COLLECTED, metricsService.getDiskMetric());
 	}
 

@@ -14,10 +14,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import com.example.metric_api.controller.MetricsControllerImpl;
-import com.example.metric_api.model.CpuDto;
-import com.example.metric_api.model.DiskDto;
-import com.example.metric_api.model.MemoryDto;
-import com.example.metric_api.model.OsDto;
+import com.example.metric_api.model.CpuMetricDto;
+import com.example.metric_api.model.DiskMetricDto;
+import com.example.metric_api.model.MemoryMetricDto;
+import com.example.metric_api.model.OsInfoDto;
 import com.example.metric_api.model.SystemMetricsDto;
 import com.example.metric_api.model.UptimeMetricDto;
 import com.example.metric_api.scheduled_job.export.PrepareJsonFile;
@@ -39,11 +39,11 @@ public class MetricsControllerImplTest {
 	private PrepareJsonFile prepareJsonFile;
 	
 	SystemMetricsDto metric = new SystemMetricsDto();
-	OsDto os = new OsDto();
-	CpuDto cpu = new CpuDto();
+	OsInfoDto os = new OsInfoDto();
+	CpuMetricDto cpu = new CpuMetricDto();
 	UptimeMetricDto uptime = new UptimeMetricDto();
-	DiskDto disk = new DiskDto();
-	MemoryDto memory = new MemoryDto();
+	DiskMetricDto disk = new DiskMetricDto();
+	MemoryMetricDto memory = new MemoryMetricDto();
 	
 	@BeforeEach
 	public void setUp() {
@@ -51,18 +51,18 @@ public class MetricsControllerImplTest {
 		os.setOsName("Linux");
 		os.setOsVersion("Linux-version");
 		
-		cpu.setCpuCores(2);
+		//cpu.setCpuCores(2);
 		cpu.setProcessCpuLoad(1.5);
 		cpu.setSystemAverageLoad(1.5);
 		cpu.setSystemCpuLoad(1.5);
 		
 		memory.setFreeMemory(10L);
-		memory.setTotalMemory(15L);
-		memory.setMemoryUsage(memory.getTotalMemory() - memory.getFreeMemory());
+		//memory.setTotalMemory(15L);
+		//memory.setMemoryUsage(memory.getTotalMemory() - memory.getFreeMemory());
 		
 		disk.setFreeDisk(10L);
-		disk.setTotalDisk(10L);
-		disk.setDiskUsage(disk.getTotalDisk() - disk.getFreeDisk());
+		//disk.setTotalDisk(10L);
+		//disk.setDiskUsage(disk.getTotalDisk() - disk.getFreeDisk());
 		
 		metric.setCpu(cpu);
 		metric.setDisk(disk);
