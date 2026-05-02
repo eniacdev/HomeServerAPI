@@ -11,9 +11,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SystemMetricsDto {
 
-	private JsonFile jsonFile;
+	//private JsonFile jsonFile;
 	private CpuMetricDto cpu;
 	private MemoryMetricDto memory;
 	private DiskMetricDto disk;
-	
+	private Long serviceUptime;
+	private Long osUptime;
 }

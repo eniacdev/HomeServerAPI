@@ -31,14 +31,14 @@ public class MetricsMapper {
         if(dto.getMemory() != null){
             metrics.setMemoryUsage(dto.getMemory().getMemoryUsage());
             metrics.setFreeMemory(dto.getMemory().getFreeMemory());
-            //metrics.setTotalMemory(dto.getMemory().getTotalMemory());
+            metrics.setTotalMemory(dto.getMemory().getTotalMemory());
         }
 
         //Disk
         if(dto.getDisk() != null){
             metrics.setDiskUsage(dto.getDisk().getDiskUsage());
             metrics.setFreeDisk(dto.getDisk().getFreeDisk());
-            //metrics.setTotalDisk(dto.getDisk().getTotalDisk());
+            metrics.setTotalDisk(dto.getDisk().getTotalDisk());
         }
         
 

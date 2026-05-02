@@ -32,6 +32,7 @@ public class CollectSystemMetrics {
 		metric.setMemory(memoryMetric.collectMemoryMetrics());
 		metric.setDisk(diskMetric.collectDiskMetrics());
 		
+		
 		return metric;
 	}
 }

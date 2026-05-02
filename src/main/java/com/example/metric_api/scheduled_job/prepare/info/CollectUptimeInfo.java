@@ -31,7 +31,7 @@ public class CollectUptimeInfo {
 		
 	}
 	
-	public Long serviceUpTime() {
+	public Long serviceUptime() {
 
 		RuntimeMXBean rb = ManagementFactory.getRuntimeMXBean();
 		Long serviceUpTime = rb.getUptime();

@@ -47,7 +47,7 @@ public class PrepareJsonFile {
 		//client için faydalı olabilir.
 		jsonFile.setFile(filePath.toString());
 		jsonFile.setCreatedAt(date);
-		metric.setJsonFile(jsonFile);
+		//metric.setJsonFile(jsonFile);
 
 		Files.createDirectories(directoryPath);
 		
