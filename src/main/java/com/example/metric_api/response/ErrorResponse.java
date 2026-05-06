@@ -15,6 +15,7 @@ public class ErrorResponse {
 
 	//error response model
 	private LocalDateTime timestamp;
+	private Integer status;
 	private String code;
 	private String message;
 }

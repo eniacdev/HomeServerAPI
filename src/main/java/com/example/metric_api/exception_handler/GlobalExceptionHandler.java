@@ -28,6 +28,7 @@ public class GlobalExceptionHandler {
 		
 		ErrorResponse errorResponse = new ErrorResponse(
 				LocalDateTime.now(),
+				responseType.getStatus().value(),
 				responseType.getCode(),
 				responseType.getMessage());
 		

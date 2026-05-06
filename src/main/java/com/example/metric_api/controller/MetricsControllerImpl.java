@@ -1,9 +1,12 @@
 package com.example.metric_api.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.metric_api.model.CpuMetricDto;
@@ -26,20 +29,22 @@ public class MetricsControllerImpl implements IMetricsController{
 		this.metricsService = metricsService;
 	}
 
-	//client schedule tetiklenmesini beklemek yerine kendi manuel olarak tetikleyebilir.
+	// client schedule tetiklenmesini beklemek yerine kendi manuel olarak tetikleyebilir.
 	@Override
 	@PostMapping(path = "/collect")
 	public ResponseEntity<ApiResponse<SystemMetricsDto>> prepareAndSaveMetrics() {
 		return ApiResponse.ok(ResponseType.METRICS_COLLECTED, metricsService.prepareAndSaveMetrics());
 	}
 
+	// tüm metrikleri toplar ancak JSON dosyası oluşturmaz ve DB'e kaydetmez. sadece anlık alınır.
 	@Override
 	@GetMapping(path = "/")
 	public ResponseEntity<ApiResponse<SystemMetricsDto>> getAllMetrics() throws Exception {
 		return ApiResponse.ok(ResponseType.METRICS_COLLECTED, metricsService.getAllMetrics());
 	}
 
-
+ 
+	// sadece belirli metrikler ...
 	@Override
 	@GetMapping(path = "/cpu")
 	public ResponseEntity<ApiResponse<CpuMetricDto>> getCpuMetric() {
@@ -59,10 +64,18 @@ public class MetricsControllerImpl implements IMetricsController{
 		return ApiResponse.ok(ResponseType.METRICS_COLLECTED, metricsService.getDiskMetric());
 	}
 
+	// sadece sistemin bilgilerini toplar.
 	@Override
 	@GetMapping(path = "/system")
 	public ResponseEntity<ApiResponse<SystemInfoDto>> prepareAndGetSystemInfo() throws Exception{
 		return ApiResponse.ok(ResponseType.SYSTEM_INFO_COLLECTED, metricsService.prepareAndGetSystemInfo());
+	}
+
+
+	@Override
+	@DeleteMapping(path = "/delete/{id}")
+	public ResponseEntity<ApiResponse<Boolean>> deleteLogById(@PathVariable(name = "id") long id) {
+		return ApiResponse.ok(ResponseType.METRICS_DELETED, metricsService.deleteLogById(id));
 	}
 
 }

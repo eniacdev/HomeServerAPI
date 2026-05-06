@@ -16,11 +16,17 @@ public class ApiResponse <T>{
 	
 	//sadece başarılı işlemler için response
 	private LocalDateTime timestamp;
-	private HttpStatus status;
+	private Integer status;
+	private String message;
 	private T data;
 	
 	public static <T> ResponseEntity<ApiResponse<T>> ok(ResponseType responseType, T data){
-		ApiResponse<T> response = new ApiResponse<T>(LocalDateTime.now(),responseType.getStatus(), data);
+
+		ApiResponse<T> response = new ApiResponse<T>(
+			LocalDateTime.now(),
+			responseType.getStatus().value(),
+			responseType.getMessage(),
+			data);
 		
 		return ResponseEntity.status(responseType.getStatus()).body(response);
 	}

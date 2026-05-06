@@ -28,6 +28,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.net.InetAddress;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -83,6 +84,19 @@ public class MetricServiceImpl implements IMetricsService{
 		entityMetrics.setOsUptime(uptimeInfo.osUptime());
 		entityMetrics.setServiceUptime(uptimeInfo.serviceUptime());
 		metricsRepository.save(entityMetrics);
+	}
+
+	@Override
+	public Boolean deleteLogById(long id) {
+		Optional optional = metricsRepository.findById(id);
+
+		if(optional.isEmpty()){
+			throw new BaseException(ResponseType.METRICS_NOT_FOUND);
+		}
+		
+		metricsRepository.deleteById(id);
+
+		return true;
 	}
 
 	// bu method metrikleri json dosyası olarak kaydetmeden sadece metrikleri alınmasını sağlar. - veriler kaydedilmez -

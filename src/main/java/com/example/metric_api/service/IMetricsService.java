@@ -13,5 +13,6 @@ public interface IMetricsService {
 	public CpuMetricDto getCpuMetric(); 
 	public MemoryMetricDto getMemoryMetric();
 	public DiskMetricDto getDiskMetric();
+	public Boolean deleteLogById(long id);
 	
 }
