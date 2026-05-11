@@ -99,6 +99,20 @@ public class MetricServiceImpl implements IMetricsService{
 		return true;
 	}
 
+	@Override
+	public SystemMetricsDto getLogById(long id) {
+		//SystemMetricsDto metricsDto = new SystemMetricsDto();
+		Optional<Metrics> optional = metricsRepository.findById(id);
+
+		if(optional.isEmpty()){
+			throw new BaseException(ResponseType.METRICS_NOT_FOUND);
+		}
+
+		Metrics metrics = optional.get();
+
+		return MetricsMapper.toDto(metrics);
+	}
+
 	// bu method metrikleri json dosyası olarak kaydetmeden sadece metrikleri alınmasını sağlar. - veriler kaydedilmez -
 	@Override
 	public SystemMetricsDto getAllMetrics() throws Exception{

@@ -20,4 +20,5 @@ public interface IMetricsController {
 	public ResponseEntity<ApiResponse<MemoryMetricDto>> getMemoryMetric();
 	public ResponseEntity<ApiResponse<DiskMetricDto>> getDiskMetric();
 	public ResponseEntity<ApiResponse<Boolean>> deleteLogById(long id);
+	public ResponseEntity<ApiResponse<SystemMetricsDto>> getLogById(long id);
 }

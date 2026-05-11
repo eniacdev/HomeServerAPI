@@ -78,4 +78,10 @@ public class MetricsControllerImpl implements IMetricsController{
 		return ApiResponse.ok(ResponseType.METRICS_DELETED, metricsService.deleteLogById(id));
 	}
 
+	@Override
+	@GetMapping(path = "/get/{id}")
+	public ResponseEntity<ApiResponse<SystemMetricsDto>> getLogById(@PathVariable(name = "id") long id) {
+		return ApiResponse.ok(ResponseType.METRICS_FOUND, metricsService.getLogById(id));
+	}
+
 }
