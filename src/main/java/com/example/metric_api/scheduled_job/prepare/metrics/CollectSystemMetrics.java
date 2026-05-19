@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import com.example.metric_api.model.SystemMetricsDto;
+import com.example.metric_api.scheduled_job.prepare.info.CollectUptimeInfo;
 import com.sun.management.OperatingSystemMXBean;
 
 @Service
@@ -25,13 +26,15 @@ public class CollectSystemMetrics {
 		CollectCpuMetric cpuMetric = new CollectCpuMetric();
 		CollectDiskMetric diskMetric = new CollectDiskMetric();
 		CollectMemoryMetric memoryMetric = new CollectMemoryMetric();
+		CollectUptimeInfo uptimeMetric = new CollectUptimeInfo();
 		
 		log.warn("the metrics is being preparing");
 		
 		metric.setCpu(cpuMetric.collectCpuMetrics());
 		metric.setMemory(memoryMetric.collectMemoryMetrics());
 		metric.setDisk(diskMetric.collectDiskMetrics());
-		
+		metric.setOsUptime(uptimeMetric.osUptime());
+		metric.setServiceUptime(uptimeMetric.serviceUptime());
 		
 		return metric;
 	}

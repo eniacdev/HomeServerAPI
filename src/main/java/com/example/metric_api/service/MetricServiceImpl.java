@@ -55,7 +55,7 @@ public class MetricServiceImpl implements IMetricsService{
 
 		// schedule tetiklendiğinde servise (buraya) yönlendirir.
 		// ayrıca client manuel tetiklemeyi bu method ile gerçekleştirir.
-		// bu method metrikleri toplar ve client tarafa gönderirken aynı zaman da metrikleri hem json dosyası hemde database'de kaydeder.
+		// bu method metrikleri toplar ve client tarafa gönderirken aynı zaman da metrikleri database'de kaydeder.
 		
 		SystemMetricsDto collectedMetrics = collectMetrics();
 
@@ -81,8 +81,6 @@ public class MetricServiceImpl implements IMetricsService{
 	private void saveMetrics(SystemMetricsDto collectedMetrics) throws Exception{
 		Metrics entityMetrics = MetricsMapper.toEntity(collectedMetrics);
 		entityMetrics.setCreatedAt(LocalDateTime.now());
-		entityMetrics.setOsUptime(uptimeInfo.osUptime());
-		entityMetrics.setServiceUptime(uptimeInfo.serviceUptime());
 		metricsRepository.save(entityMetrics);
 	}
 
@@ -101,7 +99,6 @@ public class MetricServiceImpl implements IMetricsService{
 
 	@Override
 	public SystemMetricsDto getLogById(long id) {
-		//SystemMetricsDto metricsDto = new SystemMetricsDto();
 		Optional<Metrics> optional = metricsRepository.findById(id);
 
 		if(optional.isEmpty()){

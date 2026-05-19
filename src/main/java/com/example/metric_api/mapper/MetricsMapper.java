@@ -23,7 +23,6 @@ public class MetricsMapper {
 
         //CPU
         if(dto.getCpu() != null){
-           // metrics.setCpuCores(dto.getCpu().getCpuCores());
             metrics.setProcessCpuLoad(dto.getCpu().getProcessCpuLoad());
             metrics.setSystemCpuLoad(dto.getCpu().getSystemCpuLoad());
             metrics.setSystemAverageLoad(dto.getCpu().getSystemAverageLoad());
@@ -46,7 +45,6 @@ public class MetricsMapper {
             metrics.setTotalDisk(dto.getDisk().getTotalDisk());
         }
         
-
         return metrics;
     }
 
@@ -65,7 +63,6 @@ public class MetricsMapper {
         cpu.setCpuVolt(metrics.getCpuVolt());
         cpu.setFanSpeeds(metrics.getFanSpeeds());
         dto.setCpu(cpu);
-
         
         MemoryMetricDto memory = new MemoryMetricDto();
         memory.setFreeMemory(metrics.getFreeMemory());

@@ -10,7 +10,7 @@ public enum ResponseType {
 	METRICS_FOUND("METRICS_FOUND","Metrics is succesfully found.",HttpStatus.FOUND),
 	METRICS_DELETED("METRICS_DELETED", "Metrics is succesfuly deleted.", HttpStatus.OK),
 	METRICS_NOT_COLLECTED("MERTRICS_NOT_COLLECTED","Something went wrong, metrics not collected.", HttpStatus.NOT_FOUND),
-	METRICS_NOT_FOUND("METRICS_NOT_FOUND", "Metrics is not found", HttpStatus.NOT_FOUND),
+	METRICS_NOT_FOUND("METRICS_NOT_FOUND", "Something went wrong, metrics is not found.", HttpStatus.NOT_FOUND),
 	
 	SYSTEM_INFO_COLLECTED("SYSTEM_INFO_COLLECTED","System info succesfuly collected.", HttpStatus.OK),
 	SYSTEM_INFO_NOT_COLLECTED("SYSTEM_INFO_COLLECTED","Something went wrong, system info not collected.", HttpStatus.NOT_FOUND),
