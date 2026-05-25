@@ -44,6 +44,11 @@ public class MetricsMapper {
             metrics.setFreeDisk(dto.getDisk().getFreeDisk());
             metrics.setTotalDisk(dto.getDisk().getTotalDisk());
         }
+
+        if(dto.getOsUptime() != null && dto.getServiceUptime() != null){
+            metrics.setOsUptime(dto.getOsUptime());
+            metrics.setServiceUptime(dto.getServiceUptime() / 1000); // '/ 1000' ile saniye formatı
+        }
         
         return metrics;
     }

@@ -15,7 +15,8 @@ public class CollectSystemMetrics {
 	// gerçekleştirilen işlemleri loglara yansıtmak için kullandım.
 	// importlara dikkat.
 	private static final Logger log = LoggerFactory.getLogger(CollectSystemMetrics.class);
-	OperatingSystemMXBean osBean = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
+	// osBean gerekmeyebilir ama uzun vaadede ihtiyaç olacak.
+	// OperatingSystemMXBean osBean = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
 	
 	
 	public SystemMetricsDto prepareSystemMetrics() throws Exception{

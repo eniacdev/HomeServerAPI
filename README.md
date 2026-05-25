@@ -4,10 +4,12 @@ This project was developed to learn/understand the fundamentals of backend devel
 
 ## Endpoints
 
-Base path: '/homeserver/metrics'
+Base path: '/api/v1/metrics'
 
-- `POST /collect`     → collects metrics and saves DB and JSOn file.
+- `POST /collect`     → collects metrics and saves to DB.
 - `GET /`             → returns all metrics  
+- 'GET /log/{id}'     → returns a metric log by id
+- 'DELETE /log/{id}   → deletes a metric log by id
 - `GET /system`       → returns system info (hostname, OS, uptime)  
 - `GET /cpu`          → returns only CPU metrics  
 - `GET /memory`       → returns only RAM metrics  
@@ -15,13 +17,12 @@ Base path: '/homeserver/metrics'
 
 ## Architecture
 
-![Arcihtecture](./docs/MetricAPIDiagram.drawio.svg)
+![Arcihtecture](./docs/metric-api-diagram.drawio.svg)
 
 ## Technology
 
 - Java
 - Maven
-- Docker
 - Springboot
 
 ## Licence

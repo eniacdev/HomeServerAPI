@@ -23,7 +23,7 @@ public class Scheduler {
 	 * en sonunda metrikler hazır olduğunda veritabanına (veritabanı kaldırıldı ancak ileride gerekebilir) kaydeder ve ek olarak json dosyası oluşturur.
 	 * json dosyanın güncel tarihin ismiyle metrikler kaydedilir.
 	 */
-	@Scheduled(cron = "0 28 11 * * *", zone = "Europe/Istanbul")
+	@Scheduled(fixedRate = 5000, initialDelay = 10000, zone = "Europe/Istanbul")
 	public void doSchedulerJob() {
 		try {
 		log.warn("Schedule started.");

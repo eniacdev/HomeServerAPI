@@ -61,6 +61,8 @@ public class MetricServiceImpl implements IMetricsService{
 
 		saveMetrics(collectedMetrics);
 
+		log.info("metrics is prepared and saved.");
+
 		return collectedMetrics;
 
 		}catch (Exception e) {
@@ -73,11 +75,12 @@ public class MetricServiceImpl implements IMetricsService{
 	// yakında refactor şart, ama şimdilik değil.
 	private SystemMetricsDto collectMetrics() throws Exception{
 		SystemMetricsDto collectedMetrics = systemMetrics.prepareSystemMetrics();
-		collectedMetrics.setOsUptime(uptimeInfo.osUptime());
-		collectedMetrics.setServiceUptime(uptimeInfo.serviceUptime());
+		//collectedMetrics.setOsUptime(uptimeInfo.osUptime());
+		//collectedMetrics.setServiceUptime(uptimeInfo.serviceUptime());
 		return collectedMetrics;
 	}
 
+	//veritabanına kaydedildiği zaman osUptime ve serviceUptime null dönüyor.
 	private void saveMetrics(SystemMetricsDto collectedMetrics) throws Exception{
 		Metrics entityMetrics = MetricsMapper.toEntity(collectedMetrics);
 		entityMetrics.setCreatedAt(LocalDateTime.now());

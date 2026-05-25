@@ -19,7 +19,7 @@ import com.example.metric_api.response.ResponseType;
 import com.example.metric_api.service.IMetricsService;
 
 @RestController
-@RequestMapping(path = "/homeserver/metrics")
+@RequestMapping(path = "/api/v1/metrics")
 public class MetricsControllerImpl implements IMetricsController{
 	
 	private final IMetricsService metricsService;
@@ -71,15 +71,15 @@ public class MetricsControllerImpl implements IMetricsController{
 		return ApiResponse.ok(ResponseType.SYSTEM_INFO_COLLECTED, metricsService.prepareAndGetSystemInfo());
 	}
 
-
+	
 	@Override
-	@DeleteMapping(path = "/delete/{id}")
+	@DeleteMapping(path = "/log/{id}")
 	public ResponseEntity<ApiResponse<Boolean>> deleteLogById(@PathVariable(name = "id") long id) {
 		return ApiResponse.ok(ResponseType.METRICS_DELETED, metricsService.deleteLogById(id));
 	}
 
 	@Override
-	@GetMapping(path = "/get/{id}")
+	@GetMapping(path = "/log/{id}")
 	public ResponseEntity<ApiResponse<SystemMetricsDto>> getLogById(@PathVariable(name = "id") long id) {
 		return ApiResponse.ok(ResponseType.METRICS_FOUND, metricsService.getLogById(id));
 	}
