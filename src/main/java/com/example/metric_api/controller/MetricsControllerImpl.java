@@ -6,12 +6,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.example.metric_api.model.CpuMetricDto;
 import com.example.metric_api.model.DiskMetricDto;
 import com.example.metric_api.model.MemoryMetricDto;
+import com.example.metric_api.model.NetworkMetricDto;
 import com.example.metric_api.model.SystemInfoDto;
 import com.example.metric_api.model.SystemMetricsDto;
 import com.example.metric_api.response.ApiResponse;
@@ -31,57 +30,59 @@ public class MetricsControllerImpl implements IMetricsController{
 
 	// client schedule tetiklenmesini beklemek yerine kendi manuel olarak tetikleyebilir.
 	@Override
-	@PostMapping(path = "/collect")
+	@PostMapping("/collect")
 	public ResponseEntity<ApiResponse<SystemMetricsDto>> prepareAndSaveMetrics() {
 		return ApiResponse.ok(ResponseType.METRICS_COLLECTED, metricsService.prepareAndSaveMetrics());
 	}
 
 	// tüm metrikleri toplar ancak JSON dosyası oluşturmaz ve DB'e kaydetmez. sadece anlık alınır.
 	@Override
-	@GetMapping(path = "/")
+	@GetMapping("/")
 	public ResponseEntity<ApiResponse<SystemMetricsDto>> getAllMetrics() throws Exception {
 		return ApiResponse.ok(ResponseType.METRICS_COLLECTED, metricsService.getAllMetrics());
 	}
-
  
 	// sadece belirli metrikler ...
 	@Override
-	@GetMapping(path = "/cpu")
+	@GetMapping("/cpu")
 	public ResponseEntity<ApiResponse<CpuMetricDto>> getCpuMetric() {
 		return ApiResponse.ok(ResponseType.METRICS_COLLECTED, metricsService.getCpuMetric());
 	}
 
-
 	@Override
-	@GetMapping(path = "/memory")
+	@GetMapping("/memory")
 	public ResponseEntity<ApiResponse<MemoryMetricDto>> getMemoryMetric() {
 		return ApiResponse.ok(ResponseType.METRICS_COLLECTED, metricsService.getMemoryMetric());
 	}
 
 	@Override
-	@GetMapping(path = "/disk")
+	@GetMapping("/disk")
 	public ResponseEntity<ApiResponse<DiskMetricDto>> getDiskMetric() {
 		return ApiResponse.ok(ResponseType.METRICS_COLLECTED, metricsService.getDiskMetric());
 	}
 
 	// sadece sistemin bilgilerini toplar.
 	@Override
-	@GetMapping(path = "/system")
+	@GetMapping("/system")
 	public ResponseEntity<ApiResponse<SystemInfoDto>> prepareAndGetSystemInfo() throws Exception{
 		return ApiResponse.ok(ResponseType.SYSTEM_INFO_COLLECTED, metricsService.prepareAndGetSystemInfo());
 	}
 
-	
 	@Override
-	@DeleteMapping(path = "/log/{id}")
+	@DeleteMapping("/log/{id}")
 	public ResponseEntity<ApiResponse<Boolean>> deleteLogById(@PathVariable(name = "id") long id) {
 		return ApiResponse.ok(ResponseType.METRICS_DELETED, metricsService.deleteLogById(id));
 	}
 
 	@Override
-	@GetMapping(path = "/log/{id}")
+	@GetMapping("/log/{id}")
 	public ResponseEntity<ApiResponse<SystemMetricsDto>> getLogById(@PathVariable(name = "id") long id) {
 		return ApiResponse.ok(ResponseType.METRICS_FOUND, metricsService.getLogById(id));
 	}
 
+	@Override
+	@GetMapping("/network")
+	public ResponseEntity<ApiResponse<NetworkMetricDto>> prepareAndGetNetworkMetric() {
+		return ApiResponse.ok(ResponseType.METRICS_COLLECTED, metricsService.prepareAndGetNetworkMetric());
+	}
 }

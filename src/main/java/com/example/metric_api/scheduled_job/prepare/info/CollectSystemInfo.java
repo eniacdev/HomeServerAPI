@@ -24,6 +24,8 @@ public class CollectSystemInfo {
 	private final CollectCpuInfo cpuInfo;
 	private final CollectMemoryMetric memory;
 	private final CollectDiskMetric disk;
+
+	private final CollectNetworkInfo networkInfo;
 		
 	
 	public SystemInfoDto collectSystemInfo() throws Exception{
@@ -41,6 +43,9 @@ public class CollectSystemInfo {
 		systemInfo.setCpuInfo(cpuInfo.collectCpuInfo());
 		systemInfo.setTotalMemory(memory.collectMemoryMetrics().getTotalMemory());
 		systemInfo.setTotalDisk(disk.collectDiskMetrics().getTotalDisk());
+
+		// netwok info
+		systemInfo.setNetworkInfo(networkInfo.collectNetworkInfo());
 
 		return systemInfo;
 	}

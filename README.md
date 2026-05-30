@@ -6,14 +6,14 @@ This project was developed to learn/understand the fundamentals of backend devel
 
 Base path: '/api/v1/metrics'
 
-- `POST /collect`     → collects metrics and saves to DB.
-- `GET /`             → returns all metrics  
-- 'GET /log/{id}'     → returns a metric log by id
-- 'DELETE /log/{id}   → deletes a metric log by id
-- `GET /system`       → returns system info (hostname, OS, uptime)  
-- `GET /cpu`          → returns only CPU metrics  
-- `GET /memory`       → returns only RAM metrics  
-- `GET /disk`         → returns only disk metrics  
+- `POST      /collect`      → collects metrics and saves to DB.
+- `GET       /`             → returns all metrics  
+- 'GET       /log/{id}'     → returns a metric log by id
+- 'DELETE    /log/{id}'     → deletes a metric log by id
+- `GET       /system`       → returns system info (hostname, OS, uptime)  
+- `GET       /cpu`          → returns only CPU metrics  
+- `GET       /memory`       → returns only RAM metrics  
+- `GET       /disk`         → returns only disk metrics  
 
 ## Architecture
 

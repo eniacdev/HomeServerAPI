@@ -15,6 +15,7 @@ public class SystemMetricsDto {
 	private CpuMetricDto cpu;
 	private MemoryMetricDto memory;
 	private DiskMetricDto disk;
+	private NetworkMetricDto networkMetric;
 	private Long serviceUptime;
 	private Long osUptime;
 }

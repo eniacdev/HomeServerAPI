@@ -5,10 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-
 import com.example.metric_api.service.IMetricsService;
-
- 
 
 @Component
 public class Scheduler {
@@ -26,7 +23,7 @@ public class Scheduler {
 	@Scheduled(fixedRate = 5000, initialDelay = 10000, zone = "Europe/Istanbul")
 	public void doSchedulerJob() {
 		try {
-		log.warn("Schedule started.");
+		log.info("Schedule started.");
 		metricsService.prepareAndSaveMetrics();
 		}catch (Exception e) {
 			e.getMessage();

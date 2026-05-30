@@ -1,12 +1,12 @@
 package com.example.metric_api.mapper;
-
 import com.example.metric_api.entitiy.Metrics;
-import com.example.metric_api.model.CpuInfoDto;
+import com.example.metric_api.exception_handler.BaseException;
 import com.example.metric_api.model.CpuMetricDto;
 import com.example.metric_api.model.DiskMetricDto;
 import com.example.metric_api.model.MemoryMetricDto;
 import com.example.metric_api.model.SystemMetricsDto;
 import com.example.metric_api.model.UptimeMetricDto;
+import com.example.metric_api.response.ResponseType;
 
 /* bu, MapperClass'tır. MapStruct kullanmak yerine bu yönteme başvurmak istedim, zaten neredeyse MapperClass ve MapStruct aynı konu
    olduğundan bu konuyu öğrenmek için ilk önce MapperClass ile başlayıp ondan sonra tam otomatik işlemler için MapStruct kullanacağım.
@@ -19,7 +19,7 @@ public class MetricsMapper {
 
         Metrics metrics = new Metrics();
 
-        if(dto == null)  return null;
+        if(dto == null) return null;
 
         //CPU
         if(dto.getCpu() != null){
@@ -27,8 +27,6 @@ public class MetricsMapper {
             metrics.setSystemCpuLoad(dto.getCpu().getSystemCpuLoad());
             metrics.setSystemAverageLoad(dto.getCpu().getSystemAverageLoad());
             metrics.setCpuTemp(dto.getCpu().getCpuTemp());
-            metrics.setCpuVolt(dto.getCpu().getCpuVolt());
-            metrics.setFanSpeeds(dto.getCpu().getFanSpeeds());
         }
 
         //MEMORY
@@ -49,6 +47,14 @@ public class MetricsMapper {
             metrics.setOsUptime(dto.getOsUptime());
             metrics.setServiceUptime(dto.getServiceUptime() / 1000); // '/ 1000' ile saniye formatı
         }
+
+        if(dto.getNetworkMetric() != null){
+            metrics.setBytesRecv(dto.getNetworkMetric().getBytesRecv());
+            metrics.setBytesSent(dto.getNetworkMetric().getBytesSent());
+            metrics.setInErrors(dto.getNetworkMetric().getInErrors());
+            metrics.setOutErrors(dto.getNetworkMetric().getOutErrors());
+            metrics.setInterfaceName(dto.getNetworkMetric().getInterfaceName());
+        }
         
         return metrics;
     }
@@ -65,8 +71,6 @@ public class MetricsMapper {
         cpu.setSystemCpuLoad(metrics.getSystemCpuLoad());
         cpu.setSystemAverageLoad(metrics.getSystemAverageLoad());
         cpu.setCpuTemp(metrics.getCpuTemp());
-        cpu.setCpuVolt(metrics.getCpuVolt());
-        cpu.setFanSpeeds(metrics.getFanSpeeds());
         dto.setCpu(cpu);
         
         MemoryMetricDto memory = new MemoryMetricDto();

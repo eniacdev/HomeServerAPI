@@ -17,4 +17,5 @@ public class SystemInfoDto {
 	private Long totalDisk;
 	private MotherBoardInfoDto motherBoard;
 	private BiosInfoDto bios;
+	private NetworkInfoDto networkInfo;
 }

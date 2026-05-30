@@ -8,11 +8,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
-
 import com.example.metric_api.exception_handler.BaseException;
 import com.example.metric_api.model.CpuMetricDto;
 import com.example.metric_api.model.DiskMetricDto;
 import com.example.metric_api.model.MemoryMetricDto;
+import com.example.metric_api.model.NetworkInfoDto;
+import com.example.metric_api.model.NetworkMetricDto;
 import com.example.metric_api.model.SystemInfoDto;
 import com.example.metric_api.model.SystemMetricsDto;
 import com.example.metric_api.response.ResponseType;
@@ -20,13 +21,12 @@ import com.example.metric_api.scheduled_job.export.PrepareJsonFile;
 import com.example.metric_api.scheduled_job.prepare.metrics.CollectCpuMetric;
 import com.example.metric_api.scheduled_job.prepare.metrics.CollectDiskMetric;
 import com.example.metric_api.scheduled_job.prepare.metrics.CollectMemoryMetric;
+import com.example.metric_api.scheduled_job.prepare.metrics.CollectNetworkMetric;
+import com.example.metric_api.scheduled_job.prepare.info.CollectNetworkInfo;
 import com.example.metric_api.scheduled_job.prepare.info.CollectSystemInfo;
 import com.example.metric_api.scheduled_job.prepare.info.CollectUptimeInfo;
 import com.example.metric_api.scheduled_job.prepare.metrics.CollectSystemMetrics;
-
 import lombok.RequiredArgsConstructor;
-
-import java.net.InetAddress;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -44,6 +44,7 @@ public class MetricServiceImpl implements IMetricsService{
 	private final CollectSystemInfo systemInfo;
 	private final IMetricsRepository metricsRepository;
 	private final CollectUptimeInfo uptimeInfo;
+	private final CollectNetworkMetric networkMetric;
 	//private final MetricsMapper metricsMapper;
 	private static final Logger log = LoggerFactory.getLogger(CollectSystemMetrics.class);
 
@@ -137,5 +138,10 @@ public class MetricServiceImpl implements IMetricsService{
 	@Override
 	public SystemInfoDto prepareAndGetSystemInfo() throws Exception{
 		return systemInfo.collectSystemInfo();
+	}
+
+	@Override
+	public NetworkMetricDto prepareAndGetNetworkMetric(){
+		return networkMetric.collectNetworkMetric();
 	}
 }

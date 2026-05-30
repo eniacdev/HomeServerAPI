@@ -24,25 +24,30 @@ public class Metrics {
 
     private LocalDateTime createdAt;
 
-    //CPU
+    // CPU
     private Double processCpuLoad;
 	private Double systemCpuLoad;
 	private Double systemAverageLoad;
 	private Double cpuTemp;
-	private Double cpuVolt;
-	private int[] fanSpeeds;
 
-    //RAM
+    // RAM
     private Long memoryUsage;
     private Long freeMemory;
     private Long totalMemory;
 
-    //Disk
+    // Disk
     private Long diskUsage;
     private Long freeDisk;
     private Long totalDisk;
 
-    //uptime
+    // Network
+    private String interfaceName;
+    private Long bytesRecv;
+    private Long bytesSent;
+    private Long inErrors;
+    private Long outErrors;
+
+    // uptime
     private Long serviceUptime;
     private Long osUptime;
 

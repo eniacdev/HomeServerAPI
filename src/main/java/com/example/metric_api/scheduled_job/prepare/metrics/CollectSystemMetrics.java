@@ -1,13 +1,10 @@
 package com.example.metric_api.scheduled_job.prepare.metrics;
 
-import java.lang.management.ManagementFactory;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import com.example.metric_api.model.SystemMetricsDto;
 import com.example.metric_api.scheduled_job.prepare.info.CollectUptimeInfo;
-import com.sun.management.OperatingSystemMXBean;
 
 @Service
 public class CollectSystemMetrics {
@@ -28,12 +25,14 @@ public class CollectSystemMetrics {
 		CollectDiskMetric diskMetric = new CollectDiskMetric();
 		CollectMemoryMetric memoryMetric = new CollectMemoryMetric();
 		CollectUptimeInfo uptimeMetric = new CollectUptimeInfo();
+		CollectNetworkMetric networkMetric = new CollectNetworkMetric();
 		
-		log.warn("the metrics is being preparing");
+		log.info("the metrics is being preparing");
 		
 		metric.setCpu(cpuMetric.collectCpuMetrics());
 		metric.setMemory(memoryMetric.collectMemoryMetrics());
 		metric.setDisk(diskMetric.collectDiskMetrics());
+		metric.setNetworkMetric(networkMetric.collectNetworkMetric());
 		metric.setOsUptime(uptimeMetric.osUptime());
 		metric.setServiceUptime(uptimeMetric.serviceUptime());
 		
