@@ -13,10 +13,5 @@ public class CpuMetricDto {
 	private Double systemCpuLoad;
 	private Double systemAverageLoad;
 	private Double cpuTemp;
-	private Double cpuVolt;
-	private int[] fanSpeeds;
-
-
-
-
+	
 }

@@ -3,7 +3,6 @@ package com.example.metric_api.service;
 import com.example.metric_api.exception_handler.BaseException;
 import com.example.metric_api.model.*;
 import com.example.metric_api.repository.IMetricsRepository;
-import com.example.metric_api.scheduled_job.export.PrepareJsonFile;
 import com.example.metric_api.scheduled_job.prepare.info.CollectSystemInfo;
 import com.example.metric_api.scheduled_job.prepare.info.CollectUptimeInfo;
 import com.example.metric_api.scheduled_job.prepare.metrics.CollectCpuMetric;
@@ -17,7 +16,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.verify;
@@ -95,10 +93,8 @@ public class MetricServiceImplTest {
 
     @Test
     public void prepareAndSaveMetrics() throws  Exception{
+
         when(collectSystemMetrics.prepareSystemMetrics()).thenReturn(metricsDto);
-       
-        when(uptimeInfo.osUptime()).thenReturn(100L);
-        when(uptimeInfo.serviceUptime()).thenReturn(100L);
 
         SystemMetricsDto result = metricsService.prepareAndSaveMetrics();
 
@@ -189,6 +185,7 @@ public class MetricServiceImplTest {
         SystemMetricsDto result = metricsService.getLogById(1L);
 
         assertNotNull(result);
+        
         verify(metricsRepository).findById(1L);
 
     }

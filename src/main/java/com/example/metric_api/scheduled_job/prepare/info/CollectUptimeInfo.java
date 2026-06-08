@@ -4,9 +4,7 @@ import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
 import java.nio.file.Files;
 import java.nio.file.Path;
-
 import org.springframework.stereotype.Component;
-
 import com.example.metric_api.model.UptimeMetricDto;
 
 @Component

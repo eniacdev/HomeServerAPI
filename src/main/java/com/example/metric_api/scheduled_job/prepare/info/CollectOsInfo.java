@@ -1,9 +1,7 @@
 package com.example.metric_api.scheduled_job.prepare.info;
 
 import java.lang.management.ManagementFactory;
-
 import org.springframework.stereotype.Component;
-
 import com.example.metric_api.exception_handler.BaseException;
 import com.example.metric_api.model.OsInfoDto;
 import com.example.metric_api.response.ResponseType;

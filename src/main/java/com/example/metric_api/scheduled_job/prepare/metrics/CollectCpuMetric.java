@@ -20,7 +20,7 @@ public class CollectCpuMetric {
 		OperatingSystemMXBean osBean = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
 		CpuMetricDto cpuDto = new CpuMetricDto();
 
-		//işlemcinin diğer değerlerini almak için (cpuTemp, fan ve voltage).
+		//işlemcinin diğer değerlerini almak için (cpuTemp vb.)
 		SystemInfo si = new SystemInfo();
 		HardwareAbstractionLayer hal = si.getHardware();
 		Sensors sensors = hal.getSensors();
@@ -30,13 +30,12 @@ public class CollectCpuMetric {
 		cpuDto.setSystemAverageLoad(osBean.getSystemLoadAverage());
 
 		cpuDto.setCpuTemp(sensors.getCpuTemperature()); // Celsius
-		cpuDto.setFanSpeeds(sensors.getFanSpeeds());  // RPM
-		cpuDto.setCpuVolt(sensors.getCpuVoltage()); // Voltage
 		
 		if(cpuDto.getProcessCpuLoad() == null &&
 		   cpuDto.getSystemAverageLoad() == null && cpuDto.getSystemCpuLoad() == null) {
 			throw new BaseException(ResponseType.CPU_METRICS_NOT_COLLECTED);
 		}
+
 		return cpuDto;
 	}
 }

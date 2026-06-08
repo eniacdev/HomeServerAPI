@@ -1,12 +1,10 @@
 package com.example.metric_api.mapper;
 import com.example.metric_api.entitiy.Metrics;
-import com.example.metric_api.exception_handler.BaseException;
 import com.example.metric_api.model.CpuMetricDto;
 import com.example.metric_api.model.DiskMetricDto;
 import com.example.metric_api.model.MemoryMetricDto;
 import com.example.metric_api.model.SystemMetricsDto;
 import com.example.metric_api.model.UptimeMetricDto;
-import com.example.metric_api.response.ResponseType;
 
 /* bu, MapperClass'tır. MapStruct kullanmak yerine bu yönteme başvurmak istedim, zaten neredeyse MapperClass ve MapStruct aynı konu
    olduğundan bu konuyu öğrenmek için ilk önce MapperClass ile başlayıp ondan sonra tam otomatik işlemler için MapStruct kullanacağım.
@@ -21,7 +19,7 @@ public class MetricsMapper {
 
         if(dto == null) return null;
 
-        //CPU
+        // CPU
         if(dto.getCpu() != null){
             metrics.setProcessCpuLoad(dto.getCpu().getProcessCpuLoad());
             metrics.setSystemCpuLoad(dto.getCpu().getSystemCpuLoad());
@@ -29,14 +27,14 @@ public class MetricsMapper {
             metrics.setCpuTemp(dto.getCpu().getCpuTemp());
         }
 
-        //MEMORY
+        // MEMORY
         if(dto.getMemory() != null){
             metrics.setMemoryUsage(dto.getMemory().getMemoryUsage());
             metrics.setFreeMemory(dto.getMemory().getFreeMemory());
             metrics.setTotalMemory(dto.getMemory().getTotalMemory());
         }
 
-        //Disk
+        // Disk
         if(dto.getDisk() != null){
             metrics.setDiskUsage(dto.getDisk().getDiskUsage());
             metrics.setFreeDisk(dto.getDisk().getFreeDisk());
@@ -48,6 +46,7 @@ public class MetricsMapper {
             metrics.setServiceUptime(dto.getServiceUptime() / 1000); // '/ 1000' ile saniye formatı
         }
 
+        // Network
         if(dto.getNetworkMetric() != null){
             metrics.setBytesRecv(dto.getNetworkMetric().getBytesRecv());
             metrics.setBytesSent(dto.getNetworkMetric().getBytesSent());
@@ -59,7 +58,6 @@ public class MetricsMapper {
         return metrics;
     }
 
-    // bu kodlar yeterince iyi değil. ileride refactor önemli.
     public static SystemMetricsDto toDto(Metrics metrics){
         
         SystemMetricsDto dto = new SystemMetricsDto();

@@ -4,27 +4,21 @@ import com.example.metric_api.mapper.MetricsMapper;
 import com.example.metric_api.entitiy.Metrics;
 import com.example.metric_api.repository.IMetricsRepository;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
-import org.springframework.cglib.core.Local;
+import org.slf4j.LoggerFactory; 
 import org.springframework.stereotype.Service;
 import com.example.metric_api.exception_handler.BaseException;
 import com.example.metric_api.model.CpuMetricDto;
 import com.example.metric_api.model.DiskMetricDto;
 import com.example.metric_api.model.MemoryMetricDto;
-import com.example.metric_api.model.NetworkInfoDto;
 import com.example.metric_api.model.NetworkMetricDto;
 import com.example.metric_api.model.SystemInfoDto;
 import com.example.metric_api.model.SystemMetricsDto;
 import com.example.metric_api.response.ResponseType;
-import com.example.metric_api.scheduled_job.export.PrepareJsonFile;
 import com.example.metric_api.scheduled_job.prepare.metrics.CollectCpuMetric;
 import com.example.metric_api.scheduled_job.prepare.metrics.CollectDiskMetric;
 import com.example.metric_api.scheduled_job.prepare.metrics.CollectMemoryMetric;
 import com.example.metric_api.scheduled_job.prepare.metrics.CollectNetworkMetric;
-import com.example.metric_api.scheduled_job.prepare.info.CollectNetworkInfo;
 import com.example.metric_api.scheduled_job.prepare.info.CollectSystemInfo;
-import com.example.metric_api.scheduled_job.prepare.info.CollectUptimeInfo;
 import com.example.metric_api.scheduled_job.prepare.metrics.CollectSystemMetrics;
 import lombok.RequiredArgsConstructor;
 import java.time.LocalDateTime;
@@ -36,27 +30,24 @@ public class MetricServiceImpl implements IMetricsService{
 
 	//kod bu şekilde refactor edildi. test yazmak için uygun ve daha az karmaşa (tam olarak değil).
 	//genel olarak component anatasyonu önemli (sanırsam test yazmak için).
+
 	private final CollectSystemMetrics systemMetrics;
-	private final PrepareJsonFile prepareJsonFile;
 	private final CollectCpuMetric cpuMetric;
 	private final CollectMemoryMetric memoryMetric;
 	private final CollectDiskMetric diskMetric;
 	private final CollectSystemInfo systemInfo;
 	private final IMetricsRepository metricsRepository;
-	private final CollectUptimeInfo uptimeInfo;
 	private final CollectNetworkMetric networkMetric;
-	//private final MetricsMapper metricsMapper;
 	private static final Logger log = LoggerFactory.getLogger(CollectSystemMetrics.class);
 
+	// schedule tetiklendiğinde servise yani prepareAndSaveMetrics metoduna yönlendirir.
+	// ayrıca client manuel tetiklemeyi bu method ile gerçekleştirir.
+	// bu method metrikleri toplar ve client tarafa gönderirken aynı zaman da metrikleri database'de kaydeder.
 	
 	@Override
 	public SystemMetricsDto prepareAndSaveMetrics(){
 		
 		try {
-
-		// schedule tetiklendiğinde servise (buraya) yönlendirir.
-		// ayrıca client manuel tetiklemeyi bu method ile gerçekleştirir.
-		// bu method metrikleri toplar ve client tarafa gönderirken aynı zaman da metrikleri database'de kaydeder.
 		
 		SystemMetricsDto collectedMetrics = collectMetrics();
 
@@ -67,21 +58,19 @@ public class MetricServiceImpl implements IMetricsService{
 		return collectedMetrics;
 
 		}catch (Exception e) {
-			log.error("Metrikler toplanırken bir hata oluştu: {}", e.getMessage());
+			log.error("Something went wrong: {}", e.getMessage());
 	        throw new BaseException(ResponseType.METRICS_NOT_COLLECTED);
 		}
 	}
 
-	// bu iki private metod uptime verilerini anlık alıyor, ancak arada büyük bir fark olabilior.
-	// yakında refactor şart, ama şimdilik değil.
+	// bu iki private metod uptime verisini taşırken hatalı veya farklı anlık uptime verileri olabiliyor.
+	// sorun şimdilik çözüldü gibi ancak uzun vaadede geliştirme yapılırken bu dikkate alınmalı.
+
 	private SystemMetricsDto collectMetrics() throws Exception{
 		SystemMetricsDto collectedMetrics = systemMetrics.prepareSystemMetrics();
-		//collectedMetrics.setOsUptime(uptimeInfo.osUptime());
-		//collectedMetrics.setServiceUptime(uptimeInfo.serviceUptime());
 		return collectedMetrics;
 	}
 
-	//veritabanına kaydedildiği zaman osUptime ve serviceUptime null dönüyor.
 	private void saveMetrics(SystemMetricsDto collectedMetrics) throws Exception{
 		Metrics entityMetrics = MetricsMapper.toEntity(collectedMetrics);
 		entityMetrics.setCreatedAt(LocalDateTime.now());
@@ -114,7 +103,8 @@ public class MetricServiceImpl implements IMetricsService{
 		return MetricsMapper.toDto(metrics);
 	}
 
-	// bu method metrikleri json dosyası olarak kaydetmeden sadece metrikleri alınmasını sağlar. - veriler kaydedilmez -
+	// getAllMetrics metodu metrikleri veritabanına kaydetmeden sadece anlık metrikleri alınmasını sağlar. - veriler kaydedilmez -
+
 	@Override
 	public SystemMetricsDto getAllMetrics() throws Exception{
 		return systemMetrics.prepareSystemMetrics();

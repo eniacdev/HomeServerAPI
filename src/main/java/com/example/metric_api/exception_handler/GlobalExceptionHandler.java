@@ -1,17 +1,11 @@
 package com.example.metric_api.exception_handler;
 
 import java.time.LocalDateTime;
-
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import com.example.metric_api.response.ErrorResponse;
 import com.example.metric_api.response.ResponseType;
-
-
-
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -34,5 +28,4 @@ public class GlobalExceptionHandler {
 		
 		return ResponseEntity.status(responseType.getStatus()).body(errorResponse);
 	}
-	
 }

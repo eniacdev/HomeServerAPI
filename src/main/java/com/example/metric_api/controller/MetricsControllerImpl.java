@@ -18,7 +18,7 @@ import com.example.metric_api.response.ResponseType;
 import com.example.metric_api.service.IMetricsService;
 
 @RestController
-@RequestMapping(path = "/api/v1/metrics")
+@RequestMapping("/api/v1/metrics")
 public class MetricsControllerImpl implements IMetricsController{
 	
 	private final IMetricsService metricsService;
@@ -35,7 +35,7 @@ public class MetricsControllerImpl implements IMetricsController{
 		return ApiResponse.ok(ResponseType.METRICS_COLLECTED, metricsService.prepareAndSaveMetrics());
 	}
 
-	// tüm metrikleri toplar ancak JSON dosyası oluşturmaz ve DB'e kaydetmez. sadece anlık alınır.
+	// tüm metrikleri toplar ancak veritabanına kaydetmez. sadece anlık alınır.
 	@Override
 	@GetMapping("/")
 	public ResponseEntity<ApiResponse<SystemMetricsDto>> getAllMetrics() throws Exception {
@@ -80,6 +80,7 @@ public class MetricsControllerImpl implements IMetricsController{
 		return ApiResponse.ok(ResponseType.METRICS_FOUND, metricsService.getLogById(id));
 	}
 
+	//sadece network bilgileri
 	@Override
 	@GetMapping("/network")
 	public ResponseEntity<ApiResponse<NetworkMetricDto>> prepareAndGetNetworkMetric() {

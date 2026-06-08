@@ -13,9 +13,9 @@ public class CollectNetworkMetric {
     public NetworkMetricDto collectNetworkMetric(){
 
         SystemInfo si = new SystemInfo();
+        NetworkMetricDto networkMetric = new NetworkMetricDto();
         HardwareAbstractionLayer hal = si.getHardware();
         List<NetworkIF> netwoIFs = hal.getNetworkIFs();
-        NetworkMetricDto networkMetric = new NetworkMetricDto();
         
         for (NetworkIF net : netwoIFs) {
             net.updateAttributes();
@@ -27,10 +27,6 @@ public class CollectNetworkMetric {
             networkMetric.setOutErrors(net.getOutErrors());
 
         }
-
-
-
         return networkMetric;
     }
-    
 }

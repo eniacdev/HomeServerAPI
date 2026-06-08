@@ -1,15 +1,10 @@
 package com.example.metric_api.scheduled_job.prepare.info;
 
-import com.example.metric_api.model.DiskMetricDto;
-import com.example.metric_api.model.MemoryMetricDto;
 import com.example.metric_api.model.SystemInfoDto;
 import com.example.metric_api.scheduled_job.prepare.metrics.CollectDiskMetric;
 import com.example.metric_api.scheduled_job.prepare.metrics.CollectMemoryMetric;
-
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 @Component
 @RequiredArgsConstructor
@@ -48,5 +43,6 @@ public class CollectSystemInfo {
 		systemInfo.setNetworkInfo(networkInfo.collectNetworkInfo());
 
 		return systemInfo;
+		
 	}
 }

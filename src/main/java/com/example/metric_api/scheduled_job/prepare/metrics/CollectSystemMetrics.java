@@ -9,8 +9,6 @@ import com.example.metric_api.scheduled_job.prepare.info.CollectUptimeInfo;
 @Service
 public class CollectSystemMetrics {
 
-	// gerçekleştirilen işlemleri loglara yansıtmak için kullandım.
-	// importlara dikkat.
 	private static final Logger log = LoggerFactory.getLogger(CollectSystemMetrics.class);
 	// osBean gerekmeyebilir ama uzun vaadede ihtiyaç olacak.
 	// OperatingSystemMXBean osBean = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();

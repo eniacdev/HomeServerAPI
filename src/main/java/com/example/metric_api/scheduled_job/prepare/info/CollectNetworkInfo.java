@@ -4,9 +4,7 @@ import com.example.metric_api.model.NetworkInfoDto;
 import oshi.SystemInfo;
 import java.util.Arrays;
 import java.util.List;
-
 import org.springframework.stereotype.Component;
-
 import oshi.hardware.HardwareAbstractionLayer;
 import oshi.hardware.NetworkIF;
 
@@ -30,7 +28,6 @@ public class CollectNetworkInfo {
             networkInfo.setMtu(net.getMTU());
 
         }
-
         return networkInfo;
     }
 }

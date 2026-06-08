@@ -1,11 +1,9 @@
 package com.example.metric_api.scheduled_job.prepare.info;
 
 import org.springframework.stereotype.Component;
-
 import com.example.metric_api.exception_handler.BaseException;
 import com.example.metric_api.model.MotherBoardInfoDto;
 import com.example.metric_api.response.ResponseType;
-
 import oshi.SystemInfo;
 import oshi.hardware.Baseboard;
 import oshi.hardware.ComputerSystem;

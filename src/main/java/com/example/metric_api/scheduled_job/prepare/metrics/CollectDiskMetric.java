@@ -1,7 +1,6 @@
 package com.example.metric_api.scheduled_job.prepare.metrics;
 
 import java.io.File;
-
 import com.example.metric_api.exception_handler.BaseException;
 import com.example.metric_api.model.DiskMetricDto;
 import com.example.metric_api.response.ResponseType;
@@ -20,6 +19,7 @@ public class CollectDiskMetric {
 		diskDto.setDiskUsage(diskDto.getTotalDisk() - diskDto.getFreeDisk());
 
 		Long totalDisk = root.getTotalSpace();
+
 		diskDto.setDiskUsage(totalDisk - diskDto.getFreeDisk());
 		
 		if(diskDto.getFreeDisk() == null && diskDto.getTotalDisk() == null &&
@@ -29,5 +29,4 @@ public class CollectDiskMetric {
 		
 		return diskDto;
 	}
-
 }

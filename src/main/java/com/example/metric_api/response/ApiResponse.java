@@ -1,9 +1,6 @@
 package com.example.metric_api.response;
 
-import java.sql.DatabaseMetaData;
 import java.time.LocalDateTime;
-
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import lombok.AllArgsConstructor;
@@ -12,7 +9,6 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class ApiResponse <T>{
-
 	
 	//sadece başarılı işlemler için response
 	private LocalDateTime timestamp;
@@ -30,5 +26,4 @@ public class ApiResponse <T>{
 		
 		return ResponseEntity.status(responseType.getStatus()).body(response);
 	}
-	
 }
