@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": "../../../../../../.."
+		}
+	],
+	"settings": {
+		"commentTranslate.targetLanguage": "tr",
+		"liveServer.settings.port": 5501
+	}
+}

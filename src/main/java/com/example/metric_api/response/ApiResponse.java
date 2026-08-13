@@ -1,0 +1,29 @@
+package com.example.metric_api.response;
+
+import java.time.LocalDateTime;
+import org.springframework.http.ResponseEntity;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
+public class ApiResponse <T>{
+	
+	//sadece başarılı işlemler için response
+	private LocalDateTime timestamp;
+	private Integer status;
+	private String message;
+	private T data;
+	
+	public static <T> ResponseEntity<ApiResponse<T>> ok(ResponseType responseType, T data){
+
+		ApiResponse<T> response = new ApiResponse<T>(
+			LocalDateTime.now(),
+			responseType.getStatus().value(),
+			responseType.getMessage(),
+			data);
+		
+		return ResponseEntity.status(responseType.getStatus()).body(response);
+	}
+}

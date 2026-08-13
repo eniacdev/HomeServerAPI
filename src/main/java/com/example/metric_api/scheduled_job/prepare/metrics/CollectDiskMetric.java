@@ -1,0 +1,32 @@
+package com.example.metric_api.scheduled_job.prepare.metrics;
+
+import java.io.File;
+import com.example.metric_api.exception_handler.BaseException;
+import com.example.metric_api.dto.DiskMetricResponse;
+import com.example.metric_api.response.ResponseType;
+import org.springframework.stereotype.Component;
+
+@Component
+public class CollectDiskMetric {
+	
+	public DiskMetricResponse collectDiskMetrics() {
+		
+		DiskMetricResponse diskDto = new DiskMetricResponse();
+		File root = new File("/");
+		
+		diskDto.setFreeDisk(root.getFreeSpace());
+		diskDto.setTotalDisk(root.getTotalSpace());
+		diskDto.setDiskUsage(diskDto.getTotalDisk() - diskDto.getFreeDisk());
+
+		Long totalDisk = root.getTotalSpace();
+
+		diskDto.setDiskUsage(totalDisk - diskDto.getFreeDisk());
+		
+		if(diskDto.getFreeDisk() == null && diskDto.getTotalDisk() == null &&
+		   diskDto.getDiskUsage() == null) {
+			throw new BaseException(ResponseType.METRICS_NOT_COLLECTED);
+		}
+		
+		return diskDto;
+	}
+}
