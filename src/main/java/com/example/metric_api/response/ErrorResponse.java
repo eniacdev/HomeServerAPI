@@ -9,7 +9,7 @@ import lombok.Getter;
 @Getter
 public class ErrorResponse {
 
-	//error response dto
+	//error response model
 	private LocalDateTime timestamp;
 	private Integer status;
 	private String code;

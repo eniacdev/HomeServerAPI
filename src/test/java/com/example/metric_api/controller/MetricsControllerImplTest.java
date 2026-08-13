@@ -1,13 +1,28 @@
 package com.example.metric_api.controller;
 
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.test.web.servlet.MockMvc;
+import com.example.metric_api.model.CpuMetricDto;
+import com.example.metric_api.model.DiskMetricDto;
+import com.example.metric_api.model.MemoryMetricDto;
+import com.example.metric_api.model.OsInfoDto;
+import com.example.metric_api.model.SystemMetricsDto;
+import com.example.metric_api.model.UptimeMetricDto;
+import com.example.metric_api.scheduled_job.export.PrepareJsonFile;
+import com.example.metric_api.service.IMetricsService;
 
 @WebMvcTest(MetricsControllerImpl.class)
 public class MetricsControllerImplTest {
-	/*
+
 	@Autowired
 	private MockMvc mockMvc;
 	
@@ -90,6 +105,4 @@ public class MetricsControllerImplTest {
 		
 		verify(metricsService).getMemoryMetric();
 	}
-
-	 */
 }

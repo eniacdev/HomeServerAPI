@@ -1,14 +1,32 @@
 package com.example.metric_api.service;
 
+import com.example.metric_api.exception_handler.BaseException;
+import com.example.metric_api.model.*;
+import com.example.metric_api.repository.IMetricsRepository;
+import com.example.metric_api.scheduled_job.prepare.info.CollectSystemInfo;
+import com.example.metric_api.scheduled_job.prepare.info.CollectUptimeInfo;
+import com.example.metric_api.scheduled_job.prepare.metrics.CollectCpuMetric;
+import com.example.metric_api.scheduled_job.prepare.metrics.CollectDiskMetric;
+import com.example.metric_api.scheduled_job.prepare.metrics.CollectMemoryMetric;
+import com.example.metric_api.scheduled_job.prepare.metrics.CollectSystemMetrics;
+import com.example.metric_api.entitiy.Metrics;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.Optional;
 
 
 @ExtendWith(MockitoExtension.class)
 public class MetricServiceImplTest {
- /*
+
     @InjectMocks
     private MetricServiceImpl metricsService;
 
@@ -196,6 +214,4 @@ public class MetricServiceImplTest {
         assertEquals("Something went wrong, metrics is not found.", ex.getMessage());
 
     }
-
-  */
 }
