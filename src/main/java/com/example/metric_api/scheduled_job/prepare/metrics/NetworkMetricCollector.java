@@ -1,0 +1,32 @@
+package com.example.metric_api.scheduled_job.prepare.metrics;
+import java.util.List;
+
+import org.springframework.stereotype.Component;
+
+import com.example.metric_api.model.NetworkMetric;
+import oshi.SystemInfo;
+import oshi.hardware.HardwareAbstractionLayer;
+import oshi.hardware.NetworkIF;
+
+@Component
+public class NetworkMetricCollector {
+    public NetworkMetric collectNetworkMetric(){
+
+        SystemInfo si = new SystemInfo();
+        NetworkMetric networkMetric = new NetworkMetric();
+        HardwareAbstractionLayer hal = si.getHardware();
+        List<NetworkIF> netwoIFs = hal.getNetworkIFs();
+        
+        for (NetworkIF net : netwoIFs) {
+            net.updateAttributes();
+
+            networkMetric.setInterfaceName(net.getName());
+            networkMetric.setBytesRecv(net.getBytesRecv());
+            networkMetric.setBytesSent(net.getBytesSent());
+            networkMetric.setInErrors(net.getInErrors());
+            networkMetric.setOutErrors(net.getOutErrors());
+
+        }
+        return networkMetric;
+    }
+}

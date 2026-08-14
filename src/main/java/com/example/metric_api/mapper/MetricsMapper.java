@@ -1,5 +1,6 @@
 package com.example.metric_api.mapper;
-import com.example.metric_api.dto.SystemMetricsResponse;
+import com.example.metric_api.dto.SystemMetricsDto;
+import com.example.metric_api.model.SystemMetrics;
 import com.example.metric_api.entitiy.Metrics;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -29,54 +30,56 @@ public interface MetricsMapper {
     @Mapping(target = "inErrors", source = "networkMetric.inErrors")
     @Mapping(target = "outErrors", source = "networkMetric.outErrors")
     @Mapping(target = "serviceUptime", expression = "java(systemMetricsDto.getServiceUptime() != null ? systemMetricsDto.getServiceUptime() / 1000 : null)")
-    Metrics toEntity(SystemMetricsResponse systemMetricsDto);
+    Metrics toEntity(SystemMetrics systemMetricsDto);
 
     @Mapping(target = "cpu", source = ".")
     @Mapping(target = "memory", source = ".")
     @Mapping(target = "disk", source = ".")
     @Mapping(target = "networkMetric", source = ".")
-    SystemMetricsResponse toDto(Metrics metrics);
+    SystemMetricsDto toDto(Metrics metrics);
 
-//    public static Metrics toEntity(SystemMetricsDto dto){
+    SystemMetricsDto toDto(SystemMetrics systemMetrics);
+
+//    public static Metrics toEntity(SystemMetricsDto model){
 //
 //        Metrics metrics = new Metrics();
 //
-//        if(dto == null) return null;
+//        if(model == null) return null;
 //
 //        // CPU
-//        if(dto.getCpu() != null){
-//            metrics.setProcessCpuLoad(dto.getCpu().getProcessCpuLoad());
-//            metrics.setSystemCpuLoad(dto.getCpu().getSystemCpuLoad());
-//            metrics.setSystemAverageLoad(dto.getCpu().getSystemAverageLoad());
-//            metrics.setCpuTemp(dto.getCpu().getCpuTemp());
+//        if(model.getCpu() != null){
+//            metrics.setProcessCpuLoad(model.getCpu().getProcessCpuLoad());
+//            metrics.setSystemCpuLoad(model.getCpu().getSystemCpuLoad());
+//            metrics.setSystemAverageLoad(model.getCpu().getSystemAverageLoad());
+//            metrics.setCpuTemp(model.getCpu().getCpuTemp());
 //        }
 //
 //        // MEMORY
-//        if(dto.getMemory() != null){
-//            metrics.setMemoryUsage(dto.getMemory().getMemoryUsage());
-//            metrics.setFreeMemory(dto.getMemory().getFreeMemory());
-//            metrics.setTotalMemory(dto.getMemory().getTotalMemory());
+//        if(model.getMemory() != null){
+//            metrics.setMemoryUsage(model.getMemory().getMemoryUsage());
+//            metrics.setFreeMemory(model.getMemory().getFreeMemory());
+//            metrics.setTotalMemory(model.getMemory().getTotalMemory());
 //        }
 //
 //        // Disk
-//        if(dto.getDisk() != null){
-//            metrics.setDiskUsage(dto.getDisk().getDiskUsage());
-//            metrics.setFreeDisk(dto.getDisk().getFreeDisk());
-//            metrics.setTotalDisk(dto.getDisk().getTotalDisk());
+//        if(model.getDisk() != null){
+//            metrics.setDiskUsage(model.getDisk().getDiskUsage());
+//            metrics.setFreeDisk(model.getDisk().getFreeDisk());
+//            metrics.setTotalDisk(model.getDisk().getTotalDisk());
 //        }
 //
-//        if(dto.getOsUptime() != null && dto.getServiceUptime() != null){
-//            metrics.setOsUptime(dto.getOsUptime());
-//            metrics.setServiceUptime(dto.getServiceUptime() / 1000); // '/ 1000' ile saniye formatı
+//        if(model.getOsUptime() != null && model.getServiceUptime() != null){
+//            metrics.setOsUptime(model.getOsUptime());
+//            metrics.setServiceUptime(model.getServiceUptime() / 1000); // '/ 1000' ile saniye formatı
 //        }
 //
 //        // Network
-//        if(dto.getNetworkMetric() != null){
-//            metrics.setBytesRecv(dto.getNetworkMetric().getBytesRecv());
-//            metrics.setBytesSent(dto.getNetworkMetric().getBytesSent());
-//            metrics.setInErrors(dto.getNetworkMetric().getInErrors());
-//            metrics.setOutErrors(dto.getNetworkMetric().getOutErrors());
-//            metrics.setInterfaceName(dto.getNetworkMetric().getInterfaceName());
+//        if(model.getNetworkMetric() != null){
+//            metrics.setBytesRecv(model.getNetworkMetric().getBytesRecv());
+//            metrics.setBytesSent(model.getNetworkMetric().getBytesSent());
+//            metrics.setInErrors(model.getNetworkMetric().getInErrors());
+//            metrics.setOutErrors(model.getNetworkMetric().getOutErrors());
+//            metrics.setInterfaceName(model.getNetworkMetric().getInterfaceName());
 //        }
 //
 //        return metrics;
@@ -84,7 +87,7 @@ public interface MetricsMapper {
 //
 //    public static SystemMetricsDto toDto(Metrics metrics){
 //
-//        SystemMetricsDto dto = new SystemMetricsDto();
+//        SystemMetricsDto model = new SystemMetricsDto();
 //
 //        if(metrics == null) return null;
 //
@@ -93,26 +96,26 @@ public interface MetricsMapper {
 //        cpu.setSystemCpuLoad(metrics.getSystemCpuLoad());
 //        cpu.setSystemAverageLoad(metrics.getSystemAverageLoad());
 //        cpu.setCpuTemp(metrics.getCpuTemp());
-//        dto.setCpu(cpu);
+//        model.setCpu(cpu);
 //
 //        MemoryMetricDto memory = new MemoryMetricDto();
 //        memory.setFreeMemory(metrics.getFreeMemory());
 //        memory.setMemoryUsage(metrics.getMemoryUsage());
 //        memory.setTotalMemory(metrics.getTotalMemory());
-//        dto.setMemory(memory);
+//        model.setMemory(memory);
 //
 //        DiskMetricDto disk = new DiskMetricDto();
 //        disk.setDiskUsage(metrics.getDiskUsage());
 //        disk.setFreeDisk(metrics.getFreeDisk());
 //        disk.setTotalDisk(metrics.getTotalDisk());
-//        dto.setDisk(disk);
+//        model.setDisk(disk);
 //
 //        UptimeMetricDto uptime = new UptimeMetricDto();
 //        uptime.setOsUptime(metrics.getOsUptime());
 //        uptime.setServiceUptime(metrics.getServiceUptime());
-//        dto.setOsUptime(uptime.getOsUptime());
-//        dto.setServiceUptime(uptime.getServiceUptime());
+//        model.setOsUptime(uptime.getOsUptime());
+//        model.setServiceUptime(uptime.getServiceUptime());
 //
-//        return dto;
+//        return model;
 //    }
 }

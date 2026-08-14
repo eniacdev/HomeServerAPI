@@ -1,6 +1,7 @@
 package com.example.metric_api.service;
 
-import com.example.metric_api.dto.*;
+import com.example.metric_api.dto.SystemMetricsDto;
+import com.example.metric_api.model.*;
 import com.example.metric_api.mapper.MetricsMapper;
 import com.example.metric_api.entitiy.Metrics;
 import com.example.metric_api.repository.IMetricsRepository;
@@ -9,12 +10,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import com.example.metric_api.exception_handler.BaseException;
 import com.example.metric_api.response.ResponseType;
-import com.example.metric_api.scheduled_job.prepare.metrics.CollectCpuMetric;
-import com.example.metric_api.scheduled_job.prepare.metrics.CollectDiskMetric;
-import com.example.metric_api.scheduled_job.prepare.metrics.CollectMemoryMetric;
-import com.example.metric_api.scheduled_job.prepare.metrics.CollectNetworkMetric;
-import com.example.metric_api.scheduled_job.prepare.info.CollectSystemInfo;
-import com.example.metric_api.scheduled_job.prepare.metrics.CollectSystemMetrics;
+import com.example.metric_api.scheduled_job.prepare.metrics.CpuMetricCollector;
+import com.example.metric_api.scheduled_job.prepare.metrics.DiskMetricCollector;
+import com.example.metric_api.scheduled_job.prepare.metrics.MemoryMetricCollector;
+import com.example.metric_api.scheduled_job.prepare.metrics.NetworkMetricCollector;
+import com.example.metric_api.scheduled_job.prepare.info.SystemInfoCollector;
+import com.example.metric_api.scheduled_job.prepare.metrics.SystemMetricsCollector;
 import lombok.RequiredArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -27,50 +28,48 @@ public class MetricServiceImpl implements IMetricsService{
 	//genel olarak component anatasyonu önemli (sanırsam test yazmak için).
 
 	private final MetricsMapper mapper;
-	private final CollectSystemMetrics systemMetrics;
-	private final CollectCpuMetric cpuMetric;
-	private final CollectMemoryMetric memoryMetric;
-	private final CollectDiskMetric diskMetric;
-	private final CollectSystemInfo systemInfo;
+	private final SystemMetricsCollector systemMetrics;
+	private final CpuMetricCollector cpuMetric;
+	private final MemoryMetricCollector memoryMetric;
+	private final DiskMetricCollector diskMetric;
+	private final SystemInfoCollector systemInfo;
 	private final IMetricsRepository metricsRepository;
-	private final CollectNetworkMetric networkMetric;
-	private static final Logger log = LoggerFactory.getLogger(CollectSystemMetrics.class);
+	private final NetworkMetricCollector networkMetric;
+	private static final Logger log = LoggerFactory.getLogger(SystemMetricsCollector.class);
 
 	// schedule tetiklendiğinde servise yani prepareAndSaveMetrics metoduna yönlendirir.
 	// ayrıca client manuel tetiklemeyi bu method ile gerçekleştirir.
 	// bu method metrikleri toplar ve client tarafa gönderirken aynı zaman da metrikleri database'de kaydeder.
 	
 	@Override
-	public SystemMetricsResponse prepareAndSaveMetrics(){
-		
+	public SystemMetricsDto saveAndGetMetrics(){
 		try {
-		
-		SystemMetricsResponse collectedMetrics = collectMetrics();
 
-		saveMetrics(collectedMetrics);
+			SystemMetrics collectedMetrics = systemMetrics.prepareSystemMetrics();
+			Metrics metrics = mapper.toEntity(collectedMetrics);
+			Metrics savedMetrics = metricsRepository.save(metrics);
 
-		log.info("metrics is prepared and saved.");
+			log.info("metrics is prepared and saved.");
 
-		return collectedMetrics;
+			return mapper.toDto(savedMetrics);
 
 		}catch (Exception e) {
-			log.error("Something went wrong: {}", e.getMessage());
+			log.error("Something went wrong:", e);
 	        throw new BaseException(ResponseType.METRICS_NOT_COLLECTED);
 		}
 	}
 
-	// bu iki private metod uptime verisini taşırken hatalı veya farklı anlık uptime verileri olabiliyor.
-	// sorun şimdilik çözüldü gibi ancak uzun vaadede geliştirme yapılırken bu dikkate alınmalı.
+	// getAllMetrics metodu metrikleri veritabanına kaydetmeden sadece anlık metrikleri alınmasını sağlar. - veriler kaydedilmez -
+	@Override
+	public SystemMetricsDto getMetrics() {
+		try {
+			SystemMetrics collectedSystemMetrics = systemMetrics.prepareSystemMetrics();
 
-	private SystemMetricsResponse collectMetrics() throws Exception{
-		SystemMetricsResponse collectedMetrics = systemMetrics.prepareSystemMetrics();
-		return collectedMetrics;
-	}
-
-	private void saveMetrics(SystemMetricsResponse collectedMetrics) throws Exception{
-		Metrics entityMetrics = mapper.toEntity(collectedMetrics);
-		entityMetrics.setCreatedAt(LocalDateTime.now());
-		metricsRepository.save(entityMetrics);
+			return mapper.toDto(collectedSystemMetrics);
+		} catch (Exception e) {
+			log.error("Something went wrong while collecting metrics.", e);
+			throw new BaseException(ResponseType.METRICS_NOT_COLLECTED);
+		}
 	}
 
 	@Override
@@ -87,7 +86,7 @@ public class MetricServiceImpl implements IMetricsService{
 	}
 
 	@Override
-	public SystemMetricsResponse getLogById(long id) {
+	public SystemMetricsDto getLogById(long id) {
 		Optional<Metrics> optional = metricsRepository.findById(id);
 
 		if(optional.isEmpty()){
@@ -99,35 +98,28 @@ public class MetricServiceImpl implements IMetricsService{
 		return mapper.toDto(metrics);
 	}
 
-	// getAllMetrics metodu metrikleri veritabanına kaydetmeden sadece anlık metrikleri alınmasını sağlar. - veriler kaydedilmez -
-
 	@Override
-	public SystemMetricsResponse getAllMetrics() throws Exception{
-		return systemMetrics.prepareSystemMetrics();
-	}
-
-	@Override
-	public CpuMetricResponse getCpuMetric() {
+	public CpuMetric getCpuMetric() {
 		return cpuMetric.collectCpuMetrics();
 	}
 
 	@Override
-	public MemoryMetricResponse getMemoryMetric() {
+	public MemoryMetric getMemoryMetric() {
 		return memoryMetric.collectMemoryMetrics();
 	}
-	
+
 	@Override
-	public DiskMetricResponse getDiskMetric() {
+	public DiskMetric getDiskMetric() {
 		return diskMetric.collectDiskMetrics();
 	}
 
 	@Override
-	public SystemInfoResponse prepareAndGetSystemInfo() throws Exception{
+	public SystemInfo getSystemInfo() throws Exception{
 		return systemInfo.collectSystemInfo();
 	}
 
 	@Override
-	public NetworkMetricResponse prepareAndGetNetworkMetric(){
+	public NetworkMetric getNetworkMetric(){
 		return networkMetric.collectNetworkMetric();
 	}
 }

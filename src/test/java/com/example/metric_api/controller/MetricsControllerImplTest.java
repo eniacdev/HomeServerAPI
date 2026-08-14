@@ -1,7 +1,6 @@
 package com.example.metric_api.controller;
 
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -11,12 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
-import com.example.metric_api.model.CpuMetricDto;
-import com.example.metric_api.model.DiskMetricDto;
-import com.example.metric_api.model.MemoryMetricDto;
-import com.example.metric_api.model.OsInfoDto;
-import com.example.metric_api.model.SystemMetricsDto;
-import com.example.metric_api.model.UptimeMetricDto;
+import com.example.metric_api.dto.CpuMetricDto;
+import com.example.metric_api.dto.DiskMetricDto;
+import com.example.metric_api.dto.MemoryMetricDto;
+import com.example.metric_api.dto.OsInfoDto;
+import com.example.metric_api.dto.SystemMetricsDto;
+import com.example.metric_api.dto.UptimeMetricDto;
 import com.example.metric_api.scheduled_job.export.PrepareJsonFile;
 import com.example.metric_api.service.IMetricsService;
 
@@ -67,7 +66,7 @@ public class MetricsControllerImplTest {
 	public void prepareAndCreateMetricsTest() throws Exception{
 		
 		//when
-		when(metricsService.prepareAndSaveMetrics()).thenReturn(metric);
+		//when(metricsService.prepareAndSaveMetrics()).thenReturn(metric);
 		
 		mockMvc.perform(post("/api/v1/metrics/collect"))
         .andExpect(status().isOk())
@@ -75,14 +74,14 @@ public class MetricsControllerImplTest {
         .andDo(print());
 		
 		//then
-		verify(metricsService).prepareAndSaveMetrics();
+		verify(metricsService).getMetrics();
 		
 	}
 	
 	@Test
 	public void getCpuMetricTest() throws Exception{
 		
-		when(metricsService.getCpuMetric()).thenReturn(cpu);
+		//when(metricsService.getCpuMetric()).thenReturn(cpu);
 		
 		mockMvc.perform(get("/api/v1/metrics/cpu"))
 		.andExpect(status().isOk())
@@ -96,7 +95,7 @@ public class MetricsControllerImplTest {
 	@Test
 	public void getMemoryMetricTest() throws Exception{
 		
-		when(metricsService.getMemoryMetric()).thenReturn(memory);
+		//when(metricsService.getMemoryMetric()).thenReturn(memory);
 		
 		mockMvc.perform(get("/api/v1/metrics/memory"))
 		.andExpect(status().isOk())

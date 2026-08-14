@@ -1,16 +1,18 @@
 package com.example.metric_api.service;
-import com.example.metric_api.dto.*;
+import com.example.metric_api.dto.SystemMetricsDto;
+import com.example.metric_api.entitiy.Metrics;
+import com.example.metric_api.model.*;
 
 public interface IMetricsService {
 
-	public SystemMetricsResponse prepareAndSaveMetrics();
-	public SystemInfoResponse prepareAndGetSystemInfo() throws Exception;
-	public NetworkMetricResponse prepareAndGetNetworkMetric();
-	public SystemMetricsResponse getAllMetrics() throws Exception;
-	public CpuMetricResponse getCpuMetric();
-	public MemoryMetricResponse getMemoryMetric();
-	public DiskMetricResponse getDiskMetric();
+	public SystemMetricsDto saveAndGetMetrics();
+	public SystemInfo getSystemInfo() throws Exception;
+	public NetworkMetric getNetworkMetric();
+	public SystemMetricsDto getMetrics() throws Exception;
+	public CpuMetric getCpuMetric();
+	public MemoryMetric getMemoryMetric();
+	public DiskMetric getDiskMetric();
 	public Boolean deleteLogById(long id);
-	public SystemMetricsResponse getLogById(long id);
+	public SystemMetricsDto getLogById(long id);
 	
 }

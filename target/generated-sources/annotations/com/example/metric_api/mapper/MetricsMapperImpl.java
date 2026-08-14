@@ -1,24 +1,29 @@
 package com.example.metric_api.mapper;
 
-import com.example.metric_api.dto.CpuMetricResponse;
-import com.example.metric_api.dto.DiskMetricResponse;
-import com.example.metric_api.dto.MemoryMetricResponse;
-import com.example.metric_api.dto.NetworkMetricResponse;
-import com.example.metric_api.dto.SystemMetricsResponse;
+import com.example.metric_api.dto.CpuMetricDto;
+import com.example.metric_api.dto.DiskMetricDto;
+import com.example.metric_api.dto.MemoryMetricDto;
+import com.example.metric_api.dto.NetworkMetricDto;
+import com.example.metric_api.dto.SystemMetricsDto;
 import com.example.metric_api.entitiy.Metrics;
+import com.example.metric_api.model.CpuMetric;
+import com.example.metric_api.model.DiskMetric;
+import com.example.metric_api.model.MemoryMetric;
+import com.example.metric_api.model.NetworkMetric;
+import com.example.metric_api.model.SystemMetrics;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2026-08-13T11:05:18+0300",
+    date = "2026-08-14T11:52:23+0300",
     comments = "version: 1.6.3, compiler: javac, environment: Java 25.0.3 (JetBrains s.r.o.)"
 )
 @Component
 public class MetricsMapperImpl implements MetricsMapper {
 
     @Override
-    public Metrics toEntity(SystemMetricsResponse systemMetricsDto) {
+    public Metrics toEntity(SystemMetrics systemMetricsDto) {
         if ( systemMetricsDto == null ) {
             return null;
         }
@@ -48,199 +53,276 @@ public class MetricsMapperImpl implements MetricsMapper {
     }
 
     @Override
-    public SystemMetricsResponse toDto(Metrics metrics) {
+    public SystemMetricsDto toDto(Metrics metrics) {
         if ( metrics == null ) {
             return null;
         }
 
-        SystemMetricsResponse systemMetricsResponse = new SystemMetricsResponse();
+        SystemMetricsDto systemMetricsDto = new SystemMetricsDto();
 
-        systemMetricsResponse.setCpu( metricsToCpuMetricResponse( metrics ) );
-        systemMetricsResponse.setMemory( metricsToMemoryMetricResponse( metrics ) );
-        systemMetricsResponse.setDisk( metricsToDiskMetricResponse( metrics ) );
-        systemMetricsResponse.setNetworkMetric( metricsToNetworkMetricResponse( metrics ) );
-        systemMetricsResponse.setServiceUptime( metrics.getServiceUptime() );
-        systemMetricsResponse.setOsUptime( metrics.getOsUptime() );
+        systemMetricsDto.setCpu( metricsToCpuMetricDto( metrics ) );
+        systemMetricsDto.setMemory( metricsToMemoryMetricDto( metrics ) );
+        systemMetricsDto.setDisk( metricsToDiskMetricDto( metrics ) );
+        systemMetricsDto.setNetworkMetric( metricsToNetworkMetricDto( metrics ) );
+        systemMetricsDto.setServiceUptime( metrics.getServiceUptime() );
+        systemMetricsDto.setOsUptime( metrics.getOsUptime() );
 
-        return systemMetricsResponse;
+        return systemMetricsDto;
     }
 
-    private Double systemMetricsDtoCpuProcessCpuLoad(SystemMetricsResponse systemMetricsResponse) {
-        CpuMetricResponse cpu = systemMetricsResponse.getCpu();
+    @Override
+    public SystemMetricsDto toDto(SystemMetrics systemMetrics) {
+        if ( systemMetrics == null ) {
+            return null;
+        }
+
+        SystemMetricsDto systemMetricsDto = new SystemMetricsDto();
+
+        systemMetricsDto.setCpu( cpuMetricToCpuMetricDto( systemMetrics.getCpu() ) );
+        systemMetricsDto.setMemory( memoryMetricToMemoryMetricDto( systemMetrics.getMemory() ) );
+        systemMetricsDto.setDisk( diskMetricToDiskMetricDto( systemMetrics.getDisk() ) );
+        systemMetricsDto.setNetworkMetric( networkMetricToNetworkMetricDto( systemMetrics.getNetworkMetric() ) );
+        systemMetricsDto.setServiceUptime( systemMetrics.getServiceUptime() );
+        systemMetricsDto.setOsUptime( systemMetrics.getOsUptime() );
+
+        return systemMetricsDto;
+    }
+
+    private Double systemMetricsDtoCpuProcessCpuLoad(SystemMetrics systemMetrics) {
+        CpuMetric cpu = systemMetrics.getCpu();
         if ( cpu == null ) {
             return null;
         }
         return cpu.getProcessCpuLoad();
     }
 
-    private Double systemMetricsDtoCpuSystemCpuLoad(SystemMetricsResponse systemMetricsResponse) {
-        CpuMetricResponse cpu = systemMetricsResponse.getCpu();
+    private Double systemMetricsDtoCpuSystemCpuLoad(SystemMetrics systemMetrics) {
+        CpuMetric cpu = systemMetrics.getCpu();
         if ( cpu == null ) {
             return null;
         }
         return cpu.getSystemCpuLoad();
     }
 
-    private Double systemMetricsDtoCpuSystemAverageLoad(SystemMetricsResponse systemMetricsResponse) {
-        CpuMetricResponse cpu = systemMetricsResponse.getCpu();
+    private Double systemMetricsDtoCpuSystemAverageLoad(SystemMetrics systemMetrics) {
+        CpuMetric cpu = systemMetrics.getCpu();
         if ( cpu == null ) {
             return null;
         }
         return cpu.getSystemAverageLoad();
     }
 
-    private Double systemMetricsDtoCpuCpuTemp(SystemMetricsResponse systemMetricsResponse) {
-        CpuMetricResponse cpu = systemMetricsResponse.getCpu();
+    private Double systemMetricsDtoCpuCpuTemp(SystemMetrics systemMetrics) {
+        CpuMetric cpu = systemMetrics.getCpu();
         if ( cpu == null ) {
             return null;
         }
         return cpu.getCpuTemp();
     }
 
-    private Long systemMetricsDtoMemoryMemoryUsage(SystemMetricsResponse systemMetricsResponse) {
-        MemoryMetricResponse memory = systemMetricsResponse.getMemory();
+    private Long systemMetricsDtoMemoryMemoryUsage(SystemMetrics systemMetrics) {
+        MemoryMetric memory = systemMetrics.getMemory();
         if ( memory == null ) {
             return null;
         }
         return memory.getMemoryUsage();
     }
 
-    private Long systemMetricsDtoMemoryFreeMemory(SystemMetricsResponse systemMetricsResponse) {
-        MemoryMetricResponse memory = systemMetricsResponse.getMemory();
+    private Long systemMetricsDtoMemoryFreeMemory(SystemMetrics systemMetrics) {
+        MemoryMetric memory = systemMetrics.getMemory();
         if ( memory == null ) {
             return null;
         }
         return memory.getFreeMemory();
     }
 
-    private Long systemMetricsDtoMemoryTotalMemory(SystemMetricsResponse systemMetricsResponse) {
-        MemoryMetricResponse memory = systemMetricsResponse.getMemory();
+    private Long systemMetricsDtoMemoryTotalMemory(SystemMetrics systemMetrics) {
+        MemoryMetric memory = systemMetrics.getMemory();
         if ( memory == null ) {
             return null;
         }
         return memory.getTotalMemory();
     }
 
-    private Long systemMetricsDtoDiskDiskUsage(SystemMetricsResponse systemMetricsResponse) {
-        DiskMetricResponse disk = systemMetricsResponse.getDisk();
+    private Long systemMetricsDtoDiskDiskUsage(SystemMetrics systemMetrics) {
+        DiskMetric disk = systemMetrics.getDisk();
         if ( disk == null ) {
             return null;
         }
         return disk.getDiskUsage();
     }
 
-    private Long systemMetricsDtoDiskFreeDisk(SystemMetricsResponse systemMetricsResponse) {
-        DiskMetricResponse disk = systemMetricsResponse.getDisk();
+    private Long systemMetricsDtoDiskFreeDisk(SystemMetrics systemMetrics) {
+        DiskMetric disk = systemMetrics.getDisk();
         if ( disk == null ) {
             return null;
         }
         return disk.getFreeDisk();
     }
 
-    private Long systemMetricsDtoDiskTotalDisk(SystemMetricsResponse systemMetricsResponse) {
-        DiskMetricResponse disk = systemMetricsResponse.getDisk();
+    private Long systemMetricsDtoDiskTotalDisk(SystemMetrics systemMetrics) {
+        DiskMetric disk = systemMetrics.getDisk();
         if ( disk == null ) {
             return null;
         }
         return disk.getTotalDisk();
     }
 
-    private String systemMetricsDtoNetworkMetricInterfaceName(SystemMetricsResponse systemMetricsResponse) {
-        NetworkMetricResponse networkMetric = systemMetricsResponse.getNetworkMetric();
+    private String systemMetricsDtoNetworkMetricInterfaceName(SystemMetrics systemMetrics) {
+        NetworkMetric networkMetric = systemMetrics.getNetworkMetric();
         if ( networkMetric == null ) {
             return null;
         }
         return networkMetric.getInterfaceName();
     }
 
-    private Long systemMetricsDtoNetworkMetricBytesRecv(SystemMetricsResponse systemMetricsResponse) {
-        NetworkMetricResponse networkMetric = systemMetricsResponse.getNetworkMetric();
+    private Long systemMetricsDtoNetworkMetricBytesRecv(SystemMetrics systemMetrics) {
+        NetworkMetric networkMetric = systemMetrics.getNetworkMetric();
         if ( networkMetric == null ) {
             return null;
         }
         return networkMetric.getBytesRecv();
     }
 
-    private Long systemMetricsDtoNetworkMetricBytesSent(SystemMetricsResponse systemMetricsResponse) {
-        NetworkMetricResponse networkMetric = systemMetricsResponse.getNetworkMetric();
+    private Long systemMetricsDtoNetworkMetricBytesSent(SystemMetrics systemMetrics) {
+        NetworkMetric networkMetric = systemMetrics.getNetworkMetric();
         if ( networkMetric == null ) {
             return null;
         }
         return networkMetric.getBytesSent();
     }
 
-    private Long systemMetricsDtoNetworkMetricInErrors(SystemMetricsResponse systemMetricsResponse) {
-        NetworkMetricResponse networkMetric = systemMetricsResponse.getNetworkMetric();
+    private Long systemMetricsDtoNetworkMetricInErrors(SystemMetrics systemMetrics) {
+        NetworkMetric networkMetric = systemMetrics.getNetworkMetric();
         if ( networkMetric == null ) {
             return null;
         }
         return networkMetric.getInErrors();
     }
 
-    private Long systemMetricsDtoNetworkMetricOutErrors(SystemMetricsResponse systemMetricsResponse) {
-        NetworkMetricResponse networkMetric = systemMetricsResponse.getNetworkMetric();
+    private Long systemMetricsDtoNetworkMetricOutErrors(SystemMetrics systemMetrics) {
+        NetworkMetric networkMetric = systemMetrics.getNetworkMetric();
         if ( networkMetric == null ) {
             return null;
         }
         return networkMetric.getOutErrors();
     }
 
-    protected CpuMetricResponse metricsToCpuMetricResponse(Metrics metrics) {
+    protected CpuMetricDto metricsToCpuMetricDto(Metrics metrics) {
         if ( metrics == null ) {
             return null;
         }
 
-        CpuMetricResponse cpuMetricResponse = new CpuMetricResponse();
+        CpuMetricDto cpuMetricDto = new CpuMetricDto();
 
-        cpuMetricResponse.setProcessCpuLoad( metrics.getProcessCpuLoad() );
-        cpuMetricResponse.setSystemCpuLoad( metrics.getSystemCpuLoad() );
-        cpuMetricResponse.setSystemAverageLoad( metrics.getSystemAverageLoad() );
-        cpuMetricResponse.setCpuTemp( metrics.getCpuTemp() );
+        cpuMetricDto.setProcessCpuLoad( metrics.getProcessCpuLoad() );
+        cpuMetricDto.setSystemCpuLoad( metrics.getSystemCpuLoad() );
+        cpuMetricDto.setSystemAverageLoad( metrics.getSystemAverageLoad() );
+        cpuMetricDto.setCpuTemp( metrics.getCpuTemp() );
 
-        return cpuMetricResponse;
+        return cpuMetricDto;
     }
 
-    protected MemoryMetricResponse metricsToMemoryMetricResponse(Metrics metrics) {
+    protected MemoryMetricDto metricsToMemoryMetricDto(Metrics metrics) {
         if ( metrics == null ) {
             return null;
         }
 
-        MemoryMetricResponse memoryMetricResponse = new MemoryMetricResponse();
+        MemoryMetricDto memoryMetricDto = new MemoryMetricDto();
 
-        memoryMetricResponse.setMemoryUsage( metrics.getMemoryUsage() );
-        memoryMetricResponse.setFreeMemory( metrics.getFreeMemory() );
-        memoryMetricResponse.setTotalMemory( metrics.getTotalMemory() );
+        memoryMetricDto.setMemoryUsage( metrics.getMemoryUsage() );
+        memoryMetricDto.setFreeMemory( metrics.getFreeMemory() );
+        memoryMetricDto.setTotalMemory( metrics.getTotalMemory() );
 
-        return memoryMetricResponse;
+        return memoryMetricDto;
     }
 
-    protected DiskMetricResponse metricsToDiskMetricResponse(Metrics metrics) {
+    protected DiskMetricDto metricsToDiskMetricDto(Metrics metrics) {
         if ( metrics == null ) {
             return null;
         }
 
-        DiskMetricResponse diskMetricResponse = new DiskMetricResponse();
+        DiskMetricDto diskMetricDto = new DiskMetricDto();
 
-        diskMetricResponse.setDiskUsage( metrics.getDiskUsage() );
-        diskMetricResponse.setFreeDisk( metrics.getFreeDisk() );
-        diskMetricResponse.setTotalDisk( metrics.getTotalDisk() );
+        diskMetricDto.setDiskUsage( metrics.getDiskUsage() );
+        diskMetricDto.setFreeDisk( metrics.getFreeDisk() );
+        diskMetricDto.setTotalDisk( metrics.getTotalDisk() );
 
-        return diskMetricResponse;
+        return diskMetricDto;
     }
 
-    protected NetworkMetricResponse metricsToNetworkMetricResponse(Metrics metrics) {
+    protected NetworkMetricDto metricsToNetworkMetricDto(Metrics metrics) {
         if ( metrics == null ) {
             return null;
         }
 
-        NetworkMetricResponse networkMetricResponse = new NetworkMetricResponse();
+        NetworkMetricDto networkMetricDto = new NetworkMetricDto();
 
-        networkMetricResponse.setInterfaceName( metrics.getInterfaceName() );
-        networkMetricResponse.setBytesRecv( metrics.getBytesRecv() );
-        networkMetricResponse.setBytesSent( metrics.getBytesSent() );
-        networkMetricResponse.setInErrors( metrics.getInErrors() );
-        networkMetricResponse.setOutErrors( metrics.getOutErrors() );
+        networkMetricDto.setInterfaceName( metrics.getInterfaceName() );
+        networkMetricDto.setBytesRecv( metrics.getBytesRecv() );
+        networkMetricDto.setBytesSent( metrics.getBytesSent() );
+        networkMetricDto.setInErrors( metrics.getInErrors() );
+        networkMetricDto.setOutErrors( metrics.getOutErrors() );
 
-        return networkMetricResponse;
+        return networkMetricDto;
+    }
+
+    protected CpuMetricDto cpuMetricToCpuMetricDto(CpuMetric cpuMetric) {
+        if ( cpuMetric == null ) {
+            return null;
+        }
+
+        CpuMetricDto cpuMetricDto = new CpuMetricDto();
+
+        cpuMetricDto.setProcessCpuLoad( cpuMetric.getProcessCpuLoad() );
+        cpuMetricDto.setSystemCpuLoad( cpuMetric.getSystemCpuLoad() );
+        cpuMetricDto.setSystemAverageLoad( cpuMetric.getSystemAverageLoad() );
+        cpuMetricDto.setCpuTemp( cpuMetric.getCpuTemp() );
+
+        return cpuMetricDto;
+    }
+
+    protected MemoryMetricDto memoryMetricToMemoryMetricDto(MemoryMetric memoryMetric) {
+        if ( memoryMetric == null ) {
+            return null;
+        }
+
+        MemoryMetricDto memoryMetricDto = new MemoryMetricDto();
+
+        memoryMetricDto.setMemoryUsage( memoryMetric.getMemoryUsage() );
+        memoryMetricDto.setFreeMemory( memoryMetric.getFreeMemory() );
+        memoryMetricDto.setTotalMemory( memoryMetric.getTotalMemory() );
+
+        return memoryMetricDto;
+    }
+
+    protected DiskMetricDto diskMetricToDiskMetricDto(DiskMetric diskMetric) {
+        if ( diskMetric == null ) {
+            return null;
+        }
+
+        DiskMetricDto diskMetricDto = new DiskMetricDto();
+
+        diskMetricDto.setDiskUsage( diskMetric.getDiskUsage() );
+        diskMetricDto.setFreeDisk( diskMetric.getFreeDisk() );
+        diskMetricDto.setTotalDisk( diskMetric.getTotalDisk() );
+
+        return diskMetricDto;
+    }
+
+    protected NetworkMetricDto networkMetricToNetworkMetricDto(NetworkMetric networkMetric) {
+        if ( networkMetric == null ) {
+            return null;
+        }
+
+        NetworkMetricDto networkMetricDto = new NetworkMetricDto();
+
+        networkMetricDto.setInterfaceName( networkMetric.getInterfaceName() );
+        networkMetricDto.setBytesRecv( networkMetric.getBytesRecv() );
+        networkMetricDto.setBytesSent( networkMetric.getBytesSent() );
+        networkMetricDto.setInErrors( networkMetric.getInErrors() );
+        networkMetricDto.setOutErrors( networkMetric.getOutErrors() );
+
+        return networkMetricDto;
     }
 }

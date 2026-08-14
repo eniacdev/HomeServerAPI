@@ -4,11 +4,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
-import com.example.metric_api.dto.JsonFileResponse;
+import com.example.metric_api.model.JsonFile;
+import com.example.metric_api.model.SystemMetrics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import com.example.metric_api.dto.SystemMetricsResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
@@ -21,13 +21,13 @@ public class PrepareJsonFile {
 		this.objectMapper = objectMapper;
 	}
 	
-	public boolean writeJsonFile(SystemMetricsResponse metric) {
+	public boolean writeJsonFile(SystemMetrics metric) {
 		
 		try {
 		
 		log.warn("The json file is being preparing.");
 
-		JsonFileResponse jsonFile = new JsonFileResponse();
+		JsonFile jsonFile = new JsonFile();
 		
 		LocalDate date = LocalDate.now();
 		String year = String.valueOf(date.getYear());
