@@ -1,6 +1,7 @@
 package com.example.metric_api.scheduled_job.prepare.metrics;
 import java.util.List;
 
+import com.example.metric_api.check.MetricsValidator;
 import org.springframework.stereotype.Component;
 
 import com.example.metric_api.model.NetworkMetric;
@@ -20,11 +21,31 @@ public class NetworkMetricCollector {
         for (NetworkIF net : netwoIFs) {
             net.updateAttributes();
 
-            networkMetric.setInterfaceName(net.getName());
-            networkMetric.setBytesRecv(net.getBytesRecv());
-            networkMetric.setBytesSent(net.getBytesSent());
-            networkMetric.setInErrors(net.getInErrors());
-            networkMetric.setOutErrors(net.getOutErrors());
+            networkMetric.setInterfaceName(MetricsValidator.validate(
+                    net.getName(),
+                    NetworkMetricCollector.class,
+                    "interfaceName"
+            ));
+            networkMetric.setBytesRecv(MetricsValidator.validate(
+                    net.getBytesRecv(),
+                    NetworkMetricCollector.class,
+                    "bytesRecv"
+            ));
+            networkMetric.setBytesSent(MetricsValidator.validate(
+                    net.getBytesSent(),
+                    NetworkMetricCollector.class,
+                    "bytesSent"
+            ));
+            networkMetric.setInErrors(MetricsValidator.validate(
+                    net.getInErrors(),
+                    NetworkMetricCollector.class,
+                    "inErrors"
+            ));
+            networkMetric.setOutErrors(MetricsValidator.validate(
+                    net.getOutErrors(),
+                    NetworkMetricCollector.class,
+                    "outErrors"
+            ));
 
         }
         return networkMetric;

@@ -14,3 +14,4 @@ public class BaseException extends RuntimeException{
 		this.responseType = responseType;
 	}
 }
+

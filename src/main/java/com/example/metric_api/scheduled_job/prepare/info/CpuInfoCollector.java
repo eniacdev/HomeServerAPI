@@ -1,5 +1,6 @@
 package com.example.metric_api.scheduled_job.prepare.info;
 
+import com.example.metric_api.check.MetricsValidator;
 import org.springframework.stereotype.Component;
 import com.example.metric_api.exception_handler.BaseException;
 import com.example.metric_api.model.CpuInfo;
@@ -16,22 +17,23 @@ public class CpuInfoCollector {
         SystemInfo si = new SystemInfo();
         CentralProcessor processor = si.getHardware().getProcessor();
 
-        cpuInfo.setCpuName(processor.getProcessorIdentifier().getName());
-        cpuInfo.setPhysicalCore(processor.getPhysicalProcessorCount());
-        cpuInfo.setLogicalCore(processor.getLogicalProcessorCount());
-        cpuInfo.setIs64Bit(processor.getProcessorIdentifier().isCpu64bit());
-
-        checkInfo(cpuInfo);
+        cpuInfo.setCpuName(MetricsValidator.validate(
+                processor.getProcessorIdentifier().getName(),
+                CpuInfoCollector.class,
+                "cpuName"
+        ));
+        cpuInfo.setPhysicalCore(Math.toIntExact(MetricsValidator.validate(
+                (long) processor.getPhysicalProcessorCount(),
+                CpuInfoCollector.class,
+                "physicalCore"
+        )));
+        cpuInfo.setLogicalCore(Math.toIntExact(MetricsValidator.validate(
+                (long) processor.getLogicalProcessorCount(),
+                CpuInfoCollector.class,
+                "logicalCore"
+        )));
+        cpuInfo.setIs64Bit((processor.getProcessorIdentifier().isCpu64bit()));
 
         return cpuInfo;
-    }
-
-    private void checkInfo(CpuInfo cpuInfo){
-        if(cpuInfo.getCpuName() == null &&
-        cpuInfo.getLogicalCore() == null &&
-        cpuInfo.getPhysicalCore() == null &&
-        cpuInfo.getIs64Bit() == null ){
-            throw new BaseException(ResponseType.SYSTEM_INFO_NOT_COLLECTED);
-        }
     }
 }

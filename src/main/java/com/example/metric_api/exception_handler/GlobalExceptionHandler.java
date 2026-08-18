@@ -10,10 +10,7 @@ import com.example.metric_api.response.ResponseType;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-	/* tüm hatalar burada yönetilmektedir.
-	 * bu servisin validasyon hata yönetimine ihtiyacı yok, ancak ileride gerekebilir.
-	 * 
-	 */
+	private GlobalExceptionHandler() {}
 	
 	@ExceptionHandler(value = BaseException.class)
 	public ResponseEntity<ErrorResponse> globalExceptionHandler(BaseException ex){
@@ -24,7 +21,8 @@ public class GlobalExceptionHandler {
 				LocalDateTime.now(),
 				responseType.getStatus().value(),
 				responseType.getCode(),
-				responseType.getMessage());
+				responseType.getMessage()
+		);
 		
 		return ResponseEntity.status(responseType.getStatus()).body(errorResponse);
 	}

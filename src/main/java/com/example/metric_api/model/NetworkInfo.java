@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 public class NetworkInfo {
 
     //static
+    private String hostname;
     private String interfaceName;
     private String displayName;
     private String macAddr;

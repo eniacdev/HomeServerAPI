@@ -12,14 +12,11 @@ public class SystemInfoCollector {
 
 	private final OsInfoCollector osInfo;
 	private final UptimeInfoCollector uptimeInfo;
-	private final HostnameInfoCollector hostnameInfo;
 	private final BiosInfoCollector biosInfo;
-	
 	private final MotherBoardInfoCollector motherBoardInfo;
 	private final CpuInfoCollector cpuInfo;
 	private final MemoryMetricCollector memory;
 	private final DiskMetricCollector disk;
-
 	private final NetworkInfoCollector networkInfo;
 		
 	
@@ -29,7 +26,6 @@ public class SystemInfoCollector {
 		
 		//system info
 		systemInfo.setUptime(uptimeInfo.collectUptimeMetric());
-		systemInfo.setHostname(hostnameInfo.getHostname());
 		systemInfo.setOs(osInfo.collectOsMetrics());
 		systemInfo.setBios(biosInfo.collectBiosInfo());
 

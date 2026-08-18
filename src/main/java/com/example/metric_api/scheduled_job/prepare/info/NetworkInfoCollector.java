@@ -1,7 +1,11 @@
 package com.example.metric_api.scheduled_job.prepare.info;
 
+import com.example.metric_api.check.MetricsValidator;
 import com.example.metric_api.model.NetworkInfo;
+import com.example.metric_api.scheduled_job.prepare.metrics.NetworkMetricCollector;
 import oshi.SystemInfo;
+
+import java.net.InetAddress;
 import java.util.Arrays;
 import java.util.List;
 import org.springframework.stereotype.Component;
@@ -10,7 +14,7 @@ import oshi.hardware.NetworkIF;
 
 @Component
 public class NetworkInfoCollector {
-    public NetworkInfo collectNetworkInfo(){
+    public NetworkInfo collectNetworkInfo() throws Exception{
         
         SystemInfo si = new SystemInfo();
         HardwareAbstractionLayer hal = si.getHardware();
@@ -21,13 +25,34 @@ public class NetworkInfoCollector {
 
             net.updateAttributes();
 
-            networkInfo.setInterfaceName(net.getName());
-            networkInfo.setMacAddr(net.getMacaddr());
+            networkInfo.setInterfaceName(MetricsValidator.validate(
+                    net.getName(),
+                    NetworkMetricCollector.class,
+                    "interfaceName"
+            ));
+            networkInfo.setMacAddr(MetricsValidator.validate(
+                    net.getMacaddr(),
+                    NetworkMetricCollector.class,
+                    "macAddr"
+            ));
             networkInfo.setIpv4Addr(Arrays.asList(net.getIPv4addr()));
-            networkInfo.setSpeed(net.getSpeed());
-            networkInfo.setMtu(net.getMTU());
-
+            networkInfo.setSpeed(MetricsValidator.validate(
+                    net.getSpeed(),
+                    NetworkMetricCollector.class,
+                    "speed"
+            ));
+            networkInfo.setMtu(MetricsValidator.validate(
+                    net.getMTU(),
+                    NetworkMetricCollector.class,
+                    "mtu"
+            ));
         }
+        networkInfo.setHostname(MetricsValidator.validate(
+                InetAddress.getLocalHost().getHostName(),
+                NetworkMetricCollector.class,
+                "hostname"
+        ));
+
         return networkInfo;
     }
 }

@@ -4,6 +4,8 @@ import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
 import java.nio.file.Files;
 import java.nio.file.Path;
+
+import com.example.metric_api.check.MetricsValidator;
 import org.springframework.stereotype.Component;
 import com.example.metric_api.model.UptimeMetric;
 
@@ -16,8 +18,16 @@ public class UptimeInfoCollector {
 		long uptime = rb.getUptime();
 		
 		UptimeMetric upTimeMetricDto = new UptimeMetric();
-		upTimeMetricDto.setOsUptime(osUptime());
-		upTimeMetricDto.setServiceUptime(uptime);
+		upTimeMetricDto.setOsUptime(MetricsValidator.validate(
+				osUptime(),
+				UptimeInfoCollector.class,
+				"osUptime"
+		));
+		upTimeMetricDto.setServiceUptime(MetricsValidator.validate(
+				serviceUptime(),
+				UptimeInfoCollector.class,
+				"serviceUptime"
+		));
 		
 		return upTimeMetricDto;
 	}

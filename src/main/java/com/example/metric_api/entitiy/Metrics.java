@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class Metrics {
 
     @Id
@@ -20,7 +22,13 @@ public class Metrics {
     private Long logId;
 
     @CreatedDate
+    @Column(updatable = false)
     private LocalDateTime createdAt;
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+    }
 
     // CPU
     private Double processCpuLoad;
@@ -48,5 +56,4 @@ public class Metrics {
     // uptime
     private Long serviceUptime;
     private Long osUptime;
-
 }

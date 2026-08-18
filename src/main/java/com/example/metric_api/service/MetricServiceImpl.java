@@ -54,7 +54,7 @@ public class MetricServiceImpl implements IMetricsService{
 			return mapper.toDto(savedMetrics);
 
 		}catch (Exception e) {
-			log.error("Something went wrong:", e);
+			log.error("Something went wrong: ", e);
 	        throw new BaseException(ResponseType.METRICS_NOT_COLLECTED);
 		}
 	}
@@ -93,9 +93,7 @@ public class MetricServiceImpl implements IMetricsService{
 			throw new BaseException(ResponseType.METRICS_NOT_FOUND);
 		}
 
-		Metrics metrics = optional.get();
-
-		return mapper.toDto(metrics);
+		return mapper.toDto(optional.get());
 	}
 
 	@Override

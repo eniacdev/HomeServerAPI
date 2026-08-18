@@ -1,5 +1,6 @@
 package com.example.metric_api.scheduled_job.prepare.info;
 
+import com.example.metric_api.check.MetricsValidator;
 import org.springframework.stereotype.Component;
 
 import com.example.metric_api.exception_handler.BaseException;
@@ -19,22 +20,27 @@ public class BiosInfoCollector {
         SystemInfo si = new SystemInfo();
         Firmware firmware = si.getHardware().getComputerSystem().getFirmware();
 
-        biosInfo.setManufacturer(firmware.getManufacturer());
-        biosInfo.setVersion(firmware.getVersion());
-        biosInfo.setReleaseDate(firmware.getReleaseDate());
-        biosInfo.setBiosName(firmware.getName());
-
-        checkInfo(biosInfo);
+        biosInfo.setManufacturer(MetricsValidator.validate(
+                firmware.getManufacturer(),
+                BiosInfoCollector.class,
+                "manufacturer"
+        ));
+        biosInfo.setVersion(MetricsValidator.validate(
+                firmware.getVersion(),
+                BiosInfoCollector.class,
+                "biosVersion"
+        ));
+        biosInfo.setReleaseDate(MetricsValidator.validate(
+                firmware.getReleaseDate(),
+                BiosInfoCollector.class,
+                "biosReleaseDate"
+        ));
+        biosInfo.setBiosName(MetricsValidator.validate(
+                firmware.getName(),
+                BiosInfoCollector.class,
+                "biosName"
+        ));
 
         return biosInfo;
-    }
-
-    private void checkInfo(BiosInfo biosInfo){
-        if(biosInfo.getManufacturer() == null && 
-        biosInfo.getVersion() == null &&
-        biosInfo.getReleaseDate() == null &&
-        biosInfo.getBiosName() == null){
-            throw new BaseException(ResponseType.SYSTEM_INFO_NOT_COLLECTED);
-        }
     }
 }

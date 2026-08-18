@@ -1,6 +1,9 @@
 package com.example.metric_api.scheduled_job.prepare.info;
 
 import java.lang.management.ManagementFactory;
+
+import com.example.metric_api.check.MetricsValidator;
+import com.example.metric_api.entitiy.Metrics;
 import org.springframework.stereotype.Component;
 import com.example.metric_api.exception_handler.BaseException;
 import com.example.metric_api.model.OsInfo;
@@ -14,12 +17,17 @@ public class OsInfoCollector {
 		OperatingSystemMXBean osBean = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
 		OsInfo osDto = new OsInfo();
 		
-		osDto.setOsName(osBean.getName());
-		osDto.setOsVersion(osBean.getVersion());
-		
-		if(osDto.getOsName() == null && osDto.getOsVersion() == null) {
-			throw new BaseException(ResponseType.METRICS_NOT_COLLECTED);
-		}
+		osDto.setOsName(MetricsValidator.validate(
+				osBean.getName(),
+				OsInfoCollector.class,
+				"osName"
+		));
+		osDto.setOsVersion(MetricsValidator.validate(
+				osBean.getVersion(),
+				OsInfoCollector.class,
+				"osVersion"
+		));
+
 		return osDto;
 	}
 
