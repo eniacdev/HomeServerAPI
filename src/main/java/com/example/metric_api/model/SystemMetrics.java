@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SystemMetrics {
 
-	private CpuMetric cpu;
-	private MemoryMetric memory;
-	private DiskMetric disk;
+	private CpuMetric cpuMetric;
+	private MemoryMetric memoryMetric;
+	private DiskMetric diskMetric;
 	private NetworkMetric networkMetric;
 	private Long serviceUptime;
 	private Long osUptime;

@@ -10,6 +10,9 @@ import lombok.NoArgsConstructor;
 public class DiskMetricDto {
 	
 	private Long diskUsage;
+	private String diskUsageFormatted;
 	private Long freeDisk;
+	private String freeDiskFormatted;
 	private Long totalDisk;
+	private String totalDiskFormatted;
 }

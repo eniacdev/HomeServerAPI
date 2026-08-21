@@ -1,5 +1,9 @@
 package com.example.metric_api.entitiy;
 
+import com.example.metric_api.model.CpuMetric;
+import com.example.metric_api.model.DiskMetric;
+import com.example.metric_api.model.MemoryMetric;
+import com.example.metric_api.model.NetworkMetric;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,30 +34,18 @@ public class Metrics {
         createdAt = LocalDateTime.now();
     }
 
-    // CPU
-    private Double processCpuLoad;
-	private Double systemCpuLoad;
-	private Double systemAverageLoad;
-	private Integer cpuTemp;
+    @Embedded
+    private CpuMetric cpuMetric;
 
-    // RAM
-    private Long memoryUsage;
-    private Long freeMemory;
-    private Long totalMemory;
+    @Embedded
+    private MemoryMetric memoryMetric;
 
-    // Disk
-    private Long diskUsage;
-    private Long freeDisk;
-    private Long totalDisk;
+    @Embedded
+    private DiskMetric diskMetric;
 
-    // Network
-    private String interfaceName;
-    private Long bytesRecv;
-    private Long bytesSent;
-    private Long inErrors;
-    private Long outErrors;
+    @Embedded
+    private NetworkMetric networkMetric;
 
-    // uptime
     private Long serviceUptime;
     private Long osUptime;
 }

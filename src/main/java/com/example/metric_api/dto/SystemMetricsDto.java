@@ -9,10 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SystemMetricsDto {
 
-	private CpuMetricDto cpu;
-	private MemoryMetricDto memory;
-	private DiskMetricDto disk;
-	private NetworkMetricDto networkMetric;
+	private CpuMetricDto cpuMetricDto;
+	private MemoryMetricDto memoryMetricDto;
+	private DiskMetricDto diskMetricDto;
+	private NetworkMetricDto networkMetricDto;
 	private Long serviceUptime;
 	private Long osUptime;
 }

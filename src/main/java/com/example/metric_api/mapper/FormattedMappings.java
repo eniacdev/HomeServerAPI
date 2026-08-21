@@ -13,10 +13,12 @@ public interface FormattedMappings {
     default String formatBytes(Long value) {
         return MetricFormatter.formatBytes(value);
     }
+
     @Named("formatPercentange")
     default String formatPercentange(Double value) {
         return MetricFormatter.formatPercentange(value);
     }
+
     @Named("formatTemperature")
     default String formatTemperature(Integer value) {
         return MetricFormatter.formatTempeture(value);

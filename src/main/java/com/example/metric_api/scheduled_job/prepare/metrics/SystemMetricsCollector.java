@@ -27,9 +27,9 @@ public class SystemMetricsCollector {
 		
 		log.info("the metrics is being preparing");
 
-		systemMetrics.setCpu(cpuMetric.collectCpuMetrics());
-		systemMetrics.setMemory(memoryMetric.collectMemoryMetrics());
-		systemMetrics.setDisk(diskMetric.collectDiskMetrics());
+		systemMetrics.setCpuMetric(cpuMetric.collectCpuMetrics());
+		systemMetrics.setMemoryMetric(memoryMetric.collectMemoryMetrics());
+		systemMetrics.setDiskMetric(diskMetric.collectDiskMetrics());
 		systemMetrics.setNetworkMetric(networkMetric.collectNetworkMetric());
 		systemMetrics.setOsUptime(uptimeMetric.osUptime());
 		systemMetrics.setServiceUptime(uptimeMetric.serviceUptime());
