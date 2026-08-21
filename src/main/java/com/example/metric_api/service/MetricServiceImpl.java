@@ -1,6 +1,9 @@
 package com.example.metric_api.service;
 
+import com.example.metric_api.dto.CpuMetricDto;
 import com.example.metric_api.dto.SystemMetricsDto;
+import com.example.metric_api.formatter.MetricFormatter;
+import com.example.metric_api.mapper.CpuMapper;
 import com.example.metric_api.model.*;
 import com.example.metric_api.mapper.MetricsMapper;
 import com.example.metric_api.entitiy.Metrics;
@@ -27,7 +30,8 @@ public class MetricServiceImpl implements IMetricsService{
 	//kod bu şekilde refactor edildi. test yazmak için uygun ve daha az karmaşa (tam olarak değil).
 	//genel olarak component anatasyonu önemli (sanırsam test yazmak için).
 
-	private final MetricsMapper mapper;
+	private final MetricsMapper metricsMapper;
+	private final CpuMapper cpuMapper;
 	private final SystemMetricsCollector systemMetrics;
 	private final CpuMetricCollector cpuMetric;
 	private final MemoryMetricCollector memoryMetric;
@@ -42,16 +46,18 @@ public class MetricServiceImpl implements IMetricsService{
 	// bu method metrikleri toplar ve client tarafa gönderirken aynı zaman da metrikleri database'de kaydeder.
 	
 	@Override
-	public SystemMetricsDto saveAndGetMetrics(){
+	public SystemMetricsDto saveMetrics(){
 		try {
 
 			SystemMetrics collectedMetrics = systemMetrics.prepareSystemMetrics();
-			Metrics metrics = mapper.toEntity(collectedMetrics);
+			Metrics metrics = metricsMapper.toEntity(collectedMetrics);
 			Metrics savedMetrics = metricsRepository.save(metrics);
 
 			log.info("metrics is prepared and saved.");
 
-			return mapper.toDto(savedMetrics);
+			SystemMetricsDto dto = metricsMapper.toDto(savedMetrics);
+
+			return dto;
 
 		}catch (Exception e) {
 			log.error("Something went wrong: ", e);
@@ -59,13 +65,28 @@ public class MetricServiceImpl implements IMetricsService{
 		}
 	}
 
+	/*private void applyFormatting(Metrics metrics ,SystemMetricsDto dto) {
+		dto.getCpu().setSystemCpuLoadFormatted(
+				MetricFormatter.formatPercentange(metrics.getSystemCpuLoad())
+		);
+		dto.getCpu().setProcessCpuLoadFormatted(
+				MetricFormatter.formatPercentange(metrics.getProcessCpuLoad())
+		);
+		dto.getCpu().setSystemAverageLoadFormatted(
+				MetricFormatter.formatPercentange(metrics.getSystemAverageLoad())
+		);
+		dto.getCpu().setCpuTemp(
+				MetricFormatter.formatTempeture(metrics.getCpuTemp())
+		);
+	}*/
+
 	// getAllMetrics metodu metrikleri veritabanına kaydetmeden sadece anlık metrikleri alınmasını sağlar. - veriler kaydedilmez -
 	@Override
 	public SystemMetricsDto getMetrics() {
 		try {
 			SystemMetrics collectedSystemMetrics = systemMetrics.prepareSystemMetrics();
 
-			return mapper.toDto(collectedSystemMetrics);
+			return metricsMapper.toDto(collectedSystemMetrics);
 		} catch (Exception e) {
 			log.error("Something went wrong while collecting metrics.", e);
 			throw new BaseException(ResponseType.METRICS_NOT_COLLECTED);
@@ -93,7 +114,7 @@ public class MetricServiceImpl implements IMetricsService{
 			throw new BaseException(ResponseType.METRICS_NOT_FOUND);
 		}
 
-		return mapper.toDto(optional.get());
+		return metricsMapper.toDto(optional.get());
 	}
 
 	@Override

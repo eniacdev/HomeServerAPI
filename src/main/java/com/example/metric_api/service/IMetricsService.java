@@ -5,7 +5,7 @@ import com.example.metric_api.model.*;
 
 public interface IMetricsService {
 
-	public SystemMetricsDto saveAndGetMetrics();
+	public SystemMetricsDto saveMetrics();
 	public SystemInfo getSystemInfo() throws Exception;
 	public NetworkMetric getNetworkMetric();
 	public SystemMetricsDto getMetrics() throws Exception;

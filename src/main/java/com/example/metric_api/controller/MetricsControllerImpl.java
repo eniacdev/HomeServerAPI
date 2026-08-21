@@ -27,7 +27,7 @@ public class MetricsControllerImpl implements IMetricsController{
 	@Override
 	@PostMapping("/save")
 	public ResponseEntity<ApiResponse<SystemMetricsDto>> saveAndGetMetrics() {
-		return ApiResponse.ok(ResponseType.METRICS_COLLECTED, metricsService.saveAndGetMetrics());
+		return ApiResponse.ok(ResponseType.METRICS_COLLECTED, metricsService.saveMetrics());
 	}
 
 	// tüm metrikleri toplar ancak veritabanına kaydetmez. sadece anlık alınır.

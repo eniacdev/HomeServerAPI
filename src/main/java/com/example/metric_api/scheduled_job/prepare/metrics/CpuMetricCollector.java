@@ -40,11 +40,11 @@ public class CpuMetricCollector {
 				"systemLoadAverage"
 		));
 		// Celsius
-		cpu.setCpuTemp(MetricsValidator.validate(
-				sensors.getCpuTemperature(),
+		cpu.setCpuTemp(Math.toIntExact(MetricsValidator.validate(
+				(long) sensors.getCpuTemperature(),
 				CpuMetricCollector.class,
 				"cpuTemperature"
-		));
+		)));
 
 		return cpu;
 	}

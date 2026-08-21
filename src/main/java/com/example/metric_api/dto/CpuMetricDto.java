@@ -10,8 +10,11 @@ import lombok.NoArgsConstructor;
 public class CpuMetricDto {
 	
 	private Double processCpuLoad;
+	private String processCpuLoadFormatted;
 	private Double systemCpuLoad;
+	private String systemCpuLoadFormatted;
 	private Double systemAverageLoad;
-	private Double cpuTemp;
+	private String systemAverageLoadFormatted;
+	private String cpuTemp;
 	
 }

@@ -27,7 +27,7 @@ public class Scheduler {
 	public void doSchedulerJob() {
 		try {
 		log.info("Schedule started.");
-		metricsService.saveAndGetMetrics();
+		metricsService.saveMetrics();
 		}catch (Exception e) {
 			e.getMessage();
 		}

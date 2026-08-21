@@ -34,7 +34,7 @@ public class Metrics {
     private Double processCpuLoad;
 	private Double systemCpuLoad;
 	private Double systemAverageLoad;
-	private Double cpuTemp;
+	private Integer cpuTemp;
 
     // RAM
     private Long memoryUsage;
