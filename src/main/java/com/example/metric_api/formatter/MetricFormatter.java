@@ -2,6 +2,7 @@ package com.example.metric_api.formatter;
 
 import com.example.metric_api.model.CpuMetric;
 
+import java.time.Duration;
 import java.util.Locale;
 
 public final class MetricFormatter {
@@ -32,5 +33,33 @@ public final class MetricFormatter {
         }
         // lokali us olarak formatlanmış değeri göster
         return String.format(Locale.US, "%.1f %s", value, UNITS[unitIndex]);
+    }
+
+    public static String formatUptime(Long value) {
+        // duration kesin ölçülebilir zaman değerleri için kullanılır.
+        // zamanı parçalara bölerek değerleri ölçülüyor
+        Duration duration = Duration.ofSeconds(value);
+
+        long seconds = duration.toSecondsPart();
+        long minutes = duration.toMinutesPart();
+        long hours = duration.toHoursPart();
+        long days = duration.toDays();
+
+        StringBuilder builder = new StringBuilder();
+
+        if (days > 0) {
+            builder.append(days).append("d ");
+        }
+        if (hours > 0 || days > 0) {
+            builder.append(hours).append("h ");
+        }
+        if (minutes > 0 || hours > 0 || days > 0) {
+            builder.append(minutes).append("m ");
+        }
+        if (seconds > 0 || minutes > 0 || hours > 0 || days > 0) {
+            builder.append(seconds).append("s ");
+        }
+
+        return builder.toString();
     }
 }

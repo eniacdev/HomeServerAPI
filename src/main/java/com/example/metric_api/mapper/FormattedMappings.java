@@ -23,4 +23,7 @@ public interface FormattedMappings {
     default String formatTemperature(Integer value) {
         return MetricFormatter.formatTempeture(value);
     }
+
+    @Named("formatUptime")
+    default String formatUptime(Long value) { return MetricFormatter.formatUptime(value); }
 }

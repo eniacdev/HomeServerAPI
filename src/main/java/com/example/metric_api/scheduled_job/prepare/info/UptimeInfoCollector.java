@@ -13,27 +13,29 @@ import com.example.metric_api.model.UptimeMetric;
 public class UptimeInfoCollector {
 	
 	public UptimeMetric collectUptimeMetric() throws Exception{
-		
+
+		// RuntimeMXBean sayesinde sistemin ve servisin Uptime değerlerini alır
 		RuntimeMXBean rb = ManagementFactory.getRuntimeMXBean();
-		long uptime = rb.getUptime();
+		// long uptime = rb.getUptime();
 		
-		UptimeMetric upTimeMetricDto = new UptimeMetric();
-		upTimeMetricDto.setOsUptime(MetricsValidator.validate(
+		UptimeMetric upTimeMetric = new UptimeMetric();
+		upTimeMetric.setOsUptime(MetricsValidator.validate(
 				osUptime(),
 				UptimeInfoCollector.class,
 				"osUptime"
 		));
-		upTimeMetricDto.setServiceUptime(MetricsValidator.validate(
+		upTimeMetric.setServiceUptime(MetricsValidator.validate(
 				serviceUptime(),
 				UptimeInfoCollector.class,
 				"serviceUptime"
 		));
 		
-		return upTimeMetricDto;
+		return upTimeMetric;
 	}
 	
 	public Long osUptime() throws Exception{
-		
+
+		// değerleri dosyadan okur
 		String content = Files.readString(Path.of("/proc/uptime"));
 	    return (long) Double.parseDouble(content.split(" ")[0]);
 		
@@ -41,8 +43,9 @@ public class UptimeInfoCollector {
 	
 	public Long serviceUptime() {
 
+		// milisaniye cinsinden ham veri veriyor. 1000'e bölünmesi gerekiyor, saniye cinsi olması için.
 		RuntimeMXBean rb = ManagementFactory.getRuntimeMXBean();
-		Long serviceUpTime = rb.getUptime();
+		long serviceUpTime = rb.getUptime() / 1000;
 		
 		return serviceUpTime;
 

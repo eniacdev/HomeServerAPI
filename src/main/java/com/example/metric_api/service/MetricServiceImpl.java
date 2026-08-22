@@ -30,8 +30,7 @@ public class MetricServiceImpl implements IMetricsService{
 	//kod bu şekilde refactor edildi. test yazmak için uygun ve daha az karmaşa (tam olarak değil).
 	//genel olarak component anatasyonu önemli (sanırsam test yazmak için).
 
-	private final MetricsMapper metricsMapper;
-	private final CpuMapper cpuMapper;
+	private final MetricsMapper metricsMapper;;
 	private final SystemMetricsCollector systemMetrics;
 	private final CpuMetricCollector cpuMetric;
 	private final MemoryMetricCollector memoryMetric;
@@ -39,7 +38,7 @@ public class MetricServiceImpl implements IMetricsService{
 	private final SystemInfoCollector systemInfo;
 	private final IMetricsRepository metricsRepository;
 	private final NetworkMetricCollector networkMetric;
-	private static final Logger log = LoggerFactory.getLogger(SystemMetricsCollector.class);
+	private static final Logger log = LoggerFactory.getLogger(MetricServiceImpl.class);
 
 	// schedule tetiklendiğinde servise yani prepareAndSaveMetrics metoduna yönlendirir.
 	// ayrıca client manuel tetiklemeyi bu method ile gerçekleştirir.
@@ -65,21 +64,6 @@ public class MetricServiceImpl implements IMetricsService{
 		}
 	}
 
-	/*private void applyFormatting(Metrics metrics ,SystemMetricsDto dto) {
-		dto.getCpu().setSystemCpuLoadFormatted(
-				MetricFormatter.formatPercentange(metrics.getSystemCpuLoad())
-		);
-		dto.getCpu().setProcessCpuLoadFormatted(
-				MetricFormatter.formatPercentange(metrics.getProcessCpuLoad())
-		);
-		dto.getCpu().setSystemAverageLoadFormatted(
-				MetricFormatter.formatPercentange(metrics.getSystemAverageLoad())
-		);
-		dto.getCpu().setCpuTemp(
-				MetricFormatter.formatTempeture(metrics.getCpuTemp())
-		);
-	}*/
-
 	// getAllMetrics metodu metrikleri veritabanına kaydetmeden sadece anlık metrikleri alınmasını sağlar. - veriler kaydedilmez -
 	@Override
 	public SystemMetricsDto getMetrics() {
@@ -87,6 +71,7 @@ public class MetricServiceImpl implements IMetricsService{
 			SystemMetrics collectedSystemMetrics = systemMetrics.prepareSystemMetrics();
 
 			return metricsMapper.toDto(collectedSystemMetrics);
+
 		} catch (Exception e) {
 			log.error("Something went wrong while collecting metrics.", e);
 			throw new BaseException(ResponseType.METRICS_NOT_COLLECTED);

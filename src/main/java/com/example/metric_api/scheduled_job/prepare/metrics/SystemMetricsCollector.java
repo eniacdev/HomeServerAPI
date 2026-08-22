@@ -19,6 +19,7 @@ public class SystemMetricsCollector {
 		SystemMetrics systemMetrics = new SystemMetrics();
 		
 		//Preparing Metrics
+		// statik yapmayı unutma 12.03.2026
 		CpuMetricCollector cpuMetric = new CpuMetricCollector();
 		DiskMetricCollector diskMetric = new DiskMetricCollector();
 		MemoryMetricCollector memoryMetric = new MemoryMetricCollector();
@@ -31,8 +32,7 @@ public class SystemMetricsCollector {
 		systemMetrics.setMemoryMetric(memoryMetric.collectMemoryMetrics());
 		systemMetrics.setDiskMetric(diskMetric.collectDiskMetrics());
 		systemMetrics.setNetworkMetric(networkMetric.collectNetworkMetric());
-		systemMetrics.setOsUptime(uptimeMetric.osUptime());
-		systemMetrics.setServiceUptime(uptimeMetric.serviceUptime());
+		systemMetrics.setUptimeMetric(uptimeMetric.collectUptimeMetric()); // bu satır değişti sadece
 		
 		return systemMetrics;
 	}

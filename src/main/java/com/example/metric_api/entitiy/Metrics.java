@@ -1,9 +1,6 @@
 package com.example.metric_api.entitiy;
 
-import com.example.metric_api.model.CpuMetric;
-import com.example.metric_api.model.DiskMetric;
-import com.example.metric_api.model.MemoryMetric;
-import com.example.metric_api.model.NetworkMetric;
+import com.example.metric_api.model.*;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -46,6 +43,6 @@ public class Metrics {
     @Embedded
     private NetworkMetric networkMetric;
 
-    private Long serviceUptime;
-    private Long osUptime;
+    @Embedded
+    private UptimeMetric uptimeMetric;
 }

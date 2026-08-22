@@ -13,6 +13,5 @@ public class SystemMetrics {
 	private MemoryMetric memoryMetric;
 	private DiskMetric diskMetric;
 	private NetworkMetric networkMetric;
-	private Long serviceUptime;
-	private Long osUptime;
+	private UptimeMetric uptimeMetric;
 }
