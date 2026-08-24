@@ -14,8 +14,10 @@ public class SystemInfoDto {
 	private OsInfoDto os;
 	private CpuInfoDto cpuInfo;
 	private Long totalMemory;
+	private String totalMemoryFormatted;
 	private Long totalDisk;
+	private String totalDiskFormatted;
 	private MotherBoardInfoDto motherBoard;
 	private BiosInfoDto bios;
-	private NetworkInfoDto networkInfo;
+	private NetworkInfoDto network;
 }

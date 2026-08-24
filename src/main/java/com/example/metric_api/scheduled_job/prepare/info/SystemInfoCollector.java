@@ -25,6 +25,7 @@ public class SystemInfoCollector {
 		SystemInfo systemInfo = new SystemInfo();
 		
 		//system info
+		systemInfo.setHostname(networkInfo.collectNetworkInfo().getHostname());
 		systemInfo.setUptime(uptimeInfo.collectUptimeMetric());
 		systemInfo.setOs(osInfo.collectOsMetrics());
 		systemInfo.setBios(biosInfo.collectBiosInfo());
@@ -36,7 +37,7 @@ public class SystemInfoCollector {
 		systemInfo.setTotalDisk(disk.collectDiskMetrics().getTotalDisk());
 
 		// netwok info
-		systemInfo.setNetworkInfo(networkInfo.collectNetworkInfo());
+		systemInfo.setNetwork(networkInfo.collectNetworkInfo());
 
 		return systemInfo;
 		

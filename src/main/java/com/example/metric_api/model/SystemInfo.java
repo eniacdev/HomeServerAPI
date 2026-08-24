@@ -17,5 +17,5 @@ public class SystemInfo {
 	private Long totalDisk;
 	private MotherBoardInfo motherBoard;
 	private BiosInfo bios;
-	private NetworkInfo networkInfo;
+	private NetworkInfo network;
 }

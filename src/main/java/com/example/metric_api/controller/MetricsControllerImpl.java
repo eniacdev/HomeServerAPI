@@ -1,6 +1,6 @@
 package com.example.metric_api.controller;
 
-import com.example.metric_api.dto.SystemMetricsDto;
+import com.example.metric_api.dto.*;
 import com.example.metric_api.model.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -40,26 +40,26 @@ public class MetricsControllerImpl implements IMetricsController{
 	// sadece belirli metrikler ...
 	@Override
 	@GetMapping("/cpu")
-	public ResponseEntity<ApiResponse<CpuMetric>> getCpuMetric() {
+	public ResponseEntity<ApiResponse<CpuMetricDto>> getCpuMetric() {
 		return ApiResponse.ok(ResponseType.METRICS_COLLECTED, metricsService.getCpuMetric());
 	}
 
 	@Override
 	@GetMapping("/memory")
-	public ResponseEntity<ApiResponse<MemoryMetric>> getMemoryMetric() {
+	public ResponseEntity<ApiResponse<MemoryMetricDto>> getMemoryMetric() {
 		return ApiResponse.ok(ResponseType.METRICS_COLLECTED, metricsService.getMemoryMetric());
 	}
 
 	@Override
 	@GetMapping("/disk")
-	public ResponseEntity<ApiResponse<DiskMetric>> getDiskMetric() {
+	public ResponseEntity<ApiResponse<DiskMetricDto>> getDiskMetric() {
 		return ApiResponse.ok(ResponseType.METRICS_COLLECTED, metricsService.getDiskMetric());
 	}
 
 	// sadece sistemin bilgilerini toplar.
 	@Override
 	@GetMapping("/system")
-	public ResponseEntity<ApiResponse<SystemInfo>> getSystemInfo() throws Exception{
+	public ResponseEntity<ApiResponse<SystemInfoDto>> getSystemInfo() throws Exception{
 		return ApiResponse.ok(ResponseType.SYSTEM_INFO_COLLECTED, metricsService.getSystemInfo());
 	}
 
@@ -78,7 +78,7 @@ public class MetricsControllerImpl implements IMetricsController{
 	//sadece network bilgileri
 	@Override
 	@GetMapping("/network")
-	public ResponseEntity<ApiResponse<NetworkMetric>> getNetworkMetric() {
+	public ResponseEntity<ApiResponse<NetworkMetricDto>> getNetworkMetric() {
 		return ApiResponse.ok(ResponseType.METRICS_COLLECTED, metricsService.getNetworkMetric());
 	}
 }

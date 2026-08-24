@@ -1,11 +1,9 @@
 package com.example.metric_api.service;
 
-import com.example.metric_api.dto.CpuMetricDto;
-import com.example.metric_api.dto.SystemMetricsDto;
+import com.example.metric_api.dto.*;
 import com.example.metric_api.formatter.MetricFormatter;
-import com.example.metric_api.mapper.CpuMapper;
+import com.example.metric_api.mapper.*;
 import com.example.metric_api.model.*;
-import com.example.metric_api.mapper.MetricsMapper;
 import com.example.metric_api.entitiy.Metrics;
 import com.example.metric_api.repository.IMetricsRepository;
 import org.slf4j.Logger;
@@ -30,7 +28,12 @@ public class MetricServiceImpl implements IMetricsService{
 	//kod bu şekilde refactor edildi. test yazmak için uygun ve daha az karmaşa (tam olarak değil).
 	//genel olarak component anatasyonu önemli (sanırsam test yazmak için).
 
-	private final MetricsMapper metricsMapper;;
+	private final MetricsMapper metricsMapper;
+	private final CpuMapper cpuMapper;
+	private final MemoryMapper memoryMapper;
+	private final DiskMapper diskMapper;
+	private final NetworkMapper networkMapper;
+	private final SystemInfoMapper systemInfoMapper;
 	private final SystemMetricsCollector systemMetrics;
 	private final CpuMetricCollector cpuMetric;
 	private final MemoryMetricCollector memoryMetric;
@@ -103,27 +106,32 @@ public class MetricServiceImpl implements IMetricsService{
 	}
 
 	@Override
-	public CpuMetric getCpuMetric() {
-		return cpuMetric.collectCpuMetrics();
+	public CpuMetricDto getCpuMetric() {
+		CpuMetric metric = cpuMetric.collectCpuMetrics();
+		return cpuMapper.toDto(metric);
 	}
 
 	@Override
-	public MemoryMetric getMemoryMetric() {
-		return memoryMetric.collectMemoryMetrics();
+	public MemoryMetricDto getMemoryMetric() {
+		MemoryMetric metric = memoryMetric.collectMemoryMetrics();
+		return memoryMapper.toDto(metric);
 	}
 
 	@Override
-	public DiskMetric getDiskMetric() {
-		return diskMetric.collectDiskMetrics();
+	public DiskMetricDto getDiskMetric() {
+		DiskMetric metric = diskMetric.collectDiskMetrics();
+		return diskMapper.toDto(metric);
 	}
 
 	@Override
-	public SystemInfo getSystemInfo() throws Exception{
-		return systemInfo.collectSystemInfo();
+	public SystemInfoDto getSystemInfo() throws Exception{
+		SystemInfo metric = systemInfo.collectSystemInfo();
+		return systemInfoMapper.toDto(metric);
 	}
 
 	@Override
-	public NetworkMetric getNetworkMetric(){
-		return networkMetric.collectNetworkMetric();
+	public NetworkMetricDto getNetworkMetric(){
+		NetworkMetric metric = networkMetric.collectNetworkMetric();
+		return networkMapper.toDto(metric);
 	}
 }

@@ -87,9 +87,9 @@ public class MetricServiceImplTest {
         systemInfo.setOs(os);
         systemInfo.setUptime(uptime);
 
-        systemMetrics.setCpu(cpu);
-        systemMetrics.setDisk(disk);
-        systemMetrics.setMemory(memory);
+        systemMetrics.setCpuMetric(cpu);
+        systemMetrics.setDiskMetric(disk);
+        systemMetrics.setMemoryMetric(memory);
     }
 
     /*@Test
@@ -113,7 +113,7 @@ public class MetricServiceImplTest {
 
         when(systemInfoCollector.collectSystemInfo()).thenReturn(systemInfo);
 
-        SystemInfo result = metricsService.getSystemInfo();
+        SystemInfoDto result = metricsService.getSystemInfo();
 
         assertNotNull(result);
         assertEquals(systemInfo.getOs(), result.getOs());
@@ -128,7 +128,7 @@ public class MetricServiceImplTest {
 
         when(cpuMetricCollector.collectCpuMetrics()).thenReturn(cpu);
 
-        CpuMetric result = metricsService.getCpuMetric();
+        CpuMetricDto result = metricsService.getCpuMetric();
 
         assertNotNull(result);
         assertEquals(cpu.getSystemCpuLoad(), result.getSystemCpuLoad());
@@ -144,7 +144,7 @@ public class MetricServiceImplTest {
 
         when(collectMemoryMetric.collectMemoryMetrics()).thenReturn(memory);
 
-        MemoryMetric result = metricsService.getMemoryMetric();
+        MemoryMetricDto result = metricsService.getMemoryMetric();
 
         assertNotNull(result);
         assertEquals(memory.getFreeMemory(), result.getFreeMemory());
@@ -158,7 +158,7 @@ public class MetricServiceImplTest {
 
         when(collectDiskMetric.collectDiskMetrics()).thenReturn(disk);
 
-        DiskMetric result = metricsService.getDiskMetric();
+        DiskMetricDto result = metricsService.getDiskMetric();
 
         assertNotNull(result);
         assertEquals(disk.getFreeDisk(), result.getFreeDisk());

@@ -12,10 +12,9 @@ public class NetworkInfoDto {
 
     //static
     private String interfaceName;
-    private String displayName;
     private String macAddr;
     private List<String> ipv4Addr;
     private Long speed;
-    private long mtu;
+    private Long mtu;
     
 }

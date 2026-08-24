@@ -8,15 +8,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BiosInfo {
-
     private String manufacturer;
     private String biosName;
     private String version;
     private String releaseDate;
-
-    public static void requireNonNull(){
-
-    }
-
-
 }
