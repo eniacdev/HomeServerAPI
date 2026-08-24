@@ -21,11 +21,11 @@ public interface MetricsMapper {
     @Mapping(target = "createdAt", ignore = true)
     Metrics toEntity(SystemMetrics systemMetrics);
 
-    @Mapping(target = "cpuMetricDto", source = "cpuMetric")
-    @Mapping(target = "memoryMetricDto", source = "memoryMetric")
-    @Mapping(target = "diskMetricDto", source = "diskMetric")
-    @Mapping(target = "networkMetricDto", source = "networkMetric")
-    @Mapping(target = "uptimeMetricDto", source = "uptimeMetric")
+    @Mapping(target = "cpu", source = "cpuMetric")
+    @Mapping(target = "memory", source = "memoryMetric")
+    @Mapping(target = "disk", source = "diskMetric")
+    @Mapping(target = "network", source = "networkMetric")
+    @Mapping(target = "uptime", source = "uptimeMetric")
     SystemMetricsDto toDto(Metrics metrics);
 
     SystemMetricsDto toDto(SystemMetrics systemMetrics);
