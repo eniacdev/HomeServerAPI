@@ -1,6 +1,7 @@
 package com.example.metric_api.controller;
 
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -41,7 +42,6 @@ public class MetricsControllerImplTest {
 	
 	@BeforeEach
 	public void setUp() {
-		
 		os.setOsName("Linux");
 		os.setOsVersion("Linux-version");
 		
@@ -64,24 +64,20 @@ public class MetricsControllerImplTest {
 	
 	@Test
 	public void prepareAndCreateMetricsTest() throws Exception{
+		when(metricsService.saveMetrics()).thenReturn(metric);
 		
-		//when
-		//when(metricsService.prepareAndSaveMetrics()).thenReturn(metric);
-		
-		mockMvc.perform(post("/api/v1/metrics/collect"))
+		mockMvc.perform(post("/api/v1/metrics/save"))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.data.cpu.processCpuLoad").value(1.5))
         .andDo(print());
-		
-		//then
-		verify(metricsService).getMetrics();
+
+		verify(metricsService).saveMetrics();
 		
 	}
 	
 	@Test
 	public void getCpuMetricTest() throws Exception{
-		
-		//when(metricsService.getCpuMetric()).thenReturn(cpu);
+		when(metricsService.getCpuMetric()).thenReturn(cpu);
 		
 		mockMvc.perform(get("/api/v1/metrics/cpu"))
 		.andExpect(status().isOk())
@@ -94,8 +90,7 @@ public class MetricsControllerImplTest {
 	
 	@Test
 	public void getMemoryMetricTest() throws Exception{
-		
-		//when(metricsService.getMemoryMetric()).thenReturn(memory);
+		when(metricsService.getMemoryMetric()).thenReturn(memory);
 		
 		mockMvc.perform(get("/api/v1/metrics/memory"))
 		.andExpect(status().isOk())

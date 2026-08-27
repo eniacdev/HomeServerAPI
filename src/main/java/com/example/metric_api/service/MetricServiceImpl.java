@@ -96,13 +96,10 @@ public class MetricServiceImpl implements IMetricsService{
 
 	@Override
 	public SystemMetricsDto getLogById(long id) {
-		Optional<Metrics> optional = metricsRepository.findById(id);
+		Metrics metric = metricsRepository.findById(id)
+				.orElseThrow(() -> new BaseException(ResponseType.METRICS_NOT_FOUND));
 
-		if(optional.isEmpty()){
-			throw new BaseException(ResponseType.METRICS_NOT_FOUND);
-		}
-
-		return metricsMapper.toDto(optional.get());
+		return metricsMapper.toDto(metric);
 	}
 
 	@Override

@@ -1,12 +1,12 @@
 package com.example.metric_api.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+@Getter
+@Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 public class NetworkMetricDto {
     
     private String interfaceName;
