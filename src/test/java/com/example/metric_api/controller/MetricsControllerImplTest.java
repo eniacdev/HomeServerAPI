@@ -17,7 +17,7 @@ import com.example.metric_api.dto.MemoryMetricDto;
 import com.example.metric_api.dto.OsInfoDto;
 import com.example.metric_api.dto.SystemMetricsDto;
 import com.example.metric_api.dto.UptimeMetricDto;
-import com.example.metric_api.scheduled_job.export.PrepareJsonFile;
+import com.example.metric_api.scheduled_job.export.JsonFileBuilder;
 import com.example.metric_api.service.IMetricsService;
 
 @WebMvcTest(MetricsControllerImpl.class)
@@ -30,7 +30,7 @@ public class MetricsControllerImplTest {
 	private IMetricsService metricsService;
 	
 	@MockitoBean
-	private PrepareJsonFile prepareJsonFile;
+	private JsonFileBuilder jsonFileBuilder;
 	
 	SystemMetricsDto metric = new SystemMetricsDto();
 	OsInfoDto os = new OsInfoDto();

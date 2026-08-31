@@ -1,5 +1,6 @@
 package com.example.metric_api.scheduled_job.prepare.info;
 
+import com.example.metric_api.check.MetricsValidator;
 import org.springframework.stereotype.Component;
 import com.example.metric_api.exception_handler.BaseException;
 import com.example.metric_api.model.MotherBoardInfo;
@@ -19,21 +20,21 @@ public class MotherBoardInfoCollector {
         ComputerSystem cs = si.getHardware().getComputerSystem();
 
         Baseboard baseboard = cs.getBaseboard();
-        motherBoard.setModel(baseboard.getModel());
-        motherBoard.setManufacturer(baseboard.getManufacturer());
-        motherBoard.setSerial(baseboard.getSerialNumber());
-
-        checkInfo(motherBoard); // kontroll
+        motherBoard.setModel(MetricsValidator.validate(
+                baseboard.getModel(),
+                MotherBoardInfoCollector.class,
+                "model"));
+        motherBoard.setManufacturer(MetricsValidator.validate(
+                baseboard.getManufacturer(),
+                MotherBoardInfoCollector.class,
+                "manufacturer"
+        ));
+        motherBoard.setSerial(MetricsValidator.validate(
+                baseboard.getSerialNumber(),
+                MotherBoardInfoCollector.class,
+                "serial"
+        ));
 
         return motherBoard;
-    }
-
-    private void checkInfo(MotherBoardInfo motherBoard){
-
-        if(motherBoard.getManufacturer() == null &&
-          motherBoard.getModel() == null &&
-          motherBoard.getSerial() == null){
-            throw new BaseException(ResponseType.SYSTEM_INFO_NOT_COLLECTED);
-        }
     }
 }

@@ -6,6 +6,7 @@ import com.example.metric_api.mapper.*;
 import com.example.metric_api.model.*;
 import com.example.metric_api.entitiy.Metrics;
 import com.example.metric_api.repository.IMetricsRepository;
+import com.example.metric_api.scheduled_job.prepare.snapshot.SnapshotBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory; 
 import org.springframework.stereotype.Service;
@@ -34,13 +35,16 @@ public class MetricServiceImpl implements IMetricsService{
 	private final DiskMapper diskMapper;
 	private final NetworkMapper networkMapper;
 	private final SystemInfoMapper systemInfoMapper;
+
 	private final SystemMetricsCollector systemMetrics;
 	private final CpuMetricCollector cpuMetric;
 	private final MemoryMetricCollector memoryMetric;
 	private final DiskMetricCollector diskMetric;
 	private final SystemInfoCollector systemInfo;
-	private final IMetricsRepository metricsRepository;
 	private final NetworkMetricCollector networkMetric;
+
+	private final IMetricsRepository metricsRepository;
+	private final SnapshotBuilder snapshotBuilder;
 	private static final Logger log = LoggerFactory.getLogger(MetricServiceImpl.class);
 
 	// schedule tetiklendiğinde servise yani prepareAndSaveMetrics metoduna yönlendirir.
@@ -100,6 +104,12 @@ public class MetricServiceImpl implements IMetricsService{
 				.orElseThrow(() -> new BaseException(ResponseType.METRICS_NOT_FOUND));
 
 		return metricsMapper.toDto(metric);
+	}
+
+	@Override
+	public MetricsSnapshot buildSnapshot() {
+		MetricsSnapshot snapshot = snapshotBuilder.buildSnapshot();
+		return snapshot;
 	}
 
 	@Override

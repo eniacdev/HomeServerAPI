@@ -75,6 +75,12 @@ public class MetricsControllerImpl implements IMetricsController{
 		return ApiResponse.ok(ResponseType.METRICS_FOUND, metricsService.getLogById(id));
 	}
 
+	@Override
+	@GetMapping("/snapshot")
+	public ResponseEntity<ApiResponse<MetricsSnapshot>> prepareSnapshot() {
+		return ApiResponse.ok(ResponseType.BUILD_SNAPSHOT_SUCCESSFULLY, metricsService.buildSnapshot());
+	}
+
 	//sadece network bilgileri
 	@Override
 	@GetMapping("/network")

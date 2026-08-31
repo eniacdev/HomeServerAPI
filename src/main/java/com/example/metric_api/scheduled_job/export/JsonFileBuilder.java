@@ -4,28 +4,29 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+
 import com.example.metric_api.model.JsonFile;
-import com.example.metric_api.model.SystemMetrics;
+import com.example.metric_api.model.MetricsSnapshot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
-public class PrepareJsonFile {
+public class JsonFileBuilder {
 
-	private static final Logger log = LoggerFactory.getLogger(PrepareJsonFile.class);
+	private static final Logger log = LoggerFactory.getLogger(JsonFileBuilder.class);
 	private final ObjectMapper objectMapper;
 
-	public PrepareJsonFile(ObjectMapper objectMapper){
+	public JsonFileBuilder(ObjectMapper objectMapper){
 		this.objectMapper = objectMapper;
 	}
 	
-	public boolean writeJsonFile(SystemMetrics metric) {
+	public boolean exportToJsonFile(MetricsSnapshot metric) {
 		
 		try {
 		
-		log.warn("The json file is being preparing.");
+		log.info("The json file is being preparing.");
 
 		JsonFile jsonFile = new JsonFile();
 		
@@ -42,7 +43,6 @@ public class PrepareJsonFile {
 		//client için faydalı olabilir.
 		jsonFile.setFile(filePath.toString());
 		jsonFile.setCreatedAt(date);
-		//metric.setJsonFile(jsonFile);
 
 		Files.createDirectories(directoryPath);
 		
@@ -53,7 +53,7 @@ public class PrepareJsonFile {
 		return true;
 		
 		}catch (Exception e) {
-			log.error("Json dosyası yazılamadı: {}", e.getMessage());
+			log.error("something went wrong, json file is not created: {}", e.getMessage());
 		    return false;
 		}
 	}
