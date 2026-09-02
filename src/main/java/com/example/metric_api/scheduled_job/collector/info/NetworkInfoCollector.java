@@ -1,8 +1,8 @@
-package com.example.metric_api.scheduled_job.prepare.info;
+package com.example.metric_api.scheduled_job.collector.info;
 
-import com.example.metric_api.check.MetricsValidator;
+import com.example.metric_api.validator.MetricsValidator;
 import com.example.metric_api.model.NetworkInfo;
-import com.example.metric_api.scheduled_job.prepare.metrics.NetworkMetricCollector;
+import com.example.metric_api.scheduled_job.collector.metrics.NetworkMetricCollector;
 import oshi.SystemInfo;
 
 import java.net.InetAddress;

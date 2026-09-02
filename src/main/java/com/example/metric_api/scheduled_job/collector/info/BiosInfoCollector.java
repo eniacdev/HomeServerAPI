@@ -1,18 +1,15 @@
-package com.example.metric_api.scheduled_job.prepare.info;
+package com.example.metric_api.scheduled_job.collector.info;
 
-import com.example.metric_api.check.MetricsValidator;
+import com.example.metric_api.validator.MetricsValidator;
 import org.springframework.stereotype.Component;
 
-import com.example.metric_api.exception_handler.BaseException;
 import com.example.metric_api.model.BiosInfo;
-import com.example.metric_api.response.ResponseType;
 
 import oshi.SystemInfo;
 import oshi.hardware.Firmware;
 
 @Component
 public class BiosInfoCollector {
-    
 
     public BiosInfo collectBiosInfo(){
 

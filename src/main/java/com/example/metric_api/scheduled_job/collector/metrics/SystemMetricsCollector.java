@@ -1,10 +1,10 @@
-package com.example.metric_api.scheduled_job.prepare.metrics;
+package com.example.metric_api.scheduled_job.collector.metrics;
 
-import com.example.metric_api.model.SystemMetrics;
+import com.example.metric_api.model.SystemMetricsLog;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import com.example.metric_api.scheduled_job.prepare.info.UptimeInfoCollector;
+import com.example.metric_api.scheduled_job.collector.info.UptimeInfoCollector;
 
 @Service
 public class SystemMetricsCollector {
@@ -14,9 +14,9 @@ public class SystemMetricsCollector {
 	// OperatingSystemMXBean osBean = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
 	
 	
-	public SystemMetrics prepareSystemMetrics() throws Exception{
+	public SystemMetricsLog prepareSystemMetrics() throws Exception{
 		
-		SystemMetrics systemMetrics = new SystemMetrics();
+		SystemMetricsLog systemMetrics = new SystemMetricsLog();
 		
 		//Preparing Metrics
 		// statik yapmayı unutma 12.03.2026

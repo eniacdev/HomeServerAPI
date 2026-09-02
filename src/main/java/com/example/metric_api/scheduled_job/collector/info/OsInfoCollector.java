@@ -1,13 +1,10 @@
-package com.example.metric_api.scheduled_job.prepare.info;
+package com.example.metric_api.scheduled_job.collector.info;
 
 import java.lang.management.ManagementFactory;
 
-import com.example.metric_api.check.MetricsValidator;
-import com.example.metric_api.entitiy.Metrics;
+import com.example.metric_api.validator.MetricsValidator;
 import org.springframework.stereotype.Component;
-import com.example.metric_api.exception_handler.BaseException;
 import com.example.metric_api.model.OsInfo;
-import com.example.metric_api.response.ResponseType;
 import com.sun.management.OperatingSystemMXBean;
 
 @Component

@@ -1,8 +1,8 @@
-package com.example.metric_api.scheduled_job.prepare.info;
+package com.example.metric_api.scheduled_job.collector.info;
 
 import com.example.metric_api.model.SystemInfo;
-import com.example.metric_api.scheduled_job.prepare.metrics.DiskMetricCollector;
-import com.example.metric_api.scheduled_job.prepare.metrics.MemoryMetricCollector;
+import com.example.metric_api.scheduled_job.collector.metrics.DiskMetricCollector;
+import com.example.metric_api.scheduled_job.collector.metrics.MemoryMetricCollector;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

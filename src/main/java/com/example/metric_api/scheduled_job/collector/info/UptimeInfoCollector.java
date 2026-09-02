@@ -1,11 +1,11 @@
-package com.example.metric_api.scheduled_job.prepare.info;
+package com.example.metric_api.scheduled_job.collector.info;
 
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import com.example.metric_api.check.MetricsValidator;
+import com.example.metric_api.validator.MetricsValidator;
 import org.springframework.stereotype.Component;
 import com.example.metric_api.model.UptimeMetric;
 

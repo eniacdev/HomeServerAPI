@@ -1,9 +1,8 @@
-package com.example.metric_api.scheduled_job.prepare.metrics;
+package com.example.metric_api.scheduled_job.collector.metrics;
 
 import java.lang.management.ManagementFactory;
 
-import com.example.metric_api.check.MetricsValidator;
-import com.example.metric_api.entitiy.Metrics;
+import com.example.metric_api.validator.MetricsValidator;
 import com.example.metric_api.model.CpuMetric;
 import com.sun.management.OperatingSystemMXBean;
 

@@ -1,13 +1,13 @@
-package com.example.metric_api.scheduled_job.prepare.snapshot;
+package com.example.metric_api.scheduled_job.collector.snapshot;
 
 import com.example.metric_api.mapper.SnapshotMapper;
 import com.example.metric_api.model.*;
 import com.example.metric_api.scheduled_job.export.JsonFileBuilder;
-import com.example.metric_api.scheduled_job.prepare.info.*;
-import com.example.metric_api.scheduled_job.prepare.metrics.CpuMetricCollector;
-import com.example.metric_api.scheduled_job.prepare.metrics.DiskMetricCollector;
-import com.example.metric_api.scheduled_job.prepare.metrics.MemoryMetricCollector;
-import com.example.metric_api.scheduled_job.prepare.metrics.NetworkMetricCollector;
+import com.example.metric_api.scheduled_job.collector.info.*;
+import com.example.metric_api.scheduled_job.collector.metrics.CpuMetricCollector;
+import com.example.metric_api.scheduled_job.collector.metrics.DiskMetricCollector;
+import com.example.metric_api.scheduled_job.collector.metrics.MemoryMetricCollector;
+import com.example.metric_api.scheduled_job.collector.metrics.NetworkMetricCollector;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

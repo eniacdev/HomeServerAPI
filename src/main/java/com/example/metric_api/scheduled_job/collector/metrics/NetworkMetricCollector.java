@@ -1,7 +1,7 @@
-package com.example.metric_api.scheduled_job.prepare.metrics;
+package com.example.metric_api.scheduled_job.collector.metrics;
 import java.util.List;
 
-import com.example.metric_api.check.MetricsValidator;
+import com.example.metric_api.validator.MetricsValidator;
 import org.springframework.stereotype.Component;
 
 import com.example.metric_api.model.NetworkMetric;
