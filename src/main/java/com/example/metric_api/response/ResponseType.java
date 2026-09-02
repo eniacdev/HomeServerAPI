@@ -15,8 +15,10 @@ public enum ResponseType {
 
 	BUILD_SNAPSHOT_SUCCESSFULLY("BUILD_SNAPSHOT_SUCCESFULLY", "Snapshot successfully written to json file.", HttpStatus.OK),
 
+	DATE_TYPE_ERROR("DATE_TYPE_ERROR", "Missing date, dates is missing or typed wrong.", HttpStatus.BAD_REQUEST),
+
 	SYSTEM_INFO_COLLECTED("SYSTEM_INFO_COLLECTED","System info successfully collected.", HttpStatus.OK),
-	SYSTEM_INFO_NOT_COLLECTED("SYSTEM_INFO_COLLECTED","Something went wrong, system info not collected.", HttpStatus.NOT_FOUND),
+	SYSTEM_INFO_NOT_COLLECTED("SYSTEM_INFO_NOT_COLLECTED","Something went wrong, system info not collected.", HttpStatus.NOT_FOUND),
 
 	CPU_INFO_NOT_COLLECTED("CPU_INFO_NOT_COLLECTED", "Something went wrong, CPU info not collected.", HttpStatus.NOT_FOUND),
 	DISK_INFO_NOT_COLLECTED("DISK_INFO_NOT_COLLECTED", "Something went wrong, disk info not collected.", HttpStatus.NOT_FOUND),
