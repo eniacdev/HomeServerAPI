@@ -5,9 +5,9 @@ import com.example.metric_api.dto.*;
 import com.example.metric_api.mapper.*;
 import com.example.metric_api.model.*;
 import com.example.metric_api.repository.IMetricsRepository;
-import com.example.metric_api.scheduled_job.prepare.info.SystemInfoCollector;
-import com.example.metric_api.scheduled_job.prepare.info.UptimeInfoCollector;
-import com.example.metric_api.scheduled_job.prepare.metrics.*;
+import com.example.metric_api.scheduled_job.collector.info.SystemInfoCollector;
+import com.example.metric_api.scheduled_job.collector.info.UptimeInfoCollector;
+import com.example.metric_api.scheduled_job.collector.metrics.*;
 import com.example.metric_api.entitiy.Metrics;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -71,7 +71,7 @@ public class MetricServiceImplTest {
     @Mock
     private NetworkMetricCollector networkMetricCollector;
 
-    private SystemMetrics systemMetrics = new SystemMetrics();
+    private SystemMetricsLog systemMetrics = new SystemMetricsLog();
     private Metrics metrics = new Metrics();
     private CpuMetric cpu = new CpuMetric();
     private MemoryMetric memory = new MemoryMetric();
@@ -82,7 +82,7 @@ public class MetricServiceImplTest {
     private UptimeMetric uptime = new UptimeMetric();
     private SystemInfo systemInfo;
 
-    private SystemMetricsDto systemMetricsDto;
+    private SystemMetricsLogDto systemMetricsLogDto;
     private CpuMetricDto cpuDto;
     private MemoryMetricDto memoryDto;
     private DiskMetricDto diskDto;
@@ -146,7 +146,7 @@ public class MetricServiceImplTest {
                 .totalDiskFormatted("0")
                 .build();
 
-        systemMetricsDto = SystemMetricsDto.builder()
+        systemMetricsLogDto = SystemMetricsLogDto.builder()
                 .cpu(cpuDto)
                 .memory(memoryDto)
                 .disk(diskDto)
@@ -200,14 +200,14 @@ public class MetricServiceImplTest {
     @Test
     public void SaveMetricsTest() throws  Exception{
         when(systemMetricsCollector.prepareSystemMetrics()).thenReturn(systemMetrics);
-        when(metricsMapper.toDto(metrics)).thenReturn(systemMetricsDto);
+        when(metricsMapper.toDtoLog(metrics)).thenReturn(systemMetricsLogDto);
         when(metricsMapper.toEntity(systemMetrics)).thenReturn(metrics);
         when(metricsRepository.save(metrics)).thenReturn(metrics);
 
-        SystemMetricsDto result = metricsService.saveMetrics();
+        SystemMetricsLogDto result = metricsService.saveMetrics();
 
         assertNotNull(result);
-        assertSame(systemMetricsDto, result);
+        assertSame(systemMetricsLogDto, result);
 
         verify(systemMetricsCollector).prepareSystemMetrics();
         verify(metricsMapper).toDto(metrics);
@@ -299,9 +299,9 @@ public class MetricServiceImplTest {
     @Test
     public void getLogByIdTest() throws Exception{
         when(metricsRepository.findById(1L)).thenReturn(Optional.of(metrics));
-        when(metricsMapper.toDto(metrics)).thenReturn(systemMetricsDto);
+        when(metricsMapper.toDtoLog(metrics)).thenReturn(systemMetricsLogDto);
 
-        SystemMetricsDto result = metricsService.getLogById(1L);
+        SystemMetricsLogDto result = metricsService.getLogById(1L);
 
         assertNotNull(result);
 

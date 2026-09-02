@@ -5,18 +5,14 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+import com.example.metric_api.dto.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
-import com.example.metric_api.dto.CpuMetricDto;
-import com.example.metric_api.dto.DiskMetricDto;
-import com.example.metric_api.dto.MemoryMetricDto;
-import com.example.metric_api.dto.OsInfoDto;
-import com.example.metric_api.dto.SystemMetricsDto;
-import com.example.metric_api.dto.UptimeMetricDto;
 import com.example.metric_api.scheduled_job.export.JsonFileBuilder;
 import com.example.metric_api.service.IMetricsService;
 
@@ -32,7 +28,7 @@ public class MetricsControllerImplTest {
 	@MockitoBean
 	private JsonFileBuilder jsonFileBuilder;
 	
-	SystemMetricsDto metric = new SystemMetricsDto();
+	SystemMetricsLogDto metric = new SystemMetricsLogDto();
 	OsInfoDto os = new OsInfoDto();
 	UptimeMetricDto uptime = new UptimeMetricDto();
 	CpuMetricDto cpu = new CpuMetricDto();

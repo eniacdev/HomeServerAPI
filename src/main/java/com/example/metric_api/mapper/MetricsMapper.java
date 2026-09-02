@@ -33,9 +33,9 @@ public interface MetricsMapper {
     @Mapping(target = "uptime", source = "uptimeMetric")
     SystemMetricsLogDto toDtoLog(Metrics metrics);
 
-    SystemMetricsDto toDto(Metrics metrics);
+    SystemMetricsLogDto toDtoLog(SystemMetricsLog systemMetrics);
 
-    SystemMetricsLogDto toDto(SystemMetricsLog systemMetrics);
+    SystemMetricsDto toDto(Metrics metrics);
     
     List<SystemMetricsLogDto> toDtoList(List<Metrics> MetricsList);
 }
