@@ -2,6 +2,8 @@ package com.example.metric_api.dto;
 
 import lombok.*;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Builder
@@ -13,6 +15,7 @@ public class SystemInfoDto {
 	private String hostname;
 	private OsInfoDto os;
 	private CpuInfoDto cpuInfo;
+	private List<GpuInfoDto> gpuInfo;
 	private Long totalMemory;
 	private String totalMemoryFormatted;
 	private Long totalDisk;

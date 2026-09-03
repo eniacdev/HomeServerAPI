@@ -2,6 +2,8 @@ package com.example.metric_api.model;
 
 import lombok.*;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Builder
@@ -13,6 +15,7 @@ public class SystemInfo {
 	private String hostname;
 	private OsInfo os;
 	private CpuInfo cpuInfo;
+	private List<GpuInfo> gpuInfo;
 	private Long totalMemory;
 	private Long totalDisk;
 	private MotherBoardInfo motherBoard;

@@ -5,7 +5,7 @@ import com.example.metric_api.model.SystemInfo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring", uses = {FormattedMappings.class, UptimeMapper.class})
+@Mapper(componentModel = "spring", uses = {FormattedMappings.class, UptimeMapper.class, GpuMapper.class})
 public interface SystemInfoMapper {
 
     @Mapping(target = "totalMemoryFormatted", source = "totalMemory", qualifiedByName = "formatBytes")

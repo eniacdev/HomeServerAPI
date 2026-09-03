@@ -30,6 +30,7 @@ public enum ResponseType {
 	// single metrics
 	CPU_INFO_NOT_COLLECTED("CPU_INFO_NOT_COLLECTED", "Something went wrong, CPU info not collected.", HttpStatus.NOT_FOUND),
 	DISK_INFO_NOT_COLLECTED("DISK_INFO_NOT_COLLECTED", "Something went wrong, disk info not collected.", HttpStatus.NOT_FOUND),
+	GPU_INFO_NOT_COLLECTED("GPU_INFO_NOT_COLLECTED", "Something went wrong, GPU info not collected", HttpStatus.NOT_FOUND),
 	
 	OS_METRICS_NOT_COLLECTED("OS_METRICS_NOT_FOUND","OS metrics is not collected.", HttpStatus.NOT_FOUND),
 	CPU_METRICS_NOT_COLLECTED("CPU_METRICS_NOT_FOUND","Cpu metrics is not collected.", HttpStatus.NOT_FOUND),

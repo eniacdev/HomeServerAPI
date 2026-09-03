@@ -15,6 +15,7 @@ public class SystemInfoCollector {
 	private final BiosInfoCollector biosInfo;
 	private final MotherBoardInfoCollector motherBoardInfo;
 	private final CpuInfoCollector cpuInfo;
+	private final GpuInfoCollector gpuInfo;
 	private final MemoryMetricCollector memory;
 	private final DiskMetricCollector disk;
 	private final NetworkInfoCollector networkInfo;
@@ -33,6 +34,7 @@ public class SystemInfoCollector {
 		//hardware info
 		systemInfo.setMotherBoard(motherBoardInfo.collectMotherBoardInfo());
 		systemInfo.setCpuInfo(cpuInfo.collectCpuInfo());
+		systemInfo.setGpuInfo(gpuInfo.collectGpuInfo());
 		systemInfo.setTotalMemory(memory.collectMemoryMetrics().getTotalMemory());
 		systemInfo.setTotalDisk(disk.collectDiskMetrics().getTotalDisk());
 

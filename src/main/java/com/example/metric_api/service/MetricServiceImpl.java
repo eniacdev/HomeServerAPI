@@ -98,7 +98,7 @@ public class MetricServiceImpl implements IMetricsService{
 	@Override
 	public SystemMetricsLogDto getLogById(long id) {
 		Metrics metric = metricsRepository.findById(id)
-				.orElseThrow(() -> new BaseException(ResponseType.LOG_FOUND));
+				.orElseThrow(() -> new BaseException(ResponseType.LOG_NOT_FOUND));
 
 		return metricsMapper.toDtoLog(metric);
 	}
