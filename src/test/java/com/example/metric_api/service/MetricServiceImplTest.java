@@ -210,7 +210,7 @@ public class MetricServiceImplTest {
         assertSame(systemMetricsLogDto, result);
 
         verify(systemMetricsCollector).prepareSystemMetrics();
-        verify(metricsMapper).toDto(metrics);
+        verify(metricsMapper).toDtoLog(metrics);
         verify(metricsRepository).save(any(Metrics.class));
     }
 
@@ -306,7 +306,7 @@ public class MetricServiceImplTest {
         assertNotNull(result);
 
         verify(metricsRepository).findById(1L);
-        verify(metricsMapper).toDto(metrics);
+        verify(metricsMapper).toDtoLog(metrics);
     }
 
     //exception test
