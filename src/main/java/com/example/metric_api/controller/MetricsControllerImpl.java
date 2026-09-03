@@ -100,6 +100,12 @@ public class MetricsControllerImpl implements IMetricsController{
 		return ApiResponse.ok(ResponseType.METRICS_FOUND, metricsService.findByCreatedAtBetween(start, end, pageNumber, pageSize, sortedBy));
 	}
 
+	@Override
+	@GetMapping("/gpu")
+	public ResponseEntity<ApiResponse<List<GpuInfoDto>>> getGpuInfo() {
+		return ApiResponse.ok(ResponseType.METRICS_COLLECTED, metricsService.getGpuInfo());
+	}
+
 	//sadece network bilgileri
 	@Override
 	@GetMapping("/network")

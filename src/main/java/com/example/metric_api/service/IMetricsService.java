@@ -21,4 +21,5 @@ public interface IMetricsService {
 	public MetricsSnapshot buildSnapshot();
 	public Page<SystemMetricsLogDto> findByCreatedAtBetween(
 			LocalDateTime start, LocalDateTime end, Integer pageNumber, Integer pageSize, String sortedBy);
+	public List<GpuInfoDto> getGpuInfo();
 }

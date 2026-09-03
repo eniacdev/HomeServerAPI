@@ -5,6 +5,7 @@ import com.example.metric_api.mapper.*;
 import com.example.metric_api.model.*;
 import com.example.metric_api.entitiy.Metrics;
 import com.example.metric_api.repository.IMetricsRepository;
+import com.example.metric_api.scheduled_job.collector.info.GpuInfoCollector;
 import com.example.metric_api.scheduled_job.collector.snapshot.SnapshotBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +33,7 @@ public class MetricServiceImpl implements IMetricsService{
 
 	private final MetricsMapper metricsMapper;
 	private final CpuMapper cpuMapper;
+	private final GpuMapper gpuMapper;
 	private final MemoryMapper memoryMapper;
 	private final DiskMapper diskMapper;
 	private final NetworkMapper networkMapper;
@@ -39,6 +41,7 @@ public class MetricServiceImpl implements IMetricsService{
 
 	private final SystemMetricsCollector systemMetrics;
 	private final CpuMetricCollector cpuMetric;
+	private final GpuInfoCollector gpuMetrics;
 	private final MemoryMetricCollector memoryMetric;
 	private final DiskMetricCollector diskMetric;
 	private final SystemInfoCollector systemInfo;
@@ -120,6 +123,12 @@ public class MetricServiceImpl implements IMetricsService{
 		List<SystemMetricsLogDto> responseList = metricsMapper.toDtoList(page.getContent());
 		// PageImpl ile dto'ları sayfalanmış olarak döndür
 		return new PageImpl<>(responseList, pageable, page.getTotalElements());
+	}
+
+	@Override
+	public List<GpuInfoDto> getGpuInfo() {
+		List<GpuInfo> gpuInfoList = gpuMetrics.collectGpuInfo();
+		return gpuMapper.toDtoList(gpuInfoList);
 	}
 
 	// anlık ve statik verileri json olarak kaydeder

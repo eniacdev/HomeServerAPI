@@ -27,4 +27,5 @@ public interface IMetricsController {
 	public ResponseEntity<ApiResponse<MetricsSnapshot>> prepareSnapshot();
 	public ResponseEntity<ApiResponse<Page<SystemMetricsLogDto>>> findByCreatedAtBetween(
 			LocalDate startDate,LocalDate endDate,Integer pageNumber,Integer pageSize, String sortedBy);
+	public ResponseEntity<ApiResponse<List<GpuInfoDto>>> getGpuInfo();
 }
