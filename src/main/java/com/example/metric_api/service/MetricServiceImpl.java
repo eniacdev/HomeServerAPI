@@ -87,12 +87,9 @@ public class MetricServiceImpl implements IMetricsService{
 
 	@Override
 	public Boolean deleteLogById(long id) {
-		Optional optional = metricsRepository.findById(id);
+		Metrics metrics = metricsRepository.findById(id)
+						.orElseThrow(() -> new BaseException(ResponseType.METRICS_NOT_FOUND));
 
-		if(optional.isEmpty()){
-			throw new BaseException(ResponseType.METRICS_NOT_FOUND);
-		}
-		
 		metricsRepository.deleteById(id);
 
 		return true;
