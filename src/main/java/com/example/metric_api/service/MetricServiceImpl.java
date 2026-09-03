@@ -88,7 +88,7 @@ public class MetricServiceImpl implements IMetricsService{
 	@Override
 	public Boolean deleteLogById(long id) {
 		Metrics metrics = metricsRepository.findById(id)
-						.orElseThrow(() -> new BaseException(ResponseType.METRICS_NOT_FOUND));
+						.orElseThrow(() -> new BaseException(ResponseType.LOG_DELETED));
 
 		metricsRepository.deleteById(id);
 
@@ -98,7 +98,7 @@ public class MetricServiceImpl implements IMetricsService{
 	@Override
 	public SystemMetricsLogDto getLogById(long id) {
 		Metrics metric = metricsRepository.findById(id)
-				.orElseThrow(() -> new BaseException(ResponseType.METRICS_NOT_FOUND));
+				.orElseThrow(() -> new BaseException(ResponseType.LOG_FOUND));
 
 		return metricsMapper.toDtoLog(metric);
 	}

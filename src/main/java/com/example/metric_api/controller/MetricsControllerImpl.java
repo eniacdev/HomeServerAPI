@@ -85,6 +85,7 @@ public class MetricsControllerImpl implements IMetricsController{
 		return ApiResponse.ok(ResponseType.BUILD_SNAPSHOT_SUCCESSFULLY, metricsService.buildSnapshot());
 	}
 
+	// filtreleme ile arama
 	@Override
 	@GetMapping("/search")
 	public ResponseEntity<ApiResponse<Page<SystemMetricsLogDto>>> findByCreatedAtBetween(
