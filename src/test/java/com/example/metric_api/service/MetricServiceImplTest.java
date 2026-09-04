@@ -12,13 +12,20 @@ import com.example.metric_api.entitiy.Metrics;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.*;
+import org.springframework.data.geo.Metric;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -27,6 +34,9 @@ public class MetricServiceImplTest {
 
     @InjectMocks
     private MetricServiceImpl metricsService;
+
+    @Mock
+    private IMetricsRepository metricsRepository;
 
     // mappers
     @Mock
@@ -48,10 +58,11 @@ public class MetricServiceImplTest {
     private NetworkMapper networkMapper;
 
     @Mock
-    private UptimeInfoCollector uptimeInfo;
+    private GpuMapper gpuMapper;
 
+    // collectors
     @Mock
-    private IMetricsRepository metricsRepository;
+    private UptimeInfoCollector uptimeInfoCollector;
 
     @Mock
     private SystemMetricsCollector systemMetricsCollector;
@@ -77,6 +88,7 @@ public class MetricServiceImplTest {
     private MemoryMetric memory = new MemoryMetric();
     private DiskMetric disk = new DiskMetric();
     private NetworkMetric networkMetric;
+    private GpuInfo gpuInfo;
 
     private OsInfo os = new OsInfo();
     private UptimeMetric uptime = new UptimeMetric();
@@ -88,11 +100,12 @@ public class MetricServiceImplTest {
     private DiskMetricDto diskDto;
     private NetworkMetricDto networkDto;
     private SystemInfoDto systemInfoDto;
+    private GpuInfoDto gpuInfoDto;
 
     @BeforeEach
     public void setUp(){
 
-        //entity
+        // metrics and entity
         os.setOsName("Linux");
         os.setOsVersion("Linux-version");
 
@@ -115,6 +128,34 @@ public class MetricServiceImplTest {
         systemMetrics.setCpuMetric(cpu);
         systemMetrics.setDiskMetric(disk);
         systemMetrics.setMemoryMetric(memory);
+
+        systemInfo = SystemInfo.builder()
+                .uptime(uptime)
+                .hostname("Linux")
+                .os(os)
+                .cpuInfo(new CpuInfo())
+                .totalMemory(0L)
+                .totalDisk(0L)
+                .motherBoard(new MotherBoardInfo())
+                .bios(new BiosInfo())
+                .network(new NetworkInfo())
+                .build();
+
+        networkMetric = NetworkMetric.builder()
+                .interfaceName("internetTest")
+                .bytesRecv(0L)
+                .bytesSent(0L)
+                .inErrors(0L)
+                .outErrors(0L)
+                .build();
+
+        gpuInfo = GpuInfo.builder()
+                .gpuName("gpuTest")
+                .vendor("vendorTest")
+                .vram(0L)
+                .deviceId("deviceIdTest")
+                .version("versionTest")
+                .build();
 
 
         // dtos
@@ -166,26 +207,6 @@ public class MetricServiceImplTest {
                 .network(new NetworkInfoDto())
                 .build();
 
-        systemInfo = SystemInfo.builder()
-                .uptime(uptime)
-                .hostname("Linux")
-                .os(os)
-                .cpuInfo(new CpuInfo())
-                .totalMemory(0L)
-                .totalDisk(0L)
-                .motherBoard(new MotherBoardInfo())
-                .bios(new BiosInfo())
-                .network(new NetworkInfo())
-                .build();
-
-        networkMetric = NetworkMetric.builder()
-                .interfaceName("internetTest")
-                .bytesRecv(0L)
-                .bytesSent(0L)
-                .inErrors(0L)
-                .outErrors(0L)
-                .build();
-
         networkDto = NetworkMetricDto.builder()
                 .interfaceName("internetTest")
                 .bytesRecv(0L)
@@ -194,6 +215,15 @@ public class MetricServiceImplTest {
                 .bytesSentFormatted("0")
                 .inErrors(0L)
                 .outErrors(0L)
+                .build();
+
+        gpuInfoDto = GpuInfoDto.builder()
+                .gpuName(gpuInfo.getGpuName())
+                .vendor(gpuInfo.getVendor())
+                .vram(gpuInfo.getVram())
+                .vramFormatted("0")
+                .deviceId(gpuInfo.getDeviceId())
+                .version(gpuInfo.getVersion())
                 .build();
     }
 
@@ -308,6 +338,43 @@ public class MetricServiceImplTest {
         verify(metricsRepository).findById(1L);
         verify(metricsMapper).toDtoLog(metrics);
     }
+
+    @Test
+    public void getGpuInfo_ascendingSortTest(){
+        // page ve diğer yapıların kullanımı için setlenmesi
+        LocalDateTime start = LocalDateTime.now().minusDays(1);
+        LocalDateTime end = LocalDateTime.now();
+
+        List<Metrics> metricsList = List.of(new Metrics());
+        Page<Metrics> metricsPage = new PageImpl<>(metricsList, PageRequest.of(0, 10), metricsList.size());
+        List<SystemMetricsLogDto> dtoList = List.of(new SystemMetricsLogDto());
+
+        // matcher kullanıldığı için her alan bu şekilde kontrol edilmeli.
+        // herhangi bir pageable verisi istendiği için any() kullandım. tipi önemli, içerisinde ki veri değil.
+        // hem page yapısını ve mapper doğru işlenip işlenmediğini kontrol ediyor
+        when(metricsRepository.findByCreatedAtBetween(eq(start), eq(end), any(Pageable.class))).thenReturn(metricsPage);
+        when(metricsMapper.toDtoList(metricsList)).thenReturn(dtoList);
+
+        // asıl gerçek test buradan başlıyor. parametreleri service katmanına veriyoruz
+        Page<SystemMetricsLogDto> result = metricsService.findByCreatedAtBetween(start, end, 0, 10, "asc");
+
+        // değerleri kontrol et
+        assertThat(result.getContent()).isEqualTo(dtoList);
+        assertThat(result.getTotalElements()).isEqualTo(1);
+
+        // ArgumentCaptor veriyi sonra kontrol etmek veya kullanmak için tutuluyor
+        ArgumentCaptor<Pageable> pageableCaptor = ArgumentCaptor.forClass(Pageable.class);
+        // repository üzerinden doğru işlendiğini doğrula
+        verify(metricsRepository).findByCreatedAtBetween(eq(start), eq(end), pageableCaptor.capture());
+
+        // sort kontrolü
+        // ArgumentCaptor sayesinde pageable içinde tutulan sort değerini alınıyor ve kullanılıyor
+        // controller tarafında değer varsayılan olarak desc olarak belirledim
+        Sort.Order order = pageableCaptor.getValue().getSort().getOrderFor("createdAt");
+        assertThat(order).isNotNull();
+        assertThat(order.getDirection()).isEqualTo(Sort.Direction.ASC);
+    }
+
 
     //exception test
     @Test
