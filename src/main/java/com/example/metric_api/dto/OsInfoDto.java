@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OsInfoDto {
-
 	private String osName;
 	private String osVersion;
 }

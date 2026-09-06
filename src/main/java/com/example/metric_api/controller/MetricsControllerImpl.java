@@ -81,7 +81,7 @@ public class MetricsControllerImpl implements IMetricsController{
 
 	@Override
 	@GetMapping("/snapshot")
-	public ResponseEntity<ApiResponse<MetricsSnapshot>> prepareSnapshot() {
+	public ResponseEntity<ApiResponse<MetricsSnapshot>> buildSnapshot() {
 		return ApiResponse.ok(ResponseType.BUILD_SNAPSHOT_SUCCESSFULLY, metricsService.buildSnapshot());
 	}
 

@@ -24,7 +24,7 @@ public interface IMetricsController {
 	public ResponseEntity<ApiResponse<DiskMetricDto>> getDiskMetric();
 	public ResponseEntity<ApiResponse<Boolean>> deleteLogById(long id);
 	public ResponseEntity<ApiResponse<SystemMetricsLogDto>> getLogById(long id);
-	public ResponseEntity<ApiResponse<MetricsSnapshot>> prepareSnapshot();
+	public ResponseEntity<ApiResponse<MetricsSnapshot>> buildSnapshot();
 	public ResponseEntity<ApiResponse<Page<SystemMetricsLogDto>>> findByCreatedAtBetween(
 			LocalDate startDate,LocalDate endDate,Integer pageNumber,Integer pageSize, String sortedBy);
 	public ResponseEntity<ApiResponse<List<GpuInfoDto>>> getGpuInfo();
