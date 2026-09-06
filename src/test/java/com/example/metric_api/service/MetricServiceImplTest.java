@@ -5,6 +5,7 @@ import com.example.metric_api.dto.*;
 import com.example.metric_api.mapper.*;
 import com.example.metric_api.model.*;
 import com.example.metric_api.repository.IMetricsRepository;
+import com.example.metric_api.scheduled_job.collector.info.GpuInfoCollector;
 import com.example.metric_api.scheduled_job.collector.info.SystemInfoCollector;
 import com.example.metric_api.scheduled_job.collector.info.UptimeInfoCollector;
 import com.example.metric_api.scheduled_job.collector.metrics.*;
@@ -25,6 +26,7 @@ import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -71,6 +73,9 @@ public class MetricServiceImplTest {
     private CpuMetricCollector cpuMetricCollector;
 
     @Mock
+    private GpuInfoCollector gpuInfoCollector;
+
+    @Mock
     private MemoryMetricCollector memoryMetricCollector;
 
     @Mock
@@ -89,6 +94,7 @@ public class MetricServiceImplTest {
     private DiskMetric disk = new DiskMetric();
     private NetworkMetric networkMetric;
     private GpuInfo gpuInfo;
+    private List<GpuInfo> gpuInfoList = new ArrayList<>();
 
     private OsInfo os = new OsInfo();
     private UptimeMetric uptime = new UptimeMetric();
@@ -101,6 +107,7 @@ public class MetricServiceImplTest {
     private NetworkMetricDto networkDto;
     private SystemInfoDto systemInfoDto;
     private GpuInfoDto gpuInfoDto;
+    private List<GpuInfoDto> gpuInfoDtoList = new ArrayList<>();
 
     @BeforeEach
     public void setUp(){
@@ -225,6 +232,9 @@ public class MetricServiceImplTest {
                 .deviceId(gpuInfo.getDeviceId())
                 .version(gpuInfo.getVersion())
                 .build();
+
+        gpuInfoList.add(gpuInfo);
+        gpuInfoDtoList.add(gpuInfoDto);
     }
 
     @Test
@@ -340,7 +350,7 @@ public class MetricServiceImplTest {
     }
 
     @Test
-    public void getGpuInfo_ascendingSortTest(){
+    public void findByCreatedAtBetweenTest(){
         // page ve diğer yapıların kullanımı için setlenmesi
         LocalDateTime start = LocalDateTime.now().minusDays(1);
         LocalDateTime end = LocalDateTime.now();
@@ -375,6 +385,20 @@ public class MetricServiceImplTest {
         assertThat(order.getDirection()).isEqualTo(Sort.Direction.ASC);
     }
 
+    @Test
+    public void getGpuInfoTest() {
+        when(gpuInfoCollector.collectGpuInfo()).thenReturn(gpuInfoList);
+        when(gpuMapper.toDtoList(gpuInfoList)).thenReturn(gpuInfoDtoList);
+
+        List<GpuInfoDto> result = metricsService.getGpuInfo();
+
+        assertNotNull(result);
+        assertSame(gpuInfoDtoList, result);
+
+        verify(gpuInfoCollector).collectGpuInfo();
+        verify(gpuMapper).toDtoList(gpuInfoList);
+    }
+
 
     //exception test
     @Test
@@ -397,7 +421,7 @@ public class MetricServiceImplTest {
             metricsService.getLogById(0L);
         });
 
-        assertEquals("Something went wrong, metrics is not found.", ex.getMessage());
+        assertEquals("Log is not found in database.", ex.getMessage());
 
     }
 }
