@@ -3,15 +3,13 @@ target/
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-flake.lock
-flake.nix
 
 ## LOG ##
 *.log
 MetricsLog/
 
-## PROPERTİES ##
-application.properties
+## PROPERTIES ##
+src/main/resources/application.properties
 application.yml
 
 ## JAR ##
