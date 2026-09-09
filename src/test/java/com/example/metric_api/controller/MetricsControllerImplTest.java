@@ -1,7 +1,7 @@
 package com.example.metric_api.controller;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -10,17 +10,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.example.metric_api.dto.*;
 import com.example.metric_api.model.MetricsSnapshot;
-import com.example.metric_api.response.ApiResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import com.example.metric_api.scheduled_job.export.JsonFileBuilder;
 import com.example.metric_api.service.IMetricsService;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -241,5 +243,31 @@ public class MetricsControllerImplTest {
 				.andDo(print());
 
 		verify(metricsService).getNetworkMetric();
+	}
+
+	// arama ve filtreleme için test, param ve url kısmına dikkat
+	@Test 
+	public void findByCreatedAtBetweenTest() throws Exception {
+		LocalDate start = LocalDate.now().minusDays(1);
+		LocalDate end = LocalDate.now();
+
+		List<SystemMetricsLogDto> dto = List.of(new SystemMetricsLogDto());
+		Page<SystemMetricsLogDto> page = new PageImpl<>(dto, PageRequest.of(0, 10), 1);
+
+		when(metricsService.findByCreatedAtBetween(any(), any(), eq(0), eq(10), eq("desc"))).thenReturn(page);
+
+		mockMvc.perform(get("/api/v1/metrics/search")
+                        .param("startDate", start.toString())
+                        .param("endDate", end.toString())
+                        .param("pageNumber", "0")
+                        .param("pageSize", "10")
+                        .param("sortedBy", "desc"))
+                .andExpect(status().is(302))
+                .andExpect(jsonPath("$.data.content").isArray())
+                .andExpect(jsonPath("$.data.content.length()").value(1))
+                .andExpect(jsonPath("$.data.totalElements").value(1))
+                .andExpect(jsonPath("$.data.number").value(0));
+
+		verify(metricsService).findByCreatedAtBetween(any(), any(), eq(0), eq(10), eq("desc"));
 	}
 }

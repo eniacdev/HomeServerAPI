@@ -1,18 +1,15 @@
 package com.example.metric_api.controller;
 
 import com.example.metric_api.dto.*;
-import com.example.metric_api.exception_handler.BaseException;
 import com.example.metric_api.model.*;
 import com.example.metric_api.validator.MetricsValidator;
 import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.metric_api.response.ApiResponse;
 import com.example.metric_api.response.ResponseType;
 import com.example.metric_api.service.IMetricsService;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
